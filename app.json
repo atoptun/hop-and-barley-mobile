@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "hop-and-barley-mobile",
-    "slug": "hop-and-barley-mobile",
+    "slug": "hop-and-barley",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -11,6 +11,7 @@
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.atoptun_team.hop_and_barley_app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -32,11 +33,19 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b7f5ec93-efbd-4c62-9a18-20256dfce8b8"
+      }
+    },
+    "owner": "atoptun-team"
   }
 }
