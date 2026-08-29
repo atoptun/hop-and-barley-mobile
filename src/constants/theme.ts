@@ -3,46 +3,44 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-
-
 import { Platform } from 'react-native';
 
 export const Palette = {
   // Highlight Light
-  green900: "#31572C",
-  green800: "#517C4B",
-  green600: "#7CA075",
-  green300: "#AEC4AC",
-  green100: "#E0E6DD",
+  green900: '#31572C',
+  green800: '#517C4B',
+  green600: '#7CA075',
+  green300: '#AEC4AC',
+  green100: '#E0E6DD',
 
   // Highlight Dark
-  greenDarkBase: "#7EB076",
-  greenDarkPressed: "#5C9154",
-  greenDarkContainer: "#1B3318",
+  greenDarkBase: '#7EB076',
+  greenDarkPressed: '#5C9154',
+  greenDarkContainer: '#1B3318',
 
   // Neutrals Dark
-  neutralDark1: "#1A1D1A",
-  neutralDark2: "#242824",
-  neutralDark3: "#444943",
-  neutralDark5: "#A2A6A1",
+  neutralDark1: '#1A1D1A',
+  neutralDark2: '#242824',
+  neutralDark3: '#444943',
+  neutralDark5: '#A2A6A1',
 
   // Neutrals Light
-  neutralLight1: "#E2E6E1",
-  neutralLight2: "#F0F2EF",
-  neutralLight3: "#F9FAF8",
-  white: "#FFFFFF",
+  neutralLight1: '#E2E6E1',
+  neutralLight2: '#F0F2EF',
+  neutralLight3: '#F9FAF8',
+  white: '#FFFFFF',
 
   // Stars
-  gold: "#FFC107",
-  silver: "#F0F2EF",
+  gold: '#FFC107',
+  silver: '#F0F2EF',
 
   // Statuses
-  successDark: "#0E8A5D",
-  successLight: "#E0F4E8",
-  warningDark: "#E86339",
-  warningLight: "#FFF4E4",
-  errorDark: "#ED3241",
-  errorLight: "#FFE2E5",
+  successDark: '#0E8A5D',
+  successLight: '#E0F4E8',
+  warningDark: '#E86339',
+  warningLight: '#FFF4E4',
+  errorDark: '#ED3241',
+  errorLight: '#FFE2E5',
 } as const;
 
 export const Colors = {

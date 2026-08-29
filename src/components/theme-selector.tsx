@@ -1,12 +1,12 @@
-import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { useTheme, useThemeController, ThemeMode } from "@/context/theme-context";
-import { Theme } from "@/constants/theme";
+import React from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { useTheme, useThemeController, ThemeMode } from '@/context/theme-context';
+import { Theme } from '@/constants/theme';
 
 const MODES: { label: string; value: ThemeMode }[] = [
-  { label: "Light", value: "light" },
-  { label: "Dark", value: "dark" },
-  { label: "System", value: "system" },
+  { label: 'Light', value: 'light' },
+  { label: 'Dark', value: 'dark' },
+  { label: 'System', value: 'system' },
 ];
 
 export const ThemeSelector = () => {
@@ -18,23 +18,15 @@ export const ThemeSelector = () => {
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Appearance</Text>
       <View style={styles.toggleRow}>
-        {MODES.map((item) => {
+        {MODES.map(item => {
           const isSelected = themeMode === item.value;
           return (
             <Pressable
               key={item.value}
               onPress={() => setThemeMode(item.value)}
-              style={[
-                styles.optionButton,
-                isSelected && styles.optionButtonActive,
-              ]}
+              style={[styles.optionButton, isSelected && styles.optionButtonActive]}
             >
-              <Text
-                style={[
-                  styles.optionText,
-                  isSelected && styles.optionTextActive,
-                ]}
-              >
+              <Text style={[styles.optionText, isSelected && styles.optionTextActive]}>
                 {item.label}
               </Text>
             </Pressable>
@@ -55,12 +47,12 @@ const createStyles = (colors: Theme) =>
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: "600",
+      fontWeight: '600',
       color: colors.textPrimary,
       marginBottom: 12,
     },
     toggleRow: {
-      flexDirection: "row",
+      flexDirection: 'row',
       backgroundColor: colors.surfaceSecondary,
       borderRadius: 8,
       padding: 4,
@@ -68,7 +60,7 @@ const createStyles = (colors: Theme) =>
     optionButton: {
       flex: 1,
       paddingVertical: 8,
-      alignItems: "center",
+      alignItems: 'center',
       borderRadius: 6,
     },
     optionButtonActive: {
@@ -76,11 +68,11 @@ const createStyles = (colors: Theme) =>
     },
     optionText: {
       fontSize: 14,
-      fontWeight: "500",
+      fontWeight: '500',
       color: colors.textSecondary,
     },
     optionTextActive: {
       color: colors.textOnPrimary,
-      fontWeight: "600",
+      fontWeight: '600',
     },
   });

@@ -1,9 +1,9 @@
-import { useTheme, Theme } from "@/context/theme-context";
-import { Text, View, StyleSheet } from "react-native";
+import { useTheme, Theme } from '@/context/theme-context';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default function Index() {
-  const colors = useTheme()
-    const styles = createStyles(colors);
+  const colors = useTheme();
+  const styles = createStyles(colors);
 
   return (
     <View style={styles.container}>
@@ -20,13 +20,11 @@ const createStyles = (colors: Theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: colors.background,
     },
     text: {
       color: colors.textPrimary,
     },
   });
-
-
