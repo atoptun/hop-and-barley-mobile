@@ -3,7 +3,7 @@
     "name": "hop-and-barley-mobile",
     "slug": "hop-and-barley",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "hopandbarleymobile",
     "userInterfaceStyle": "automatic",
@@ -13,7 +13,7 @@
     "android": {
       "package": "com.atoptun_team.hop_and_barley_app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE"
+        "backgroundColor": "#7EB076"
         // "foregroundImage": "./assets/images/android-icon-foreground.png",
         // "backgroundImage": "./assets/images/android-icon-background.png",
         // "monochromeImage": "./assets/images/android-icon-monochrome.png"
