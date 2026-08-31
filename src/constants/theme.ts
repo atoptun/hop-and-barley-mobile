@@ -50,6 +50,9 @@ export const Colors = {
     primaryPressed: Palette.green800,
     primaryContainer: Palette.green100,
 
+    backgroundSecondary: Palette.green300,
+    borderSecondary: Palette.neutralDark5,
+
     // Backgrounds & Surfaces
     background: Palette.neutralLight3,
     surface: Palette.white,
@@ -79,6 +82,9 @@ export const Colors = {
     primary: Palette.greenDarkBase,
     primaryPressed: Palette.greenDarkPressed,
     primaryContainer: Palette.greenDarkContainer,
+
+    backgroundSecondary: Palette.green300,
+    borderSecondary: Palette.neutralDark5,
 
     // Backgrounds & Surfaces
     background: Palette.neutralDark1,
@@ -110,31 +116,6 @@ export type Theme = typeof Colors.light | typeof Colors.dark;
 
 export type ThemeColors = keyof typeof Colors.light & keyof typeof Colors.dark;
 export type ColorKey = ThemeColors;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
 
 export const Spacing = {
   half: 2,
