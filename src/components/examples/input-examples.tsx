@@ -1,16 +1,14 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
 import { ThemedInput } from '@/components/ui/themed-input';
+import { Theme, useTheme } from '@/context/theme-context';
 import { useState } from 'react';
-import { ThemedIcon } from '../ui/themed-icon';
+import { StyleSheet, View } from 'react-native';
 import { PasswordInput } from '../ui/password-input';
 
 export function InputExamples() {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [price, setPrice] = useState('150');
 
   return (

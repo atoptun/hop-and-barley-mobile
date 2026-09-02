@@ -1,9 +1,9 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { Theme, useTheme } from '@/context/theme-context';
+import { StyleSheet, View } from 'react-native';
 import { ThemedImage } from '../ui/themed-image';
 
 export function ImageExamples() {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (

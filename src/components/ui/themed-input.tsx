@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import {
-  View,
-  TextInput,
-  TextInputProps,
-  StyleSheet,
-  Pressable,
-  ViewStyle,
-  StyleProp,
-} from 'react-native';
-import { useTheme } from '@/context/theme-context';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Typography } from '@/constants/typography';
+import { useTheme } from '@/context/theme-context';
+import { useState } from 'react';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 export interface ThemedInputProps extends Omit<TextInputProps, 'style'> {
   title?: string;
@@ -41,7 +41,7 @@ export function ThemedInput({
   placeholderTextColor,
   ...props
 }: ThemedInputProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
   const hasError = Boolean(isError || errorMessage);

@@ -1,18 +1,31 @@
-import Feather from '@expo/vector-icons/Feather';
-import { useTheme, ThemeColors } from '@/context/theme-context';
+import { ThemeColors, useTheme } from '@/context/theme-context';
+// import Feather from '@expo/vector-icons/Feather';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { ColorValue } from 'react-native';
 
-export type IconName = React.ComponentProps<typeof Feather>['name'];
+// type FeatherIconName = React.ComponentProps<typeof Feather>['name'];
+type MaterialIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+
+export type IconName = MaterialIconName;
 
 interface ThemedIconProps {
   name: IconName;
   size?: number;
   color?: ThemeColors;
-  customColor?: string;
+  customColor?: ColorValue;
 }
 
+// const mcIcons = ['store'];
+
 export function ThemedIcon({ name, size = 24, color, customColor }: ThemedIconProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const iconColor = customColor ?? (color ? colors[color] : colors.textPrimary);
 
-  return <Feather name={name} size={size} color={iconColor} />;
+  // if (mcIcons.includes(name)) {
+  const iconName = name as MaterialIconName;
+  return <MaterialCommunityIcons name={iconName} size={size} color={iconColor} />;
+  // }
+
+  // const iconName = name as FeatherIconName;
+  // return <Feather name={iconName} size={size} color={iconColor} />;
 }

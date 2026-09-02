@@ -3,7 +3,7 @@ import { useTheme, Theme } from '@/context/theme-context';
 import { ThemedButton } from '@/components/ui/themed-button';
 
 export function ButtonExamples() {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (
@@ -164,7 +164,7 @@ export function ButtonExamples() {
           variant="outline"
           fullWidth
           disabled
-          iconName="shopping-cart"
+          iconName="cart-outline"
           iconPosition="left"
           iconSize={20}
           onPress={() => {
@@ -176,7 +176,7 @@ export function ButtonExamples() {
           variant="primary"
           fullWidth
           disabled
-          iconName="shopping-cart"
+          iconName="cart-outline"
           iconPosition="left"
           iconSize={20}
           onPress={() => {

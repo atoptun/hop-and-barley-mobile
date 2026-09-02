@@ -1,7 +1,7 @@
+import { ProductItemData, ProductList } from '@/components/features/catalog/product-list';
 import { Theme, useTheme } from '@/context/theme-context';
-import { StyleSheet, View } from 'react-native';
-import { ProductList, ProductItemData } from '@/components/features/catalog/product-list';
 import { useCallback, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 const BASE_PRODUCTS: Omit<ProductItemData, 'id'>[] = [
   {
@@ -42,7 +42,7 @@ const MOCK_PRODUCTS: ProductItemData[] = Array.from({ length: 30 }, (_, index) =
 });
 
 export function ProductListExamples() {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   const [items, setItems] = useState<ProductItemData[]>(MOCK_PRODUCTS);

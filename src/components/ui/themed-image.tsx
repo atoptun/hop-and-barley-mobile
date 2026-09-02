@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle, ActivityIndicator } from 'react-native';
-import { Image, ImageProps } from 'expo-image';
-import { useTheme, Theme } from '@/context/theme-context';
 import { ThemedIcon } from '@/components/ui/themed-icon';
+import { Theme, useTheme } from '@/context/theme-context';
+import { Image, ImageProps } from 'expo-image';
+import { useState } from 'react';
+import { ActivityIndicator, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ThemedImageProps extends Omit<ImageProps, 'style'> {
   style?: StyleProp<ViewStyle>;
@@ -23,7 +23,7 @@ export function ThemedImage({
   transition = 1000,
   ...props
 }: ThemedImageProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);

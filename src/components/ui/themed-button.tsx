@@ -1,16 +1,16 @@
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  PressableProps,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
-import { useTheme } from '@/context/theme-context';
+import { IconName, ThemedIcon } from '@/components/ui/themed-icon';
 import { TypographyVariant } from '@/constants/typography';
+import { useTheme } from '@/context/theme-context';
+import {
+  ActivityIndicator,
+  Pressable,
+  PressableProps,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { ThemedText } from './themed-text';
-import { ThemedIcon, IconName } from '@/components/ui/themed-icon';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost';
 
@@ -37,7 +37,7 @@ export function ThemedButton({
   style,
   ...props
 }: ThemedButtonProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
 
   const textVariant: TypographyVariant = 'actionM';
 

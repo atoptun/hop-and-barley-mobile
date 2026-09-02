@@ -1,6 +1,6 @@
-import { Text, TextProps } from 'react-native';
-import { useTheme, ThemeColors } from '@/context/theme-context';
 import { Typography, TypographyVariant } from '@/constants/typography';
+import { ThemeColors, useTheme } from '@/context/theme-context';
+import { Text, TextProps } from 'react-native';
 
 interface ThemedTextProps extends TextProps {
   variant?: TypographyVariant;
@@ -14,7 +14,7 @@ export function ThemedText({
   children,
   ...props
 }: ThemedTextProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
 
   return (
     <Text style={[Typography[variant], { color: colors[color] }, style]} {...props}>

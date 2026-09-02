@@ -1,10 +1,10 @@
-import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { ImageSource } from 'expo-image';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedCounter } from '@/components/ui/themed-counter';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
+import { ImageSource } from 'expo-image';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
   title: string;
@@ -33,7 +33,7 @@ export function ProductCard({
   onDecrement,
   style,
 }: ProductCardProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   const formattedPrice = `${currency} ${price.toFixed(2)}`;
