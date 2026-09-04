@@ -3,10 +3,12 @@ import { Typography } from '@/constants/typography';
 import { useTheme } from '@/context/theme-context';
 import { useState } from 'react';
 import {
+  NativeSyntheticEvent,
   Pressable,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputFocusEventData,
   TextInputProps,
   View,
   ViewStyle,
@@ -59,16 +61,6 @@ export function ThemedInput({
     return colors.background;
   };
 
-  const handleFocus = (e: any) => {
-    setIsFocused(true);
-    onFocus?.(e);
-  };
-
-  const handleBlur = (e: any) => {
-    setIsFocused(false);
-    onBlur?.(e);
-  };
-
   return (
     <View style={[styles.wrapper, containerStyle]}>
       {/* 1. Title / Label */}
@@ -108,12 +100,18 @@ export function ThemedInput({
         <TextInput
           editable={editable}
           value={value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={e => {
+            setIsFocused(true);
+            onFocus?.(e);
+          }}
+          onBlur={e => {
+            setIsFocused(false);
+            onBlur?.(e);
+          }}
           placeholderTextColor={placeholderTextColor ?? colors.textSecondary}
           style={[
             styles.input,
-            Typography.bodyL,
+            Typography.bodyM,
             {
               color: isDisabled ? colors.textSecondary : colors.textPrimary,
             },

@@ -1,44 +1,41 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { ButtonExamples } from '@/components/examples/button-examples';
-import { TextExamples } from '@/components/examples/text-examples';
-import { PageDotsExamples } from '@/components/examples/page-dots-examples';
-import { LinkExamples } from '@/components/examples/link-examples';
-import { InputExamples } from '@/components/examples/input-examples';
-import { ImageExamples } from '@/components/examples/image-examples';
-import { ProductListExamples } from '@/components/examples/product-list-examples';
+import { Redirect, SplashScreen } from 'expo-router';
+import { useEffect, useState } from 'react';
 
-export default function IndexScreen() {
-  const colors = useTheme();
-  const styles = createStyles(colors);
+type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/(tabs)/store';
 
-  return (
-    <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
-      <View style={styles.container}>
-        {/* <TextExamples /> */}
-        {/* <ButtonExamples /> */}
-        {/* <PageDotsExamples /> */}
-        {/* <LinkExamples /> */}
-        {/* <InputExamples /> */}
-        {/* <ImageExamples /> */}
-        <ProductListExamples />
-      </View>
-    </SafeAreaView>
-  );
+export default function EntryScreen() {
+  const [target, setTarget] = useState<TargetRoute | null>(null);
+
+  useEffect(() => {
+    async function prepareApp() {
+      try {
+        // TODO: check onboarded settings
+        const hasOnboarded = false;
+
+        if (!hasOnboarded) {
+          setTarget('/(onboarding)');
+          return;
+        }
+
+        // TODO: check auth token
+        const hasAuthToken = false;
+
+        if (!hasAuthToken) {
+          setTarget('/(auth)/login');
+        } else {
+          setTarget('/(tabs)/store');
+        }
+      } catch {
+        setTarget('/(onboarding)');
+      } finally {
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepareApp();
+  }, []);
+
+  if (!target) return null;
+
+  return <Redirect href={target} />;
 }
-
-const createStyles = (colors: Theme) =>
-  StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    container: {
-      flex: 1,
-      alignItems: 'stretch',
-      justifyContent: 'flex-start',
-      backgroundColor: colors.background,
-      padding: 24,
-    },
-  });

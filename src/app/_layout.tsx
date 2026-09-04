@@ -17,7 +17,7 @@ if (__DEV__) {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
@@ -26,22 +26,52 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
+    if (fontError) {
+      // SplashScreen.hideAsync();
+      console.error('Font loading error', fontError);
     }
-  }, [loaded, error]);
+  }, [fontError]);
 
-  if (!loaded && !error) {
+  if (!fontLoaded && !fontError) {
     return null;
   }
 
   return (
     <ThemeProvider>
-      {/* <Stack>
-        <Stack.Screen name="index" options={{ title: 'Home', headerShown: true }} />
-        <Stack.Screen name="about" options={{ title: 'About' }} />
-      </Stack> */}
-      <Stack screenOptions={{ title: 'Home', headerShown: true }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+
+        <Stack.Screen name="(onboarding)" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+
+        {/* Product details */}
+        <Stack.Screen
+          name="(modals)/product/[id]"
+          options={{
+            presentation: 'card',
+            animation: 'slide_from_right',
+          }}
+        />
+
+        {/* Filters */}
+        <Stack.Screen
+          name="(modals)/filters"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+
+        {/* Checkout */}
+        <Stack.Screen
+          name="(modals)/checkout"
+          options={{
+            presentation: 'card',
+            animation: 'slide_from_right',
+          }}
+        />
+      </Stack>
     </ThemeProvider>
   );
 }

@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    minHeight: 40,
+    // minHeight: 40,
   },
   fullWidth: {
     // width: '100%',

@@ -1,18 +1,17 @@
 import { View, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
-import { Link, Stack } from 'expo-router';
+import { ThemedText } from '@/components/ui/themed-text';
 
-export default function NotFoundScreen() {
+export default function ProfileScreen() {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops! Not Found' }} />
-      <View style={styles.container}>
-        <Link href={'/'}>Go to Home screen</Link>
-      </View>
-    </>
+    <View style={styles.container}>
+      <ThemedText variant="h1" color="textPrimary">
+        Profile screen
+      </ThemedText>
+    </View>
   );
 }
 
@@ -22,8 +21,7 @@ const createStyles = (colors: Theme) =>
       flex: 1,
       backgroundColor: colors.background,
     },
-    button: {
+    text: {
       color: colors.textPrimary,
-      backgroundColor: colors.errorBg,
     },
   });

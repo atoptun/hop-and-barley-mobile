@@ -30,6 +30,6 @@ export function ThemedLink({
 
 const styles = StyleSheet.create({
   link: {
-    textAlign: 'center',
+    // textAlign: 'center',
   },
 });
