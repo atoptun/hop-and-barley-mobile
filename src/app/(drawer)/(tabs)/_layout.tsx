@@ -9,8 +9,8 @@ export default function TabsLayout() {
     <Tabs
       initialRouteName="store"
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: colors.primary,
-        // headerShown: false,
       }}
     >
       <Tabs.Screen

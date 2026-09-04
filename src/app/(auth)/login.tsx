@@ -9,11 +9,11 @@ export default function AuthLoginScreen() {
     // TODO: handle login
     console.info(`Login data: ${JSON.stringify(data)}`);
 
-    router.replace('/(tabs)/store');
+    router.replace('/store');
   };
 
   const handleGuest = () => {
-    router.replace('/(tabs)/store');
+    router.replace('/store');
   };
 
   return <LoginView onLogin={handleLogin} onGuest={handleGuest} />;

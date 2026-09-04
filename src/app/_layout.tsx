@@ -9,6 +9,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { ThemeProvider } from '@/context/theme-context';
 import { Stack, SplashScreen } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 if (__DEV__) {
   import('../../ReactotronConfig');
@@ -27,7 +28,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontError) {
-      // SplashScreen.hideAsync();
       console.error('Font loading error', fontError);
     }
   }, [fontError]);
@@ -38,40 +38,43 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(auth)" />
 
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(drawer)" />
+          {/* <Stack.Screen name="(tabs)" /> */}
 
-        {/* Product details */}
-        <Stack.Screen
-          name="(modals)/product/[id]"
-          options={{
-            presentation: 'card',
-            animation: 'slide_from_right',
-          }}
-        />
+          {/* Product details */}
+          <Stack.Screen
+            name="(modals)/product/[id]"
+            options={{
+              presentation: 'card',
+              animation: 'slide_from_right',
+            }}
+          />
 
-        {/* Filters */}
-        <Stack.Screen
-          name="(modals)/filters"
-          options={{
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
-          }}
-        />
+          {/* Filters */}
+          <Stack.Screen
+            name="(modals)/filters"
+            options={{
+              presentation: 'modal',
+              animation: 'slide_from_bottom',
+            }}
+          />
 
-        {/* Checkout */}
-        <Stack.Screen
-          name="(modals)/checkout"
-          options={{
-            presentation: 'card',
-            animation: 'slide_from_right',
-          }}
-        />
-      </Stack>
+          {/* Checkout */}
+          <Stack.Screen
+            name="(modals)/checkout"
+            options={{
+              presentation: 'card',
+              animation: 'slide_from_right',
+            }}
+          />
+        </Stack>
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }

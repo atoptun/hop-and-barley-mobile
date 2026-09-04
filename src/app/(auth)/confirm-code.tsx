@@ -26,7 +26,7 @@ export default function AuthConfirmScreen() {
       }
 
       // Success
-      router.replace('/(tabs)/store');
+      router.replace('/store');
     } catch {
       setErrorMessage('Invalid confirmation code. Please try again.');
     } finally {

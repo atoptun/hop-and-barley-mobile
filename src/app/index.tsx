@@ -1,7 +1,7 @@
 import { Redirect, SplashScreen } from 'expo-router';
 import { useEffect, useState } from 'react';
 
-type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/(tabs)/store';
+type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/store';
 
 export default function EntryScreen() {
   const [target, setTarget] = useState<TargetRoute | null>(null);
@@ -23,7 +23,7 @@ export default function EntryScreen() {
         if (!hasAuthToken) {
           setTarget('/(auth)/login');
         } else {
-          setTarget('/(tabs)/store');
+          setTarget('/store');
         }
       } catch {
         setTarget('/(onboarding)');

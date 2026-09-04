@@ -13,7 +13,7 @@ export default function AuthRegsterScreen() {
   };
 
   const handleGuest = () => {
-    router.replace('/(tabs)/store');
+    router.replace('/store');
   };
 
   return <RegisterView onRegister={handleRegister} onGuest={handleGuest} />;
