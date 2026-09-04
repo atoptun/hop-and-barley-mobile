@@ -9,7 +9,7 @@ export default function AuthRegsterScreen() {
     // TODO: handle register
     console.info(`Refister: data ${JSON.stringify(data)}`);
 
-    router.replace('/(tabs)/store');
+    router.push({ pathname: '/(auth)/confirm-code', params: { email: data.email } });
   };
 
   const handleGuest = () => {

@@ -1,28 +1,38 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedText } from '@/components/ui/themed-text';
+import { PasswordInput } from '@/components/ui/password-input';
 import { ThemedButton } from '@/components/ui/themed-button';
-import { Spacing } from '@/constants/theme';
-import { StatusBar } from 'expo-status-bar';
+import { ThemedCheckbox } from '@/components/ui/themed-checkbox';
 import { ThemedInput } from '@/components/ui/themed-input';
 import { ThemedLink } from '@/components/ui/themed-link';
-import { z } from 'zod';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 import { RegisterData } from '@/types/auth';
-import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PasswordInput } from '@/components/ui/password-input';
+import { StatusBar } from 'expo-status-bar';
+import { Controller, useForm } from 'react-hook-form';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { z } from 'zod';
 
 const registerSchema = z
   .object({
-    name: z.string().min(3, 'Name must be at least 8 characters'),
+    name: z
+      .string()
+      .trim()
+      .nonempty('Name is required')
+      .min(3, 'Name must be at least 3 characters'),
     email: z.email('Please enter a valid email address'),
     password: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string().min(8, 'Password must be at least 8 characters'),
+    agreeTerms: z.boolean(),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
+  })
+  .refine(data => data.agreeTerms === true, {
+    message: 'You must agree to continue',
+    path: ['agreeTerms'],
   });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -47,6 +57,7 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
       email: '',
       password: '',
       confirmPassword: '',
+      agreeTerms: false,
     },
     mode: 'onBlur',
   });
@@ -85,7 +96,7 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
                   autoCapitalize="words"
                   autoCorrect={false}
                   keyboardType="default"
-                  errorMessage={value && errors.name?.message}
+                  errorMessage={errors.name?.message}
                 />
               )}
             />
@@ -102,7 +113,7 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType="email-address"
-                  errorMessage={value && errors.email?.message}
+                  errorMessage={errors.email?.message}
                 />
               )}
             />
@@ -116,7 +127,7 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
                   onBlur={onBlur}
                   title="Password"
                   placeholder="Create a password"
-                  errorMessage={value && errors.password?.message}
+                  errorMessage={errors.password?.message}
                 />
               )}
             />
@@ -130,13 +141,37 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
                   onBlur={onBlur}
                   title=""
                   placeholder="Confirm password"
-                  errorMessage={value && errors.confirmPassword?.message}
+                  errorMessage={errors.confirmPassword?.message}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="agreeTerms"
+              render={({ field: { value, onChange, onBlur } }) => (
+                <ThemedCheckbox
+                  value={value}
+                  onChange={onChange}
+                  label={
+                    <ThemedText variant="bodyS" color="textSecondary">
+                      I&apos;ve read and agree with the{' '}
+                      <ThemedText variant="actionM" color="primary">
+                        Terms and Conditions
+                      </ThemedText>{' '}
+                      and the{' '}
+                      <ThemedText variant="actionM" color="primary">
+                        Privacy Policy
+                      </ThemedText>
+                      .
+                    </ThemedText>
+                  }
+                  errorMessage={errors.agreeTerms?.message}
                 />
               )}
             />
           </View>
           <View style={styles.actions}>
-            <ThemedButton title="Register" onPress={handleSubmit(submit)} />
+            <ThemedButton title="Register" disabled={isSubmitting} onPress={handleSubmit(submit)} />
             <ThemedText variant="bodyS" color="textSecondary" style={{ textAlign: 'center' }}>
               I already have account.{' '}
               <ThemedLink variant="actionM" href={'/(auth)/login'}>
