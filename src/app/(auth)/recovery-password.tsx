@@ -1,26 +1,15 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { useRouter } from 'expo-router';
+import { RecoveryPasswordView } from '@/components/features/auth/recovery-password-view';
 
-export interface RecoveryPasswordScreenProps {}
+export default function RecoveryPasswordScreen() {
+  const router = useRouter();
 
-export default function RecoveryPasswordScreen({}: RecoveryPasswordScreenProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const handleSubmit = async (email: string) => {
+    // TODO: API request recovery password
+    console.info(`Recovery password email: ${email}`);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>RecoveryPasswordScreen</Text>
-    </View>
-  );
+    router.replace('/(auth)/login');
+  };
+
+  return <RecoveryPasswordView onSubmit={handleSubmit} />;
 }
-
-const createStyles = (colors: Theme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    text: {
-      color: colors.textPrimary,
-    },
-  });
