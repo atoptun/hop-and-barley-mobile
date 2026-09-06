@@ -10,7 +10,7 @@ export default function EntryScreen() {
     async function prepareApp() {
       try {
         // TODO: check onboarded settings
-        const hasOnboarded = false;
+        const hasOnboarded = true;
 
         if (!hasOnboarded) {
           setTarget('/(onboarding)');
@@ -18,7 +18,7 @@ export default function EntryScreen() {
         }
 
         // TODO: check auth token
-        const hasAuthToken = false;
+        const hasAuthToken = true;
 
         if (!hasAuthToken) {
           setTarget('/(auth)/login');

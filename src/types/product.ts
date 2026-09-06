@@ -7,4 +7,5 @@ export interface Product {
   price: number;
   currency: string;
   image: string | number | ImageSource;
+  quantity: number;
 }

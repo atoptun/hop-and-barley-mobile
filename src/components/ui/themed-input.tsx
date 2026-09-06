@@ -3,12 +3,10 @@ import { Typography } from '@/constants/typography';
 import { useTheme } from '@/context/theme-context';
 import { useState } from 'react';
 import {
-  NativeSyntheticEvent,
   Pressable,
   StyleProp,
   StyleSheet,
   TextInput,
-  TextInputFocusEventData,
   TextInputProps,
   View,
   ViewStyle,

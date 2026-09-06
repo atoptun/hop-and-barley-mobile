@@ -1,27 +1,16 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { ThemedText } from '@/components/ui/themed-text';
+import { StoreView } from '@/components/features/store/store-view';
+import { useRouter } from 'expo-router';
 
-export default function HomeScreen() {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+export default function StoreScreen() {
+  const router = useRouter();
 
-  return (
-    <View style={styles.container}>
-      <ThemedText variant="h1" color="primary">
-        Store screen
-      </ThemedText>
-    </View>
-  );
+  const handleProductPress = (productId: string) => {
+    router.push({ pathname: '/(modals)/product/[id]', params: { id: productId } });
+  };
+
+  const handleFilterPress = () => {
+    router.push('/(modals)/filters');
+  };
+
+  return <StoreView onProductPress={handleProductPress} onFilterPress={handleFilterPress} />;
 }
-
-const createStyles = (colors: Theme) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.successBg,
-    },
-    text: {
-      color: colors.textPrimary,
-    },
-  });

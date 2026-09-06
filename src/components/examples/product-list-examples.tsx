@@ -1,9 +1,10 @@
-import { ProductItemData, ProductList } from '@/components/features/catalog/product-list';
+import { ProductList } from '@/components/features/catalog/product-list';
 import { Theme, useTheme } from '@/context/theme-context';
+import { Product } from '@/types/product';
 import { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const BASE_PRODUCTS: Omit<ProductItemData, 'id'>[] = [
+const BASE_PRODUCTS: Omit<Product, 'id'>[] = [
   {
     title: 'Imperial Organic Yeast A07',
     subtitle: 'per pouch',
@@ -30,7 +31,7 @@ const BASE_PRODUCTS: Omit<ProductItemData, 'id'>[] = [
   },
 ];
 
-const MOCK_PRODUCTS: ProductItemData[] = Array.from({ length: 30 }, (_, index) => {
+const MOCK_PRODUCTS: Product[] = Array.from({ length: 30 }, (_, index) => {
   const baseItem = BASE_PRODUCTS[index % BASE_PRODUCTS.length];
   const id = String(index + 1);
 
@@ -45,7 +46,7 @@ export function ProductListExamples() {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const [items, setItems] = useState<ProductItemData[]>(MOCK_PRODUCTS);
+  const [items, setItems] = useState<Product[]>(MOCK_PRODUCTS);
 
   const handleIncrement = useCallback((id: string) => {
     setItems(prev =>

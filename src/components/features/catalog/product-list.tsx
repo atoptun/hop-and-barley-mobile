@@ -4,12 +4,8 @@ import { Divider } from '@/components/ui/divider';
 import { ProductListItem } from './product-list-item';
 import { Product } from '@/types/product';
 
-export interface ProductItemData extends Product {
-  quantity: number;
-}
-
 export interface ProductListProps {
-  products: ProductItemData[];
+  products: Product[];
   onProductPress?: (id: string) => void;
   onAdd?: (id: string) => void;
   onIncrement?: (id: string) => void;
@@ -32,7 +28,7 @@ export function ProductList({
   ListEmptyComponent,
 }: ProductListProps) {
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ProductItemData>) => (
+    ({ item }: ListRenderItemInfo<Product>) => (
       <ProductListItem
         title={item.title}
         subtitle={item.subtitle}
@@ -49,7 +45,7 @@ export function ProductList({
     [onProductPress, onAdd, onIncrement, onDecrement]
   );
 
-  const keyExtractor = useCallback((item: ProductItemData) => item.id, []);
+  const keyExtractor = useCallback((item: Product) => item.id, []);
 
   const renderSeparator = useCallback(() => <Divider marginVertical={SEPARATOR_MARGIN} />, []);
 
