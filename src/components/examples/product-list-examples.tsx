@@ -6,24 +6,24 @@ import { StyleSheet, View } from 'react-native';
 
 const BASE_PRODUCTS: Omit<Product, 'id'>[] = [
   {
-    title: 'Imperial Organic Yeast A07',
-    subtitle: 'per pouch',
+    name: 'Imperial Organic Yeast A07',
+    price_tag: 'per pouch',
     price: 12.0,
     currency: '€',
     image: require('@/assets/images/products/product-1.png'),
     quantity: 1,
   },
   {
-    title: 'Saaz Hops',
-    subtitle: 'per 100g',
+    name: 'Saaz Hops',
+    price_tag: 'per 100g',
     price: 15.0,
     currency: '€',
     image: require('@/assets/images/products/product-2.png'),
     quantity: 1,
   },
   {
-    title: 'West Coast IPA - All-Grain Kit',
-    subtitle: 'for 5 Gallons',
+    name: 'West Coast IPA - All-Grain Kit',
+    price_tag: 'for 5 Gallons',
     price: 20.0,
     currency: '€',
     image: require('@/assets/images/products/product-3.png'),
@@ -38,7 +38,7 @@ const MOCK_PRODUCTS: Product[] = Array.from({ length: 30 }, (_, index) => {
   return {
     ...baseItem,
     id,
-    title: `${baseItem.title} #${id}`,
+    title: `${baseItem.name} #${id}`,
   };
 });
 
@@ -50,14 +50,14 @@ export function ProductListExamples() {
 
   const handleIncrement = useCallback((id: string) => {
     setItems(prev =>
-      prev.map(item => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+      prev.map(item => (item.slug === id ? { ...item, quantity: item.quantity + 1 } : item))
     );
   }, []);
 
   const handleDecrement = useCallback((id: string) => {
     setItems(prev =>
       prev.map(item =>
-        item.id === id ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
+        item.slug === id ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
       )
     );
   }, []);

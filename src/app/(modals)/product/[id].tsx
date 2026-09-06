@@ -1,14 +1,13 @@
-import { ThemedText } from '@/components/ui/themed-text';
-import { useRoute, useRouter } from 'expo-router';
-import { View } from 'react-native';
+import { ProductDetailsView } from '@/components/features/modals/product-details-view';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export default function ProductDetailsScreen() {
-  const route = useRoute();
   const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>();
 
-  return (
-    <View style={{ flex: 1 }}>
-      <ThemedText variant="h1">Product screen</ThemedText>
-    </View>
-  );
+  const handleClose = () => {
+    router.back();
+  };
+
+  return <ProductDetailsView productId={id} onClose={handleClose} />;
 }

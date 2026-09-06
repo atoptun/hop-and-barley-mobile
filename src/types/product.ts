@@ -1,11 +1,13 @@
 import { ImageSource } from 'expo-image';
 
 export interface Product {
-  id: string;
-  title: string;
-  subtitle: string;
+  slug: string;
+  name: string;
+  description: string;
   price: number;
-  currency: string;
+  price_tag: string;
+  average_rating: number;
   image: string | number | ImageSource;
+  technical_specifications?: Record<string, string>;
   quantity: number;
 }

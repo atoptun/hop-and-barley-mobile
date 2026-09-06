@@ -10,6 +10,6 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export async function fetchProductById(id: string): Promise<Product | null> {
   await delay(300);
-  const found = MOCK_PRODUCTS.find(p => p.id === id);
+  const found = MOCK_PRODUCTS.find(p => p.slug === id);
   return found ?? null;
 }
