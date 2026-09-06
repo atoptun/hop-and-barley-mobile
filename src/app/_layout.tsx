@@ -61,7 +61,7 @@ export default function RootLayout() {
             name="(modals)/filters"
             options={{
               presentation: 'modal',
-              animation: 'slide_from_bottom',
+              animation: 'slide_from_left',
             }}
           />
 

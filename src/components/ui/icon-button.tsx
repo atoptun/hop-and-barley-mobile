@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
 import { ThemeColors } from '@/context/theme-context';
 import { ThemedIcon, IconName } from '@/components/ui/themed-icon';
 
@@ -7,16 +7,18 @@ export interface IconButtonProps {
   iconSize?: number;
   iconColor?: ThemeColors;
   onPress: VoidFunction;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function IconButton({
   iconName,
-  iconSize = 22,
+  iconSize = 24,
   iconColor = 'primary',
   onPress,
+  style,
 }: IconButtonProps) {
   return (
-    <Pressable onPress={onPress} hitSlop={8} style={styles.button}>
+    <Pressable onPress={onPress} hitSlop={8} style={[styles.button, style]}>
       <ThemedIcon name={iconName} size={iconSize} color={iconColor} />
     </Pressable>
   );
