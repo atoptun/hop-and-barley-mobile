@@ -1,10 +1,15 @@
-import { ThemedText } from '@/components/ui/themed-text';
-import { View } from 'react-native';
+import { CheckoutView } from '@/components/features/cart/checkout-view';
+import { useRouter } from 'expo-router';
 
 export default function CheckoutScreen() {
-  return (
-    <View style={{ flex: 1 }}>
-      <ThemedText variant="h1">Checkout screen</ThemedText>
-    </View>
-  );
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.back();
+  };
+
+  const handleContinue = () => {
+    router.replace('/(drawer)/(tabs)/store');
+  };
+  return <CheckoutView onClose={handleClose} onContinue={handleContinue} />;
 }

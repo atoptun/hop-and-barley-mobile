@@ -45,8 +45,15 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" />
 
           <Stack.Screen name="(drawer)" />
-          {/* <Stack.Screen name="(tabs)" /> */}
 
+          {/* Cart */}
+          <Stack.Screen
+            name="(modals)/cart"
+            options={{
+              presentation: 'modal',
+              animation: 'slide_from_left',
+            }}
+          />
           {/* Product details */}
           <Stack.Screen
             name="(modals)/product/[id]"

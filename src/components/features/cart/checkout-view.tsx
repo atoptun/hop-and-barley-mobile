@@ -1,40 +1,31 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { ModalHeader } from '../modals/modal-header';
+import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { Spacing } from '@/constants/theme';
-import { ThemedText } from '@/components/ui/themed-text';
 
-export interface CartViewProps {
-  onCheckout?: VoidFunction;
+export interface CheckoutViewProps {
+  onContinue?: VoidFunction;
   onClose?: VoidFunction;
 }
 
-export function CartView({ onCheckout, onClose }: CartViewProps) {
+export function CheckoutView({ onClose, onContinue }: CheckoutViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
-  const totalPrice = 40;
-  const isCartEmpty = false;
-
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <ModalHeader title="Cart" onClosePress={onClose} />
+      <ModalHeader title="Checkout" onClosePress={onClose} />
       <View style={styles.content}>
-        <ThemedText variant="h3">CartView</ThemedText>
+        <ThemedText variant="h3">Checkout view</ThemedText>
       </View>
       <View style={styles.footer}>
-        <View style={styles.total}>
-          <ThemedText variant="bodyM" color="textSecondary">
-            Total
-          </ThemedText>
-          <ThemedText variant="h3" color="textPrimary">{`$ ${totalPrice.toFixed(2)}`}</ThemedText>
-        </View>
-        <ThemedButton title="Checkout" onPress={onCheckout} disabled={isCartEmpty} />
+        <ThemedButton title="Continue" onPress={onContinue} />
       </View>
     </View>
   );
@@ -56,12 +47,6 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
       paddingTop: Spacing.three,
       paddingHorizontal: Spacing.six,
       paddingBottom: Math.min(Spacing.six, insets.bottom),
-    },
-    total: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingHorizontal: Spacing.three,
-      paddingVertical: Spacing.two,
     },
     text: {
       color: colors.textPrimary,

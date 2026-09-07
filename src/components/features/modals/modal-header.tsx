@@ -6,7 +6,7 @@ import { IconButton } from '@/components/ui/icon-button';
 
 export interface HeaderProps {
   title: string;
-  onClosePress: VoidFunction;
+  onClosePress?: VoidFunction;
   titleStyle?: StyleProp<TextStyle>;
 }
 
@@ -14,13 +14,19 @@ export function ModalHeader({ title, onClosePress, titleStyle }: HeaderProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
+  const handleClose = () => {
+    if (onClosePress) {
+      onClosePress();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <IconButton
         iconName="chevron-left"
         iconColor="primary"
         iconSize={36}
-        onPress={onClosePress}
+        onPress={handleClose}
         style={styles.closeButton}
       />
       <ThemedText variant="h3" color="textPrimary" style={titleStyle}>
@@ -39,8 +45,8 @@ const createStyles = (colors: Theme) =>
       justifyContent: 'center',
       paddingVertical: Spacing.five,
       paddingHorizontal: Spacing.four,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.borderSecondary,
+      // borderBottomWidth: 1,
+      // borderBottomColor: colors.borderSecondary,
     },
     closeButton: {
       position: 'absolute',

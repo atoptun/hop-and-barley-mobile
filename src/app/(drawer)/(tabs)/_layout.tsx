@@ -1,9 +1,10 @@
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { useTheme } from '@/context/theme-context';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 
 export default function TabsLayout() {
   const { colors } = useTheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -29,15 +30,23 @@ export default function TabsLayout() {
           },
         }}
       />
+
       <Tabs.Screen
-        name="cart"
+        name="cart-tab"
         options={{
           title: 'Cart',
           tabBarIcon: ({ color, focused }) => {
             return <ThemedIcon name={focused ? 'cart' : 'cart-outline'} customColor={color} />;
           },
         }}
+        listeners={{
+          tabPress: e => {
+            e.preventDefault();
+            router.push('/(modals)/cart');
+          },
+        }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
