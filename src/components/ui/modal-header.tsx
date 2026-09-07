@@ -1,18 +1,20 @@
-import { View, StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { View, StyleSheet, StyleProp, TextStyle, ViewProps } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 import { Spacing } from '@/constants/theme';
 import { ThemedText } from '@/components/ui/themed-text';
 import { IconButton } from '@/components/ui/icon-button';
 
-export interface HeaderProps {
+export interface HeaderProps extends ViewProps {
   title: string;
   onClosePress?: VoidFunction;
   titleStyle?: StyleProp<TextStyle>;
 }
 
-export function ModalHeader({ title, onClosePress, titleStyle }: HeaderProps) {
+export function ModalHeader({ title, onClosePress, titleStyle, ...props }: HeaderProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+
+  const { style: viewStyle, ...restViewProps } = props;
 
   const handleClose = () => {
     if (onClosePress) {
@@ -21,7 +23,7 @@ export function ModalHeader({ title, onClosePress, titleStyle }: HeaderProps) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, viewStyle]} {...restViewProps}>
       <IconButton
         iconName="chevron-left"
         iconColor="primary"

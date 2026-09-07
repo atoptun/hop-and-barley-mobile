@@ -11,7 +11,13 @@ export default function AuthLayout() {
       <Stack.Screen name="login" />
       <Stack.Screen name="register" />
       <Stack.Screen name="confirm-code" />
-      <Stack.Screen name="recovery-password" />
+      <Stack.Screen
+        name="recovery-password"
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_right',
+        }}
+      />
     </Stack>
   );
 }

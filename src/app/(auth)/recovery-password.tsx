@@ -11,5 +11,9 @@ export default function RecoveryPasswordScreen() {
     router.replace('/(auth)/login');
   };
 
-  return <RecoveryPasswordView onSubmit={handleSubmit} />;
+  const handleClose = () => {
+    router.back();
+  };
+
+  return <RecoveryPasswordView onSubmit={handleSubmit} onClose={handleClose} />;
 }

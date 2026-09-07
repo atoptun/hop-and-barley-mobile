@@ -1,4 +1,5 @@
 import { PasswordInput } from '@/components/ui/password-input';
+import { SafeKeyboardView } from '@/components/ui/safe-keyboard-view';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedInput } from '@/components/ui/themed-input';
@@ -8,10 +9,12 @@ import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { LoginData } from '@/types/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { z } from 'zod';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const IMAGE_HEIGHT = Math.round(SCREEN_HEIGHT * 0.28);
 
 const loginSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -44,83 +47,84 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <ScrollView>
-        <ThemedImage source={require('@/assets/images/login.jpg')} style={styles.image} />
+    <SafeKeyboardView
+      useSafeArea={false}
+      statusBarStyle="light"
+      scrollContentStyles={styles.container}
+    >
+      <ThemedImage source={require('@/assets/images/login.jpg')} style={styles.image} />
 
-        <View style={styles.content}>
-          <ThemedText variant="h1">Welcome!</ThemedText>
-          <View style={styles.form}>
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <ThemedInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  placeholder="Email Address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  errorMessage={value && errors.email?.message}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <PasswordInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  placeholder="Password"
-                  title=""
-                  errorMessage={value && errors.password?.message}
-                />
-              )}
-            />
-            <ThemedLink variant="actionM" href={'/(auth)/recovery-password'} style={{}}>
-              Forgot password?
-            </ThemedLink>
-          </View>
-
-          <View style={styles.actions}>
-            <ThemedButton title="Login" onPress={handleSubmit(onSubmit)} disabled={isSubmitting} />
-            <ThemedText variant="bodyS" color="textSecondary" style={{ textAlign: 'center' }}>
-              Not a member?{' '}
-              <ThemedLink variant="actionM" href={'/(auth)/register'}>
-                Register now
-              </ThemedLink>
-            </ThemedText>
-            <ThemedButton
-              title="Continue as Guest"
-              variant="ghost"
-              onPress={() => {
-                onGuest();
-              }}
-              style={{ paddingVertical: 0 }}
-            />
-          </View>
+      <View style={styles.content}>
+        <ThemedText variant="h1">Welcome!</ThemedText>
+        <View style={styles.form}>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <ThemedInput
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Email Address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                errorMessage={value && errors.email?.message}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <PasswordInput
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Password"
+                title=""
+                errorMessage={value && errors.password?.message}
+              />
+            )}
+          />
+          <ThemedLink variant="actionM" href={'/(auth)/recovery-password'} style={{}}>
+            Forgot password?
+          </ThemedLink>
         </View>
-      </ScrollView>
-    </View>
+
+        <View style={styles.actions}>
+          <ThemedButton title="Login" onPress={handleSubmit(onSubmit)} disabled={isSubmitting} />
+          <ThemedText variant="bodyS" color="textSecondary" style={{ textAlign: 'center' }}>
+            Not a member?{' '}
+            <ThemedLink variant="actionM" href={'/(auth)/register'}>
+              Register now
+            </ThemedLink>
+          </ThemedText>
+          <ThemedButton
+            title="Continue as Guest"
+            variant="ghost"
+            onPress={() => {
+              onGuest();
+            }}
+            style={{ paddingVertical: 0 }}
+          />
+        </View>
+      </View>
+    </SafeKeyboardView>
   );
 }
 
 const createStyles = (colors: Theme) =>
   StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: colors.background,
+      paddingTop: 0,
+      paddingHorizontal: 0,
     },
     image: {
-      height: '100%',
+      width: '100%',
+      height: IMAGE_HEIGHT,
     },
     content: {
-      // flex: 1,
       gap: Spacing.six,
       padding: Spacing.six,
       paddingTop: Spacing.ten,

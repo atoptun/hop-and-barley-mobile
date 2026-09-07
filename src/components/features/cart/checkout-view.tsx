@@ -1,11 +1,11 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { ModalHeader } from '../modals/modal-header';
-import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedButton } from '@/components/ui/themed-button';
+import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ModalHeader } from '../../ui/modal-header';
 
 export interface CheckoutViewProps {
   onContinue?: VoidFunction;

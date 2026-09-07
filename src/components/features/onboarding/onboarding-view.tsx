@@ -1,15 +1,17 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedButton } from '@/components/ui/themed-button';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Spacing } from '@/constants/theme';
 import { PaginationDots } from '@/components/ui/pagination-dots';
 import { ThemedImage } from '@/components/ui/themed-image';
-import { OnboardingStep } from '@/types/onboarding';
 import { ONBOARDING_STEPS } from '@/data/onboarding-steps';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const IMAGE_HEIGHT = Math.round(SCREEN_HEIGHT * 0.5);
 
 export interface OnboardingViewProps {
   onFinish: (isSkip: boolean) => void;
@@ -17,8 +19,8 @@ export interface OnboardingViewProps {
 
 export function OnboardingView({ onFinish }: OnboardingViewProps) {
   const { colors } = useTheme();
-  const styles = createStyles(colors);
   const insets = useSafeAreaInsets();
+  const styles = createStyles(colors, insets);
   const [curStepIndex, setCurStepIndex] = useState(0);
 
   const steps = ONBOARDING_STEPS;
@@ -38,57 +40,68 @@ export function OnboardingView({ onFinish }: OnboardingViewProps) {
   return (
     <View style={[styles.container]}>
       <StatusBar style="inverted" />
-      <View style={styles.imageContainer}>
-        <ThemedImage source={steps[curStepIndex].image} style={styles.image} />
-      </View>
-      <View style={styles.contentContainer}>
+      {/* <View style={styles.imageContainer}>
+      </View> */}
+      <ThemedImage source={steps[curStepIndex].image} transition={300} style={styles.image} />
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <PaginationDots total={steps.length} activeIndex={curStepIndex} />
         <ThemedText variant="h1" color="textPrimary">
           {steps[curStepIndex].title}
         </ThemedText>
         <ThemedText variant="bodyM">{steps[curStepIndex].text}</ThemedText>
-        <View style={styles.actionsContainer}>
+      </ScrollView>
+      <View style={styles.actions}>
+        <ThemedButton
+          title={curStepIndex < steps.length - 1 ? 'Next' : 'Get started'}
+          onPress={handleNextPress}
+        />
+        {curStepIndex < steps.length - 1 && (
           <ThemedButton
-            title={curStepIndex < steps.length - 1 ? 'Next' : 'Get started'}
-            onPress={handleNextPress}
+            title="Skip for now"
+            variant="ghost"
+            style={styles.skipButton}
+            onPress={handleSkipPress}
           />
-          {curStepIndex < steps.length - 1 && (
-            <ThemedButton
-              title="Skip for now"
-              variant="ghost"
-              style={styles.skipButton}
-              onPress={handleSkipPress}
-            />
-          )}
-        </View>
+        )}
       </View>
     </View>
   );
 }
 
-const createStyles = (colors: Theme) =>
+const createStyles = (colors: Theme, insets: EdgeInsets) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      gap: Spacing.three,
       backgroundColor: colors.background,
     },
     imageContainer: {
-      flex: 2,
+      // flex: 2,
+      height: IMAGE_HEIGHT,
     },
     image: {
-      flex: 1,
+      // flex: 1,
+      width: '100%',
+      height: IMAGE_HEIGHT,
     },
-    contentContainer: {
+    scrollContainer: {
       flex: 1,
+      paddingTop: Spacing.six,
+    },
+    scrollContent: {
+      flexGrow: 1,
       gap: Spacing.four,
-      padding: Spacing.six,
+      paddingHorizontal: Spacing.six,
+      paddingBottom: Spacing.six,
     },
-    actionsContainer: {
+    actions: {
       gap: 10,
-    },
-    text: {
-      color: colors.textPrimary,
+      paddingHorizontal: Spacing.six,
+      paddingTop: Spacing.four,
+      paddingBottom: Math.max(Spacing.six, insets.bottom + Spacing.four),
     },
     skipButton: {
       paddingVertical: 0,

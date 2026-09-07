@@ -1,14 +1,14 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { z } from 'zod';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
+import { ModalHeader } from '@/components/ui/modal-header';
+import { SafeKeyboardView } from '@/components/ui/safe-keyboard-view';
+import { ThemedButton } from '@/components/ui/themed-button';
+import { ThemedInput } from '@/components/ui/themed-input';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
-import { ThemedInput } from '@/components/ui/themed-input';
-import { ThemedButton } from '@/components/ui/themed-button';
+import { Theme, useTheme } from '@/context/theme-context';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { z } from 'zod';
 
 const recoverySchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -18,9 +18,10 @@ type RecoveryFormValues = z.infer<typeof recoverySchema>;
 
 export interface RecoveryPasswordViewProps {
   onSubmit: (email: string) => Promise<void>;
+  onClose?: VoidFunction;
 }
 
-export function RecoveryPasswordView({ onSubmit }: RecoveryPasswordViewProps) {
+export function RecoveryPasswordView({ onSubmit, onClose }: RecoveryPasswordViewProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
@@ -41,54 +42,48 @@ export function RecoveryPasswordView({ onSubmit }: RecoveryPasswordViewProps) {
   };
 
   return (
-    <SafeAreaView style={styles.saveArea}>
-      <StatusBar style="auto" />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <ThemedText variant="h3">Recovery password</ThemedText>
-            <ThemedText variant="bodyS" color="textSecondary">
-              Enter your email and we send you a letter with instructions.
-            </ThemedText>
-          </View>
-          <View style={styles.form}>
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <ThemedInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  title="Email Address"
-                  placeholder="name@email.com"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  errorMessage={errors.email?.message}
-                />
-              )}
-            />
-          </View>
-          <View style={styles.actions}>
-            <ThemedButton title="Sent" disabled={isSubmitting} onPress={handleSubmit(submit)} />
-          </View>
+    <SafeKeyboardView scrollContentStyles={styles.container}>
+      <ModalHeader title="Recovery password" onClosePress={onClose} />
+      <View style={styles.content}>
+        {/* <ThemedText variant="h3">Recovery password</ThemedText> */}
+        <ThemedText variant="bodyS" color="textSecondary">
+          Enter your email and we send you a letter with instructions.
+        </ThemedText>
+        <View style={styles.form}>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <ThemedInput
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                title="Email Address"
+                placeholder="name@email.com"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                errorMessage={errors.email?.message}
+              />
+            )}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.actions}>
+          <ThemedButton title="Sent" disabled={isSubmitting} onPress={handleSubmit(submit)} />
+        </View>
+      </View>
+    </SafeKeyboardView>
   );
 }
 
 const createStyles = (colors: Theme) =>
   StyleSheet.create({
-    saveArea: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
     container: {
-      flex: 1,
-      padding: Spacing.six,
+      paddingHorizontal: 0,
+    },
+    content: {
       gap: Spacing.six,
+      paddingHorizontal: Spacing.six,
     },
     header: {
       gap: Spacing.two,

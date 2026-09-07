@@ -25,7 +25,6 @@ export function ProductDetailsView({ productId, onClose }: ProductDetailsViewPro
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {/* <ModalHeader title="" onClosePress={onClose} /> */}
       <IconButton
         iconName="close"
         iconColor="primary"

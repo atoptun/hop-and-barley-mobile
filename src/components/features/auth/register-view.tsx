@@ -1,4 +1,5 @@
 import { PasswordInput } from '@/components/ui/password-input';
+import { SafeKeyboardView } from '@/components/ui/safe-keyboard-view';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedCheckbox } from '@/components/ui/themed-checkbox';
 import { ThemedInput } from '@/components/ui/themed-input';
@@ -8,10 +9,8 @@ import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { RegisterData } from '@/types/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
 const registerSchema = z
@@ -72,136 +71,126 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="auto" />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <ThemedText variant="h3">Sign up</ThemedText>
-            <ThemedText variant="bodyS" color="textSecondary">
-              Create an account to get started{' '}
-            </ThemedText>
-          </View>
-          <View style={styles.form}>
-            <Controller
-              control={control}
-              name="name"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <ThemedInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  title="Name"
-                  placeholder="Name"
-                  autoCapitalize="words"
-                  autoCorrect={false}
-                  keyboardType="default"
-                  errorMessage={errors.name?.message}
-                />
-              )}
+    <SafeKeyboardView scrollContentStyles={styles.content}>
+      <View style={styles.header}>
+        <ThemedText variant="h3">Sign up</ThemedText>
+        <ThemedText variant="bodyS" color="textSecondary">
+          Create an account to get started{' '}
+        </ThemedText>
+      </View>
+      <View style={styles.form}>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <ThemedInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              title="Name"
+              placeholder="Name"
+              autoCapitalize="words"
+              autoCorrect={false}
+              keyboardType="default"
+              errorMessage={errors.name?.message}
             />
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <ThemedInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  title="Email Address"
-                  placeholder="name@email.com"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  errorMessage={errors.email?.message}
-                />
-              )}
+          )}
+        />
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <ThemedInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              title="Email Address"
+              placeholder="name@email.com"
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
+              errorMessage={errors.email?.message}
             />
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <PasswordInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  title="Password"
-                  placeholder="Create a password"
-                  errorMessage={errors.password?.message}
-                />
-              )}
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <PasswordInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              title="Password"
+              placeholder="Create a password"
+              errorMessage={errors.password?.message}
             />
-            <Controller
-              control={control}
-              name="confirmPassword"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <PasswordInput
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  title=""
-                  placeholder="Confirm password"
-                  errorMessage={errors.confirmPassword?.message}
-                />
-              )}
+          )}
+        />
+        <Controller
+          control={control}
+          name="confirmPassword"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <PasswordInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              title=""
+              placeholder="Confirm password"
+              errorMessage={errors.confirmPassword?.message}
             />
-            <Controller
-              control={control}
-              name="agreeTerms"
-              render={({ field: { value, onChange, onBlur } }) => (
-                <ThemedCheckbox
-                  value={value}
-                  onChange={onChange}
-                  label={
-                    <ThemedText variant="bodyS" color="textSecondary">
-                      I&apos;ve read and agree with the{' '}
-                      <ThemedText variant="actionM" color="primary">
-                        Terms and Conditions
-                      </ThemedText>{' '}
-                      and the{' '}
-                      <ThemedText variant="actionM" color="primary">
-                        Privacy Policy
-                      </ThemedText>
-                      .
-                    </ThemedText>
-                  }
-                  errorMessage={errors.agreeTerms?.message}
-                />
-              )}
+          )}
+        />
+        <Controller
+          control={control}
+          name="agreeTerms"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <ThemedCheckbox
+              value={value}
+              onChange={onChange}
+              label={
+                <ThemedText variant="bodyS" color="textSecondary">
+                  I&apos;ve read and agree with the{' '}
+                  <ThemedText variant="actionM" color="primary">
+                    Terms and Conditions
+                  </ThemedText>{' '}
+                  and the{' '}
+                  <ThemedText variant="actionM" color="primary">
+                    Privacy Policy
+                  </ThemedText>
+                  .
+                </ThemedText>
+              }
+              errorMessage={errors.agreeTerms?.message}
             />
-          </View>
-          <View style={styles.actions}>
-            <ThemedButton title="Register" disabled={isSubmitting} onPress={handleSubmit(submit)} />
-            <ThemedText variant="bodyS" color="textSecondary" style={{ textAlign: 'center' }}>
-              I already have account.{' '}
-              <ThemedLink variant="actionM" href={'/(auth)/login'}>
-                Log in
-              </ThemedLink>
-            </ThemedText>
-            <ThemedButton
-              title="Continue as Guest"
-              variant="ghost"
-              onPress={() => {
-                onGuest();
-              }}
-              style={{ paddingVertical: 0 }}
-            />
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          )}
+        />
+      </View>
+      <View style={styles.actions}>
+        <ThemedButton title="Register" disabled={isSubmitting} onPress={handleSubmit(submit)} />
+        <ThemedText variant="bodyS" color="textSecondary" style={{ textAlign: 'center' }}>
+          I already have account.{' '}
+          <ThemedLink variant="actionM" href={'/(auth)/login'}>
+            Log in
+          </ThemedLink>
+        </ThemedText>
+        <ThemedButton
+          title="Continue as Guest"
+          variant="ghost"
+          onPress={() => {
+            onGuest();
+          }}
+          style={{ paddingVertical: 0 }}
+        />
+      </View>
+    </SafeKeyboardView>
   );
 }
 
 const createStyles = (colors: Theme) =>
   StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    container: {
+    content: {
       gap: Spacing.six,
-      padding: Spacing.six,
     },
     header: {
       gap: Spacing.two,
