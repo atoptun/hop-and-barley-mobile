@@ -2,4 +2,6 @@
 
 Example of navigation in video on Youtube
 
-[https://www.youtube.com/watch?v=KbXAUirEKT0](https://www.youtube.com/watch?v=KbXAUirEKT0)
+<a href="https://www.youtube.com/watch?v=KbXAUirEKT0" target="_blank">
+  ▶ Watch on YouTube
+</a>
