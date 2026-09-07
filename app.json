@@ -7,6 +7,11 @@
     "icon": "./assets/images/icon.png",
     "scheme": "hopandbarleymobile",
     "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#00000000",
+      "translucent": true
+    },
     "ios": {
       "icon": "./assets/expo.icon"
     },
