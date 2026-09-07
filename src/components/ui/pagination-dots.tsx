@@ -1,5 +1,5 @@
-import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { useTheme } from '@/context/theme-context';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface PaginationDotsProps {
   total: number;
@@ -16,7 +16,7 @@ export function PaginationDots({
   gap = 12,
   style,
 }: PaginationDotsProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
 
   return (
     <View style={[styles.container, { gap }, style]}>

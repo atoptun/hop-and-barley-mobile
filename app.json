@@ -7,6 +7,11 @@
     "icon": "./assets/images/icon.png",
     "scheme": "hopandbarleymobile",
     "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#00000000",
+      "translucent": true
+    },
     "ios": {
       "icon": "./assets/expo.icon"
     },
@@ -14,9 +19,6 @@
       "package": "com.atoptun_team.hop_and_barley_app",
       "adaptiveIcon": {
         "backgroundColor": "#7EB076"
-        // "foregroundImage": "./assets/images/android-icon-foreground.png",
-        // "backgroundImage": "./assets/images/android-icon-background.png",
-        // "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -35,7 +37,8 @@
         }
       ],
       "expo-secure-store",
-      "expo-font"
+      "expo-font",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,10 +1,10 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedLink } from '@/components/ui/themed-link';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Theme, useTheme } from '@/context/theme-context';
+import { StyleSheet, View } from 'react-native';
 
 export function LinkExamples() {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (

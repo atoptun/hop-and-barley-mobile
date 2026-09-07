@@ -1,15 +1,11 @@
-import { useCallback } from 'react';
-import { FlatList, StyleSheet, ListRenderItemInfo } from 'react-native';
 import { Divider } from '@/components/ui/divider';
-import { ProductListItem } from './product-list-item';
 import { Product } from '@/types/product';
-
-export interface ProductItemData extends Product {
-  quantity: number;
-}
+import { useCallback } from 'react';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { ProductListItem } from './product-list-item';
 
 export interface ProductListProps {
-  products: ProductItemData[];
+  products: Product[];
   onProductPress?: (id: string) => void;
   onAdd?: (id: string) => void;
   onIncrement?: (id: string) => void;
@@ -32,24 +28,19 @@ export function ProductList({
   ListEmptyComponent,
 }: ProductListProps) {
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ProductItemData>) => (
+    ({ item }: ListRenderItemInfo<Product>) => (
       <ProductListItem
-        title={item.title}
-        subtitle={item.subtitle}
-        price={item.price}
-        currency={item.currency ?? '€'}
-        image={item.image}
-        quantity={item.quantity}
-        onPress={onProductPress ? () => onProductPress(item.id) : undefined}
-        onAdd={onAdd ? () => onAdd(item.id) : undefined}
-        onIncrement={onIncrement ? () => onIncrement(item.id) : undefined}
-        onDecrement={onDecrement ? () => onDecrement(item.id) : undefined}
+        product={item}
+        onPress={onProductPress ? () => onProductPress(item.slug) : undefined}
+        onAdd={onAdd ? () => onAdd(item.slug) : undefined}
+        onIncrement={onIncrement ? () => onIncrement(item.slug) : undefined}
+        onDecrement={onDecrement ? () => onDecrement(item.slug) : undefined}
       />
     ),
     [onProductPress, onAdd, onIncrement, onDecrement]
   );
 
-  const keyExtractor = useCallback((item: ProductItemData) => item.id, []);
+  const keyExtractor = useCallback((item: Product) => item.slug, []);
 
   const renderSeparator = useCallback(() => <Divider marginVertical={SEPARATOR_MARGIN} />, []);
 

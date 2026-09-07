@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import * as SecureStore from 'expo-secure-store';
+import * as SystemUI from 'expo-system-ui';
 import { Colors, Theme, ThemeColors, ColorKey } from '@/constants/theme';
+import { Platform, StatusBar } from 'react-native';
 
 export type { Theme, ThemeColors, ColorKey };
 
@@ -41,6 +43,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const activeScheme = themeMode === 'system' ? deviceScheme : themeMode;
   const theme: 'light' | 'dark' = activeScheme === 'dark' ? 'dark' : 'light';
   const colors = Colors[theme];
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync(colors.background);
+
+    if (Platform.OS === 'android') {
+      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor('transparent');
+      StatusBar.setBarStyle(isDark ? 'light-content' : 'dark-content', true);
+    }
+  }, [isDark, colors.background]);
 
   if (!isReady) return null;
 
@@ -50,7 +63,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         theme,
         themeMode,
         colors,
-        isDark: theme === 'dark',
+        isDark,
         setThemeMode,
       }}
     >
@@ -64,7 +77,7 @@ export function useTheme() {
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return context.colors;
+  return { colors: context.colors };
 }
 
 export function useThemeController() {

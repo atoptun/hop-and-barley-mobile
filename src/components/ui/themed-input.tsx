@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import {
-  View,
-  TextInput,
-  TextInputProps,
-  StyleSheet,
-  Pressable,
-  ViewStyle,
-  StyleProp,
-} from 'react-native';
-import { useTheme } from '@/context/theme-context';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Typography } from '@/constants/typography';
+import { useTheme } from '@/context/theme-context';
+import { useState } from 'react';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 export interface ThemedInputProps extends Omit<TextInputProps, 'style'> {
   title?: string;
@@ -41,7 +41,7 @@ export function ThemedInput({
   placeholderTextColor,
   ...props
 }: ThemedInputProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
   const hasError = Boolean(isError || errorMessage);
@@ -57,16 +57,6 @@ export function ThemedInput({
   const getBackgroundColor = () => {
     if (isDisabled) return colors.backgroundSecondary;
     return colors.background;
-  };
-
-  const handleFocus = (e: any) => {
-    setIsFocused(true);
-    onFocus?.(e);
-  };
-
-  const handleBlur = (e: any) => {
-    setIsFocused(false);
-    onBlur?.(e);
   };
 
   return (
@@ -108,12 +98,18 @@ export function ThemedInput({
         <TextInput
           editable={editable}
           value={value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={e => {
+            setIsFocused(true);
+            onFocus?.(e);
+          }}
+          onBlur={e => {
+            setIsFocused(false);
+            onBlur?.(e);
+          }}
           placeholderTextColor={placeholderTextColor ?? colors.textSecondary}
           style={[
             styles.input,
-            Typography.bodyL,
+            Typography.bodyM,
             {
               color: isDisabled ? colors.textSecondary : colors.textPrimary,
             },

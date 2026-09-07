@@ -1,18 +1,13 @@
-import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { ImageSource } from 'expo-image';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedCounter } from '@/components/ui/themed-counter';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
+import { Product } from '@/types/product';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
-  title: string;
-  subtitle?: string;
-  price: number;
-  currency?: string;
-  image: string | number | ImageSource;
-  quantity?: number;
+  product: Product;
   onPress?: () => void;
   onAdd?: () => void;
   onIncrement?: () => void;
@@ -21,22 +16,17 @@ export interface ProductCardProps {
 }
 
 export function ProductCard({
-  title,
-  subtitle,
-  price,
-  currency = '€',
-  image,
-  quantity = 0,
+  product,
   onPress,
   onAdd,
   onIncrement,
   onDecrement,
   style,
 }: ProductCardProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const formattedPrice = `${currency} ${price.toFixed(2)}`;
+  const formattedPrice = `${product.price.toFixed(2)}`;
 
   return (
     <Pressable
@@ -53,7 +43,7 @@ export function ProductCard({
     >
       {/* Image */}
       <ThemedImage
-        source={typeof image === 'string' ? { uri: image } : image}
+        source={typeof product.image === 'string' ? { uri: product.image } : product.image}
         style={styles.image}
         contentFit="cover"
         transition={200}
@@ -64,11 +54,11 @@ export function ProductCard({
         {/* Header */}
         <View style={styles.header}>
           <ThemedText variant="h5" color="textPrimary" numberOfLines={1}>
-            {title}
+            {product.name}
           </ThemedText>
-          {Boolean(subtitle) && (
+          {Boolean(product.price_tag) && (
             <ThemedText variant="bodyS" color="textSecondary" numberOfLines={1}>
-              {subtitle}
+              {product.price_tag}
             </ThemedText>
           )}
         </View>
@@ -76,11 +66,11 @@ export function ProductCard({
         {/* Footer */}
         <View style={styles.footer}>
           {/*Actions */}
-          {quantity === 0 ? (
+          {product.quantity === 0 ? (
             <ThemedButton title="Add" iconName="plus" onPress={onAdd} style={styles.addButton} />
           ) : (
             <ThemedCounter
-              quantity={quantity}
+              quantity={product.quantity}
               onIncrement={onIncrement}
               onDecrement={onDecrement}
             />

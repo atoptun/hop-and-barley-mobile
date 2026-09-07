@@ -1,5 +1,5 @@
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { Theme, useTheme } from '@/context/theme-context';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface DividerProps {
   marginVertical?: number;
@@ -7,7 +7,7 @@ export interface DividerProps {
 }
 
 export function Divider({ marginVertical = 16, style }: DividerProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (

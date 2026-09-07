@@ -11,7 +11,7 @@ const MODES: { label: string; value: ThemeMode }[] = [
 
 export const ThemeSelector = () => {
   const { themeMode, setThemeMode } = useThemeController();
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (

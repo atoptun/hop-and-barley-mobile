@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { ThemedText } from './themed-text';
+import { Theme, useTheme } from '@/context/theme-context';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { ThemedIcon } from './themed-icon';
+import { ThemedText } from './themed-text';
 
 export interface ThemedCounterProps {
   quantity?: number;
@@ -10,7 +10,7 @@ export interface ThemedCounterProps {
 }
 
 export function ThemedCounter({ quantity = 0, onIncrement, onDecrement }: ThemedCounterProps) {
-  const colors = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
 
   return (
