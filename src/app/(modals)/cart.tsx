@@ -8,9 +8,9 @@ export default function CartScreen() {
     router.push('/(modals)/checkout');
   };
 
-  const onClose = () => {
+  const handleClose = () => {
     router.back();
   };
 
-  return <CartView onCheckout={handleCheckout} onClose={onClose} />;
+  return <CartView onCheckout={handleCheckout} onClose={handleClose} />;
 }
