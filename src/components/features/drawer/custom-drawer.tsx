@@ -1,10 +1,18 @@
 import { ThemedText } from '@/components/ui/themed-text';
+import { Theme, useTheme } from '@/context/theme-context';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from 'expo-router/drawer';
 import { StyleSheet, View } from 'react-native';
 
 export function CustomDrawerContent(props: any) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={styles.drawerContainer}
+      style={{ backgroundColor: colors.background }}
+    >
       {/* Header */}
       <View style={styles.profileHeader}>
         <ThemedText variant="h3">Lucas Scott</ThemedText>
@@ -20,7 +28,7 @@ export function CustomDrawerContent(props: any) {
       <View style={styles.footer}>
         <DrawerItem
           label="Log out"
-          labelStyle={{ color: '#D32F2F' }}
+          labelStyle={{ color: colors.error }}
           onPress={() => {
             // logout
           }}
@@ -30,20 +38,22 @@ export function CustomDrawerContent(props: any) {
   );
 }
 
-const styles = StyleSheet.create({
-  drawerContainer: {
-    flex: 1,
-  },
-  profileHeader: {
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0',
-    marginBottom: 10,
-  },
-  footer: {
-    marginTop: 'auto',
-    borderTopWidth: 1,
-    borderTopColor: '#E2E8F0',
-    paddingTop: 10,
-  },
-});
+const createStyles = (colors: Theme) =>
+  StyleSheet.create({
+    drawerContainer: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    profileHeader: {
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSecondary,
+      marginBottom: 10,
+    },
+    footer: {
+      marginTop: 'auto',
+      borderTopWidth: 1,
+      borderTopColor: colors.borderSecondary,
+      paddingTop: 10,
+    },
+  });

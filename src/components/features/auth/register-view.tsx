@@ -174,14 +174,9 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
             Log in
           </ThemedLink>
         </ThemedText>
-        <ThemedButton
-          title="Continue as Guest"
-          variant="ghost"
-          onPress={() => {
-            onGuest();
-          }}
-          style={{ paddingVertical: 0 }}
-        />
+        <ThemedLink onPress={onGuest} style={styles.guestLink}>
+          Continue as Guest
+        </ThemedLink>
       </View>
     </SafeKeyboardView>
   );
@@ -200,5 +195,8 @@ const createStyles = (colors: Theme) =>
     },
     actions: {
       gap: Spacing.three,
+    },
+    guestLink: {
+      textAlign: 'center',
     },
   });

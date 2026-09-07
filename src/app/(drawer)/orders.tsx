@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 
-export interface OrdersScreenProps {}
-
-export default function OrdersScreen({}: OrdersScreenProps) {
+export default function OrdersScreen() {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 

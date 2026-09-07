@@ -9,6 +9,7 @@ import { PaginationDots } from '@/components/ui/pagination-dots';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ONBOARDING_STEPS } from '@/data/onboarding-steps';
 import { useState } from 'react';
+import { ThemedLink } from '@/components/ui/themed-link';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const IMAGE_HEIGHT = Math.round(SCREEN_HEIGHT * 0.5);
@@ -60,12 +61,9 @@ export function OnboardingView({ onFinish }: OnboardingViewProps) {
           onPress={handleNextPress}
         />
         {curStepIndex < steps.length - 1 && (
-          <ThemedButton
-            title="Skip for now"
-            variant="ghost"
-            style={styles.skipButton}
-            onPress={handleSkipPress}
-          />
+          <ThemedLink onPress={handleSkipPress} style={styles.skipButton}>
+            Skip for now
+          </ThemedLink>
         )}
       </View>
     </View>
@@ -104,6 +102,6 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
       paddingBottom: Math.max(Spacing.six, insets.bottom + Spacing.four),
     },
     skipButton: {
-      paddingVertical: 0,
+      textAlign: 'center',
     },
   });
