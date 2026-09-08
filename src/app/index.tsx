@@ -1,4 +1,4 @@
-import { Redirect, SplashScreen } from 'expo-router';
+import { Redirect, router, SplashScreen } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/store';

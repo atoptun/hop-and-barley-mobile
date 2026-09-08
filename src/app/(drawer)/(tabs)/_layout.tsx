@@ -1,10 +1,9 @@
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { useTheme } from '@/context/theme-context';
-import { Tabs, useRouter } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 
 export default function TabsLayout() {
   const { colors } = useTheme();
-  const router = useRouter();
 
   return (
     <Tabs
