@@ -1,13 +1,13 @@
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StoreHeader } from './store-header';
+import { StoreHeader } from '@/components/features/store/store-header';
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ProductList } from '@/components/features/catalog/product-list';
 import { useProducts } from '@/hooks/use-products';
 import { Spacing } from '@/constants/theme';
-import { ErrorLoad } from '@/components/ui/error-load';
+import { ErrorLoad } from '@/components/common/error-load';
 
 export interface StoreViewProps {
   onProductPress: (productId: string) => void;

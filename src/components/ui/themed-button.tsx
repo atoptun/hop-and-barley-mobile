@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { ThemedText } from './themed-text';
+import { ThemedText } from '@/components/ui/themed-text';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost';
 

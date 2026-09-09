@@ -2,7 +2,7 @@ import { Divider } from '@/components/ui/divider';
 import { Product } from '@/types/product';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { ProductListItem } from './product-list-item';
+import { ProductListItem } from '@/components/features/catalog/product-list-item';
 
 export interface ProductListProps {
   products: Product[];

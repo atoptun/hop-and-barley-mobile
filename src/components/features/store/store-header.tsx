@@ -1,5 +1,5 @@
+import { SearchInput } from '@/components/common/search-input';
 import { IconButton } from '@/components/ui/icon-button';
-import { SearchInput } from '@/components/ui/search-input';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useNavigation } from 'expo-router';

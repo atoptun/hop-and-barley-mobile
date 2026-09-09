@@ -1,4 +1,4 @@
-import { OtpInput } from '@/components/ui/otp-input';
+import { OtpInput } from '@/components/common/otp-input';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';

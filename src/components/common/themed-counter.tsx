@@ -1,7 +1,7 @@
 import { Theme, useTheme } from '@/context/theme-context';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { ThemedIcon } from './themed-icon';
-import { ThemedText } from './themed-text';
+import { ThemedIcon } from '@/components/ui/themed-icon';
+import { ThemedText } from '@/components/ui/themed-text';
 
 export interface ThemedCounterProps {
   quantity?: number;

@@ -1,9 +1,9 @@
 import { View, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
 import { Spacing } from '@/constants/theme';
-import { ThemedIcon } from './themed-icon';
-import { ThemedText } from './themed-text';
-import { ThemedButton } from './themed-button';
+import { ThemedIcon } from '@/components/ui/themed-icon';
+import { ThemedText } from '@/components/ui/themed-text';
+import { ThemedButton } from '@/components/ui/themed-button';
 
 export interface ErrorLoadProps {
   error?: string;

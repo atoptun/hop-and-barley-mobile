@@ -1,5 +1,5 @@
+import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { PasswordInput } from '@/components/ui/password-input';
-import { SafeKeyboardView } from '@/components/ui/safe-keyboard-view';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedInput } from '@/components/ui/themed-input';

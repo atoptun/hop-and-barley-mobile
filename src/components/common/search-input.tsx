@@ -1,6 +1,6 @@
 import { Theme, useTheme } from '@/context/theme-context';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { ThemedIcon } from './themed-icon';
+import { ThemedIcon } from '@/components/ui/themed-icon';
 
 export interface SearchInputProps {
   value: string;

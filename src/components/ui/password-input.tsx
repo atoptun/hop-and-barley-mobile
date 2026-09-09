@@ -1,7 +1,7 @@
 import { useTheme } from '@/context/theme-context';
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
-import { ThemedInput, ThemedInputProps } from './themed-input';
+import { ThemedInput, ThemedInputProps } from '@/components/ui/themed-input';
 
 export type PasswordInputProps = Omit<
   ThemedInputProps,

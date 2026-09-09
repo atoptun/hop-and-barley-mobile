@@ -5,7 +5,7 @@ import { Theme, useTheme } from '@/context/theme-context';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ModalHeader } from '../../ui/modal-header';
+import { ModalHeader } from '@/components/common/modal-header';
 
 export interface FiltersViewProps {
   onClose: VoidFunction;

@@ -1,15 +1,15 @@
+import { ErrorLoad } from '@/components/common/error-load';
+import { ThemedCounter } from '@/components/common/themed-counter';
+import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
 import { IconButton } from '@/components/ui/icon-button';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProductDetails } from '@/hooks/use-product-details';
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProductDetailsCard } from '../catalog/product-details-card';
-import { useState } from 'react';
-import { ThemedCounter } from '@/components/ui/themed-counter';
-import { ErrorLoad } from '@/components/ui/error-load';
 
 export interface ProductDetailsViewProps {
   slug: string;

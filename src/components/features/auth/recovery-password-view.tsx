@@ -1,5 +1,5 @@
-import { ModalHeader } from '@/components/ui/modal-header';
-import { SafeKeyboardView } from '@/components/ui/safe-keyboard-view';
+import { ModalHeader } from '@/components/common/modal-header';
+import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedInput } from '@/components/ui/themed-input';
 import { ThemedText } from '@/components/ui/themed-text';
