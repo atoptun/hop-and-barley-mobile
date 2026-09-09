@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { useTheme, useThemeController, ThemeMode } from '@/context/theme-context';
 import { Theme } from '@/constants/theme';
+import { ThemedText } from '@/components/ui/themed-text';
 
 const MODES: { label: string; value: ThemeMode }[] = [
   { label: 'Light', value: 'light' },
@@ -16,7 +17,9 @@ export const ThemeSelector = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Appearance</Text>
+      <ThemedText variant="actionL" color="textPrimary" style={styles.title}>
+        Appearance
+      </ThemedText>
       <View style={styles.toggleRow}>
         {MODES.map(item => {
           const isSelected = themeMode === item.value;
@@ -26,9 +29,12 @@ export const ThemeSelector = () => {
               onPress={() => setThemeMode(item.value)}
               style={[styles.optionButton, isSelected && styles.optionButtonActive]}
             >
-              <Text style={[styles.optionText, isSelected && styles.optionTextActive]}>
+              <ThemedText
+                variant={isSelected ? 'actionS' : 'bodyS'}
+                color={isSelected ? 'textOnPrimary' : 'textSecondary'}
+              >
                 {item.label}
-              </Text>
+              </ThemedText>
             </Pressable>
           );
         })}
@@ -40,15 +46,9 @@ export const ThemeSelector = () => {
 const createStyles = (colors: Theme) =>
   StyleSheet.create({
     container: {
-      padding: 16,
-      backgroundColor: colors.surface,
-      borderRadius: 12,
-      marginVertical: 8,
+      paddingVertical: 8,
     },
-    sectionTitle: {
-      fontSize: 16,
-      fontWeight: '600',
-      color: colors.textPrimary,
+    title: {
       marginBottom: 12,
     },
     toggleRow: {
@@ -65,14 +65,5 @@ const createStyles = (colors: Theme) =>
     },
     optionButtonActive: {
       backgroundColor: colors.primary,
-    },
-    optionText: {
-      fontSize: 14,
-      fontWeight: '500',
-      color: colors.textSecondary,
-    },
-    optionTextActive: {
-      color: colors.textOnPrimary,
-      fontWeight: '600',
     },
   });

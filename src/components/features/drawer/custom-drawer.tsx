@@ -1,3 +1,4 @@
+import { ThemeSelector } from '@/components/common/theme-selector';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from 'expo-router/drawer';
@@ -22,10 +23,16 @@ export function CustomDrawerContent(props: any) {
       </View>
 
       {/* Routes */}
-      <DrawerItemList {...props} />
+      <View style={styles.routes}>
+        <DrawerItemList {...props} />
+      </View>
 
       {/* Footer */}
       <View style={styles.footer}>
+        <View style={styles.themeSelector}>
+          <ThemeSelector />
+        </View>
+
         <DrawerItem
           label="Log out"
           labelStyle={{ color: colors.error }}
@@ -50,10 +57,18 @@ const createStyles = (colors: Theme) =>
       borderBottomColor: colors.borderSecondary,
       marginBottom: 10,
     },
+    routes: {
+      flex: 1,
+    },
     footer: {
       marginTop: 'auto',
       borderTopWidth: 1,
       borderTopColor: colors.borderSecondary,
-      paddingTop: 10,
+      paddingTop: 12,
+      paddingBottom: 8,
+    },
+    themeSelector: {
+      paddingHorizontal: 16,
+      marginBottom: 4,
     },
   });
