@@ -6,10 +6,7 @@ import { ProductListItem } from './product-list-item';
 
 export interface ProductListProps {
   products: Product[];
-  onProductPress?: (id: string) => void;
-  onAdd?: (id: string) => void;
-  onIncrement?: (id: string) => void;
-  onDecrement?: (id: string) => void;
+  onProductPress?: (slug: string) => void;
   ListHeaderComponent?: React.ReactElement;
   ListEmptyComponent?: React.ReactElement;
 }
@@ -21,9 +18,6 @@ const TOTAL_ROW_HEIGHT = ITEM_HEIGHT + SEPARATOR_MARGIN * 2;
 export function ProductList({
   products,
   onProductPress,
-  onAdd,
-  onIncrement,
-  onDecrement,
   ListHeaderComponent,
   ListEmptyComponent,
 }: ProductListProps) {
@@ -32,12 +26,9 @@ export function ProductList({
       <ProductListItem
         product={item}
         onPress={onProductPress ? () => onProductPress(item.slug) : undefined}
-        onAdd={onAdd ? () => onAdd(item.slug) : undefined}
-        onIncrement={onIncrement ? () => onIncrement(item.slug) : undefined}
-        onDecrement={onDecrement ? () => onDecrement(item.slug) : undefined}
       />
     ),
-    [onProductPress, onAdd, onIncrement, onDecrement]
+    [onProductPress]
   );
 
   const keyExtractor = useCallback((item: Product) => item.slug, []);

@@ -2,8 +2,8 @@ import { StoreView } from '@/components/features/store/store-view';
 import { router } from 'expo-router';
 
 export default function StoreScreen() {
-  const handleProductPress = (productId: string) => {
-    router.push({ pathname: '/(modals)/product/[id]', params: { id: productId } });
+  const handleProductPress = (productSlug: string) => {
+    router.push({ pathname: '/(modals)/product/[slug]', params: { slug: productSlug } });
   };
 
   const handleFilterPress = () => {

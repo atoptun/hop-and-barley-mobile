@@ -1,26 +1,49 @@
-import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { Spacing } from '@/constants/theme';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedButton } from '@/components/ui/themed-button';
-import { ProductDetailsCard } from '../catalog/product-details-card';
-import { useProductDetails } from '@/hooks/use-product-details';
 import { IconButton } from '@/components/ui/icon-button';
+import { ThemedButton } from '@/components/ui/themed-button';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
+import { useProductDetails } from '@/hooks/use-product-details';
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ProductDetailsCard } from '../catalog/product-details-card';
+import { useState } from 'react';
+import { ThemedCounter } from '@/components/ui/themed-counter';
 
 export interface ProductDetailsViewProps {
-  productId: string;
+  slug: string;
   onClose: VoidFunction;
 }
 
-export function ProductDetailsView({ productId, onClose }: ProductDetailsViewProps) {
+export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
-  const { product, isLoading, error } = useProductDetails(productId);
+  const [quantity, setQuantity] = useState(0);
+
+  const { product, isLoading, error } = useProductDetails(slug);
 
   const styles = createStyles(colors, insets);
+
+  const handleAdd = (slug: string) => {
+    console.info('Add product to cart: ', slug);
+    if (product?.stock! > 0) {
+      setQuantity(1);
+    }
+  };
+  const handleIncrement = (slug: string) => {
+    console.info('Inc product in cart: ', slug);
+    if (quantity < product?.stock!) {
+      setQuantity(prev => prev + 1);
+    }
+  };
+  const handleDecrement = (slug: string) => {
+    console.info('Dec product in cart: ', slug);
+    if (quantity > 0) {
+      setQuantity(prev => prev - 1);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -36,7 +59,7 @@ export function ProductDetailsView({ productId, onClose }: ProductDetailsViewPro
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        {isLoading && <ActivityIndicator />}
+        {isLoading && <ActivityIndicator size={'large'} />}
         {error && (
           <ThemedText style={styles.error}>
             Something went wrong{'\n'} ({error}).
@@ -45,15 +68,25 @@ export function ProductDetailsView({ productId, onClose }: ProductDetailsViewPro
         {product && <ProductDetailsCard product={product!} />}
       </ScrollView>
       <View style={styles.actions}>
-        <ThemedButton
-          title="Add to cart"
-          variant="primary"
-          disabled={!product}
-          iconName={'plus'}
-          iconSize={22}
-          style={styles.button}
-          onPress={() => {}}
-        />
+        {quantity === 0 ? (
+          <ThemedButton
+            title="Add to cart"
+            variant="primary"
+            disabled={!product}
+            iconName={'plus'}
+            iconSize={22}
+            style={styles.button}
+            onPress={() => {
+              handleAdd(product?.slug!);
+            }}
+          />
+        ) : (
+          <ThemedCounter
+            quantity={quantity}
+            onIncrement={() => handleIncrement(product?.slug!)}
+            onDecrement={() => handleDecrement(product?.slug!)}
+          />
+        )}
       </View>
     </View>
   );
@@ -87,10 +120,12 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
     },
     actions: {
       flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
       width: '100%',
       paddingHorizontal: Spacing.six,
       paddingTop: Spacing.three,
-      paddingBottom: Math.max(insets.bottom, Spacing.four),
+      paddingBottom: Math.max(insets.bottom, insets.bottom + Spacing.four),
       // gap: 48,
       // borderTopWidth: 1,
       // borderTopColor: colors.borderSecondary ?? '#E2E8F0',

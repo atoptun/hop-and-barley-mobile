@@ -1,12 +1,12 @@
 import { ProductDetailsView } from '@/components/features/modals/product-details-view';
-import { useLocalSearchParams, router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 export default function ProductDetailsScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { slug } = useLocalSearchParams<{ slug: string }>();
 
   const handleClose = () => {
     router.back();
   };
 
-  return <ProductDetailsView productId={id} onClose={handleClose} />;
+  return <ProductDetailsView slug={slug} onClose={handleClose} />;
 }
