@@ -18,7 +18,7 @@ export function useProductDetails(slug: string) {
         // throw Error('Connection error')
         setData(item);
       } catch {
-        setError('Load product error');
+        setError('Something went wrong.\nTry later...');
       } finally {
         setIsLoading(false);
       }

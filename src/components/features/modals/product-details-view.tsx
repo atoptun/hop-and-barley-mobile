@@ -10,6 +10,7 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductDetailsCard } from '../catalog/product-details-card';
 import { useState } from 'react';
 import { ThemedCounter } from '@/components/ui/themed-counter';
+import { ErrorLoad } from '@/components/ui/error-load';
 
 export interface ProductDetailsViewProps {
   slug: string;
@@ -45,6 +46,10 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
     }
   };
 
+  const handleReload = () => {
+    console.info('Reload product');
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -54,19 +59,25 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
         onPress={onClose}
         style={styles.closeButton}
       />
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        {isLoading && <ActivityIndicator size={'large'} />}
-        {error && (
-          <ThemedText style={styles.error}>
-            Something went wrong{'\n'} ({error}).
-          </ThemedText>
-        )}
-        {product && <ProductDetailsCard product={product!} />}
-      </ScrollView>
+      {isLoading && (
+        <View style={styles.centered}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      )}
+      {error && (
+        <View style={styles.centered}>
+          <ErrorLoad error={error} onReloadPress={handleReload} />
+        </View>
+      )}
+      {product && (
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <ProductDetailsCard product={product!} />
+        </ScrollView>
+      )}
       <View style={styles.actions}>
         {quantity === 0 ? (
           <ThemedButton
@@ -106,6 +117,13 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
       top: insets.top,
       backgroundColor: colors.backgroundSecondary,
       zIndex: 100,
+    },
+    centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: Spacing.six,
+      paddingTop: insets.top,
     },
     error: {
       alignSelf: 'center',

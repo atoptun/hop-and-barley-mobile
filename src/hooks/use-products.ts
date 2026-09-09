@@ -14,9 +14,10 @@ export function useProducts() {
 
       try {
         const items = await fetchProducts();
+
         setData(items);
       } catch {
-        setError('Load products error');
+        setError('Something went wrong.\nTry later...');
       } finally {
         setIsLoading(false);
       }
