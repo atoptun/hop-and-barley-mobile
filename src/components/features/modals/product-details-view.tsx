@@ -1,6 +1,5 @@
 import { IconButton } from '@/components/ui/icon-button';
 import { ThemedButton } from '@/components/ui/themed-button';
-import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProductDetails } from '@/hooks/use-product-details';
@@ -59,17 +58,15 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
         onPress={onClose}
         style={styles.closeButton}
       />
-      {isLoading && (
+      {isLoading ? (
         <View style={styles.centered}>
-          <ActivityIndicator size={'large'} />
+          <ActivityIndicator size={'large'} color={colors.primary} />
         </View>
-      )}
-      {error && (
+      ) : error ? (
         <View style={styles.centered}>
           <ErrorLoad error={error} onReloadPress={handleReload} />
         </View>
-      )}
-      {product && (
+      ) : (
         <ScrollView
           style={styles.content}
           contentContainerStyle={styles.contentContainer}
@@ -78,27 +75,29 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
           <ProductDetailsCard product={product!} />
         </ScrollView>
       )}
-      <View style={styles.actions}>
-        {quantity === 0 ? (
-          <ThemedButton
-            title="Add to cart"
-            variant="primary"
-            disabled={!product}
-            iconName={'plus'}
-            iconSize={22}
-            style={styles.button}
-            onPress={() => {
-              handleAdd(product?.slug!);
-            }}
-          />
-        ) : (
-          <ThemedCounter
-            quantity={quantity}
-            onIncrement={() => handleIncrement(product?.slug!)}
-            onDecrement={() => handleDecrement(product?.slug!)}
-          />
-        )}
-      </View>
+      {product && (
+        <View style={styles.actions}>
+          {quantity === 0 ? (
+            <ThemedButton
+              title="Add to cart"
+              variant="primary"
+              disabled={!product}
+              iconName={'plus'}
+              iconSize={22}
+              style={styles.button}
+              onPress={() => {
+                handleAdd(product?.slug!);
+              }}
+            />
+          ) : (
+            <ThemedCounter
+              quantity={quantity}
+              onIncrement={() => handleIncrement(product?.slug!)}
+              onDecrement={() => handleDecrement(product?.slug!)}
+            />
+          )}
+        </View>
+      )}
     </View>
   );
 }

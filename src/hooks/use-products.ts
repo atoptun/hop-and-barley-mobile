@@ -14,7 +14,7 @@ export function useProducts() {
 
       try {
         const items = await fetchProducts();
-
+        // throw new Error("test error");
         setData(items);
       } catch {
         setError('Something went wrong.\nTry later...');
