@@ -1,5 +1,5 @@
 import { ConfirmCodeView } from '@/components/features/auth/confirm-code-view';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 import { useState } from 'react';
 
 type ConfirmRouteParams = {
@@ -7,7 +7,6 @@ type ConfirmRouteParams = {
 };
 
 export default function AuthConfirmScreen() {
-  const router = useRouter();
   const { email } = useLocalSearchParams<ConfirmRouteParams>();
 
   const [isLoading, setIsLoading] = useState(false);

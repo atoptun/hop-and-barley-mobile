@@ -1,9 +1,7 @@
 import { CheckoutView } from '@/components/features/cart/checkout-view';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 
 export default function CheckoutScreen() {
-  const router = useRouter();
-
   const handleClose = () => {
     router.back();
   };

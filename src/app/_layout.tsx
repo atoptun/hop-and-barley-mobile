@@ -56,7 +56,7 @@ export default function RootLayout() {
           />
           {/* Product details */}
           <Stack.Screen
-            name="(modals)/product/[id]"
+            name="(modals)/product/[slug]"
             options={{
               presentation: 'card',
               animation: 'slide_from_right',

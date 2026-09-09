@@ -4,34 +4,44 @@ import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
 import { Product } from '@/types/product';
+import { useState } from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
   product: Product;
-  onPress?: () => void;
-  onAdd?: () => void;
-  onIncrement?: () => void;
-  onDecrement?: () => void;
+  onPress?: (slug: string) => void;
   style?: StyleProp<ViewStyle>;
 }
 
-export function ProductCard({
-  product,
-  onPress,
-  onAdd,
-  onIncrement,
-  onDecrement,
-  style,
-}: ProductCardProps) {
+export function ProductCard({ product, onPress, style }: ProductCardProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const formattedPrice = `${product.price.toFixed(2)}`;
+  const [quantity, setQuantity] = useState(0);
+
+  const handleAdd = (slug: string) => {
+    console.info('Add product to cart: ', slug);
+    setQuantity(1);
+  };
+  const handleIncrement = (slug: string) => {
+    console.info('Inc product in cart: ', slug);
+    if (quantity < product.stock) {
+      setQuantity(prev => prev + 1);
+    }
+  };
+  const handleDecrement = (slug: string) => {
+    console.info('Dec product in cart: ', slug);
+    if (quantity > 0) {
+      setQuantity(prev => prev - 1);
+    }
+  };
+
+  const formattedPrice = `$ ${product.price.toFixed(2)}`;
 
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={onPress}
+      onPress={() => (onPress ? onPress(product.slug) : undefined)}
       disabled={!onPress}
       style={({ pressed }) => [
         styles.card,
@@ -66,13 +76,18 @@ export function ProductCard({
         {/* Footer */}
         <View style={styles.footer}>
           {/*Actions */}
-          {product.quantity === 0 ? (
-            <ThemedButton title="Add" iconName="plus" onPress={onAdd} style={styles.addButton} />
+          {quantity === 0 ? (
+            <ThemedButton
+              title="Add"
+              iconName="plus"
+              onPress={() => handleAdd(product.slug)}
+              style={styles.addButton}
+            />
           ) : (
             <ThemedCounter
-              quantity={product.quantity}
-              onIncrement={onIncrement}
-              onDecrement={onDecrement}
+              quantity={quantity}
+              onIncrement={() => handleIncrement(product.slug)}
+              onDecrement={() => handleDecrement(product.slug)}
             />
           )}
 
