@@ -11,6 +11,10 @@ export interface AuthResponse {
   token: string;
 }
 
+export interface LogoutResponse {
+  result: boolean;
+}
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const authApi = {
@@ -35,6 +39,8 @@ export const authApi = {
 
   login: async (credentials: LoginData): Promise<AuthResponse> => {
     await delay(1000);
+
+    console.info(`Login data: ${JSON.stringify(credentials)}`);
 
     if (credentials.password === 'wrongpassword') {
       throw new Error('Wrong credentials');
@@ -61,10 +67,10 @@ export const authApi = {
     };
   },
 
-  logout: async (token: string): Promise<boolean> => {
+  logout: async (token: string): Promise<LogoutResponse> => {
     await delay(500);
     if (!token) throw new Error('Unauthorized');
 
-    return true;
+    return { result: true };
   },
 };

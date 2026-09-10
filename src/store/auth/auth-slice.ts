@@ -1,10 +1,9 @@
 import { User } from '@/api/auth-service';
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { loginThunk, logoutThunk, registerThunk, restoreSessionThunk } from './operations';
+import { loginThunk, logoutThunk, registerThunk, restoreSessionThunk } from './auth-thunks';
 
 interface AuthState {
   user: User | null;
-  token: string | null;
   isGuest: boolean;
   isLoading: boolean;
   isRestoringToken: boolean;
@@ -13,7 +12,6 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
   isGuest: false,
   isLoading: false,
   isRestoringToken: true,
@@ -32,17 +30,16 @@ export const authSlice = createSlice({
     builder
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.token = payload.token;
         state.isGuest = false;
       })
+
       .addCase(registerThunk.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.token = payload.token;
         state.isGuest = false;
       })
-      .addCase(logoutThunk.fulfilled, (state, { payload }) => {
+
+      .addCase(logoutThunk.fulfilled, state => {
         state.user = null;
-        state.token = null;
         state.error = null;
         state.isGuest = true;
       })
@@ -50,11 +47,11 @@ export const authSlice = createSlice({
       .addCase(restoreSessionThunk.pending, state => {
         state.isRestoringToken = true;
       })
+
       .addCase(restoreSessionThunk.fulfilled, (state, { payload }) => {
         state.isRestoringToken = false;
         if (payload) {
-          state.user = payload.user;
-          state.token = payload.token;
+          state.user = payload;
           state.isGuest = false;
         }
       })
@@ -71,7 +68,7 @@ export const authSlice = createSlice({
       })
       .addMatcher(isRejected, (state, { error }) => {
         state.isLoading = false;
-        state.error = error as string;
+        state.error = error.message || null;
       });
   },
 });

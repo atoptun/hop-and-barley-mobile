@@ -8,6 +8,7 @@ import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { LoginData } from '@/types/auth';
+import { hasErrorMessage } from '@/utils/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
@@ -35,6 +36,8 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
   const {
     control,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -43,7 +46,15 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
   });
 
   const onSubmit = async ({ email, password }: LoginFormValues) => {
-    await onLogin({ email, password });
+    clearErrors('root');
+    try {
+      await onLogin({ email, password });
+    } catch (error) {
+      setError('root', {
+        type: 'server',
+        message: hasErrorMessage(error) ? error.message : 'Login filed',
+      });
+    }
   };
 
   return (
@@ -87,6 +98,9 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
               />
             )}
           />
+
+          {errors.root?.message && <ThemedText color="error">{errors.root.message}</ThemedText>}
+
           <ThemedLink variant="actionM" href={'/(auth)/recovery-password'} style={{}}>
             Forgot password?
           </ThemedLink>

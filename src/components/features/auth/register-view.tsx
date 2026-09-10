@@ -8,6 +8,7 @@ import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { RegisterData } from '@/types/auth';
+import { hasErrorMessage } from '@/utils/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
@@ -48,6 +49,8 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
   const {
     control,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -62,12 +65,20 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
   });
 
   const submit = async ({ name, email, password, confirmPassword }: RegisterFormValues) => {
-    await onRegister({
-      name,
-      email,
-      password,
-      confirmPassword,
-    });
+    clearErrors();
+    try {
+      await onRegister({
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+    } catch (error) {
+      setError('root', {
+        type: 'server',
+        message: hasErrorMessage(error) ? error.message : 'Registration error',
+      });
+    }
   };
 
   return (
@@ -165,6 +176,8 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
             />
           )}
         />
+
+        {errors.root?.message && <ThemedText color="error">{errors.root.message}</ThemedText>}
       </View>
       <View style={styles.actions}>
         <ThemedButton title="Register" disabled={isSubmitting} onPress={handleSubmit(submit)} />

@@ -1,7 +1,7 @@
 import { ThemeSelector } from '@/components/common/theme-selector';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectUser } from '@/store/auth/selectors';
+import { selectUser } from '@/store/auth/auth-selectors';
 import { router } from 'expo-router';
 import {
   DrawerContentComponentProps,
@@ -12,7 +12,16 @@ import {
 import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export function CustomDrawerContent(props: DrawerContentComponentProps) {
+interface CustomDrawerContentProps extends DrawerContentComponentProps {
+  onLoginPress?: VoidFunction;
+  onLogouPress?: VoidFunction;
+}
+
+export function CustomDrawerContent({
+  onLoginPress,
+  onLogouPress,
+  ...props
+}: CustomDrawerContentProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
@@ -50,7 +59,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             label="Log out"
             labelStyle={{ color: colors.error }}
             onPress={() => {
-              // logout
+              onLogouPress && onLogouPress();
             }}
           />
         ) : (
@@ -58,7 +67,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             label="Log in"
             labelStyle={{ color: colors.primary }}
             onPress={() => {
-              router.push('/(auth)/login');
+              onLoginPress && onLoginPress();
             }}
           />
         )}
