@@ -1,12 +1,22 @@
 import { ThemeSelector } from '@/components/common/theme-selector';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { DrawerContentScrollView, DrawerItem, DrawerItemList } from 'expo-router/drawer';
+import { selectUser } from '@/store/auth/selectors';
+import { router } from 'expo-router';
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+} from 'expo-router/drawer';
 import { StyleSheet, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
-export function CustomDrawerContent(props: any) {
+export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+
+  const user = useSelector(selectUser);
 
   return (
     <DrawerContentScrollView
@@ -16,10 +26,12 @@ export function CustomDrawerContent(props: any) {
     >
       {/* Header */}
       <View style={styles.profileHeader}>
-        <ThemedText variant="h3">Lucas Scott</ThemedText>
-        <ThemedText variant="bodyS" color="textSecondary">
-          lucasscott3@email.com
-        </ThemedText>
+        <ThemedText variant="h3">{user?.name || 'Guest'}</ThemedText>
+        {user && (
+          <ThemedText variant="bodyS" color="textSecondary">
+            {user?.email || ''}
+          </ThemedText>
+        )}
       </View>
 
       {/* Routes */}
@@ -33,13 +45,23 @@ export function CustomDrawerContent(props: any) {
           <ThemeSelector />
         </View>
 
-        <DrawerItem
-          label="Log out"
-          labelStyle={{ color: colors.error }}
-          onPress={() => {
-            // logout
-          }}
-        />
+        {user ? (
+          <DrawerItem
+            label="Log out"
+            labelStyle={{ color: colors.error }}
+            onPress={() => {
+              // logout
+            }}
+          />
+        ) : (
+          <DrawerItem
+            label="Log in"
+            labelStyle={{ color: colors.primary }}
+            onPress={() => {
+              router.push('/(auth)/login');
+            }}
+          />
+        )}
       </View>
     </DrawerContentScrollView>
   );
@@ -56,6 +78,9 @@ const createStyles = (colors: Theme) =>
       borderBottomWidth: 1,
       borderBottomColor: colors.borderSecondary,
       marginBottom: 10,
+    },
+    login: {
+      marginLeft: 20,
     },
     routes: {
       flex: 1,

@@ -10,6 +10,8 @@ import {
 import { ThemeProvider } from '@/context/theme-context';
 import { Stack, SplashScreen } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 if (__DEV__) {
   import('../../ReactotronConfig');
@@ -37,51 +39,53 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(onboarding)" />
-          <Stack.Screen name="(auth)" />
+    <Provider store={store}>
+      <ThemeProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(onboarding)" />
+            <Stack.Screen name="(auth)" />
 
-          <Stack.Screen name="(drawer)" />
+            <Stack.Screen name="(drawer)" />
 
-          {/* Cart */}
-          <Stack.Screen
-            name="(modals)/cart"
-            options={{
-              presentation: 'modal',
-              animation: 'slide_from_left',
-            }}
-          />
-          {/* Product details */}
-          <Stack.Screen
-            name="(modals)/product/[slug]"
-            options={{
-              presentation: 'card',
-              animation: 'slide_from_right',
-            }}
-          />
+            {/* Cart */}
+            <Stack.Screen
+              name="(modals)/cart"
+              options={{
+                presentation: 'modal',
+                animation: 'slide_from_left',
+              }}
+            />
+            {/* Product details */}
+            <Stack.Screen
+              name="(modals)/product/[slug]"
+              options={{
+                presentation: 'card',
+                animation: 'slide_from_right',
+              }}
+            />
 
-          {/* Filters */}
-          <Stack.Screen
-            name="(modals)/filters"
-            options={{
-              presentation: 'modal',
-              animation: 'slide_from_left',
-            }}
-          />
+            {/* Filters */}
+            <Stack.Screen
+              name="(modals)/filters"
+              options={{
+                presentation: 'modal',
+                animation: 'slide_from_left',
+              }}
+            />
 
-          {/* Checkout */}
-          <Stack.Screen
-            name="(modals)/checkout"
-            options={{
-              presentation: 'card',
-              animation: 'slide_from_right',
-            }}
-          />
-        </Stack>
-      </GestureHandlerRootView>
-    </ThemeProvider>
+            {/* Checkout */}
+            <Stack.Screen
+              name="(modals)/checkout"
+              options={{
+                presentation: 'card',
+                animation: 'slide_from_right',
+              }}
+            />
+          </Stack>
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </Provider>
   );
 }
