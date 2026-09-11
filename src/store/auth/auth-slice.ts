@@ -14,7 +14,7 @@ const initialState: AuthState = {
   user: null,
   isGuest: false,
   isLoading: false,
-  isRestoringToken: true,
+  isRestoringToken: false,
   error: null,
 };
 

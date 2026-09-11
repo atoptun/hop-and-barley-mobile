@@ -13,15 +13,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import authReducer from '@/store/auth/auth-slice';
 import cartReducer from '@/store/cart/cart-slice';
+import reactotron from '@/config/reactotron';
+
+const authPersistConfig = {
+  key: 'auth',
+  storage: AsyncStorage,
+  whitelist: ['user'],
+  // blacklist: ['isLoading', 'error'],
+};
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'cart'],
+  whitelist: ['cart'],
 };
 
 const rootReducer = combineReducers({
-  auth: authReducer,
+  auth: persistReducer(authPersistConfig, authReducer),
   cart: cartReducer,
 });
 
@@ -35,6 +43,12 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  enhancers: getDefaultEnhancers => {
+    if (__DEV__ && reactotron.createEnhancer) {
+      return getDefaultEnhancers().concat(reactotron.createEnhancer());
+    }
+    return getDefaultEnhancers();
+  },
 });
 
 export const persistor = persistStore(store);

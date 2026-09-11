@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SystemUI from 'expo-system-ui';
 import { Colors, Theme, ThemeColors, ColorKey } from '@/constants/theme';
 import { Platform, StatusBar } from 'react-native';
@@ -17,7 +17,7 @@ interface ThemeContextValue {
   setThemeMode: (mode: ThemeMode) => void;
 }
 
-const STORAGE_KEY = 'settings-theme_mode';
+const STORAGE_KEY = 'settings:theme_mode';
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
@@ -27,17 +27,37 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    SecureStore.getItemAsync(STORAGE_KEY).then((saved: string | null) => {
-      if (saved === 'light' || saved === 'dark' || saved === 'system') {
-        setModeState(saved);
+    let ignore = false;
+
+    async function loadTheme() {
+      try {
+        const saved = await AsyncStorage.getItem(STORAGE_KEY);
+        if (!ignore && (saved === 'light' || saved === 'dark' || saved === 'system')) {
+          setModeState(saved);
+        }
+      } catch (error) {
+        console.warn('Failed to load theme from storage', error);
+      } finally {
+        if (!ignore) {
+          setIsReady(true);
+        }
       }
-      setIsReady(true);
-    });
+    }
+
+    loadTheme();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const setThemeMode = async (mode: ThemeMode) => {
     setModeState(mode);
-    await SecureStore.setItemAsync(STORAGE_KEY, mode);
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, mode);
+    } catch (error) {
+      console.warn('Failed to save theme to storage', error);
+    }
   };
 
   const activeScheme = themeMode === 'system' ? deviceScheme : themeMode;

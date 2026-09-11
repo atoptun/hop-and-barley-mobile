@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 if (__DEV__) {
-  import('../../ReactotronConfig');
+  import('@/config/reactotron');
 }
 
 SplashScreen.preventAutoHideAsync();
