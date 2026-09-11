@@ -4,27 +4,32 @@ import { useEffect, useState } from 'react';
 
 export function useProductDetails(slug: string) {
   const [data, setData] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let ignore = false;
+
     const load = async () => {
       setIsLoading(true);
       setError(null);
-      setData(null);
 
       try {
         const item = await fetchProductBySlug(slug);
         // throw Error('Connection error')
-        setData(item);
+        if (!ignore) setData(item);
       } catch {
-        setError('Something went wrong.\nTry later...');
+        if (!ignore) setError('Something went wrong.\nTry later...');
       } finally {
-        setIsLoading(false);
+        if (!ignore) setIsLoading(false);
       }
     };
 
     void load();
+
+    return () => {
+      ignore = true;
+    };
   }, [slug]);
 
   return {

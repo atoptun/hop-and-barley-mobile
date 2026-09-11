@@ -15,5 +15,7 @@ export const selectCartTotalPrice = createSelector([selectCartItemsList], items 
   items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 );
 
-export const selectItemQuantity = (slug: string) => (state: RootState) =>
-  state.cart.items[slug]?.quantity ?? 0;
+export const selectItemQuantity = (slug?: string | null) => (state: RootState) => {
+  if (!slug) return 0;
+  return state.cart.items[slug]?.quantity ?? 0;
+};
