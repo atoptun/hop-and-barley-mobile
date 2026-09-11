@@ -6,6 +6,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ModalHeader } from '@/components/common/modal-header';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectCartItemsList, selectCartTotalPrice } from '@/store/cart/cart-selectors';
+import { ProductList } from '../catalog/product-list';
 
 export interface CartViewProps {
   onCheckout?: VoidFunction;
@@ -17,15 +20,16 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
-  const totalPrice = 40;
-  const isCartEmpty = false;
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectCartItemsList);
+  const totalPrice = useAppSelector(selectCartTotalPrice);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <ModalHeader title="Cart" onClosePress={onClose} />
       <View style={styles.content}>
-        <ThemedText variant="h3">CartView</ThemedText>
+        <ProductList products={cartItems} />
       </View>
       <View style={styles.footer}>
         <View style={styles.total}>
@@ -34,7 +38,7 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
           </ThemedText>
           <ThemedText variant="h3" color="textPrimary">{`$ ${totalPrice.toFixed(2)}`}</ThemedText>
         </View>
-        <ThemedButton title="Checkout" onPress={onCheckout} disabled={isCartEmpty} />
+        <ThemedButton title="Checkout" onPress={onCheckout} disabled={cartItems.length === 0} />
       </View>
     </View>
   );
@@ -49,13 +53,13 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
     },
     content: {
       flex: 1,
-      padding: Spacing.six,
+      // padding: Spacing.six,
     },
     footer: {
       gap: Spacing.four,
       paddingTop: Spacing.three,
       paddingHorizontal: Spacing.six,
-      paddingBottom: Math.min(Spacing.six, insets.bottom),
+      paddingBottom: Math.max(Spacing.six, insets.bottom + Spacing.four),
     },
     total: {
       flexDirection: 'row',

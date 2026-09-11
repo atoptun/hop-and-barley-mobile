@@ -6,11 +6,11 @@ import { Theme, useTheme } from '@/context/theme-context';
 import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { Product } from '@/types/product';
+import { Product, ProductCardItem } from '@/types/product';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
-  product: Product;
+  product: ProductCardItem;
   onPress?: (slug: string) => void;
   style?: StyleProp<ViewStyle>;
 }

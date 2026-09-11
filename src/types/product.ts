@@ -15,6 +15,16 @@ export interface Product {
   description: string;
 }
 
-export interface ProductItem extends Product {
-  quantity: number;
+// export interface ProductCardItem extends Product {
+//   quantity: number;
+// }
+
+export interface ProductCardItem {
+  slug: string;
+  name: string;
+  price: number;
+  image: string | number | ImageSource;
+  price_tag: string;
+  stock: number;
+  // quantity: number;
 }

@@ -1,5 +1,5 @@
 import { CartItem } from '@/types/cart';
-import { Product } from '@/types/product';
+import { Product, ProductCardItem } from '@/types/product';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {
@@ -14,7 +14,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<Product>) => {
+    addToCart: (state, action: PayloadAction<ProductCardItem>) => {
       const product = action.payload;
       const existing = state.items[product.slug];
       if (existing) {
@@ -26,6 +26,7 @@ export const cartSlice = createSlice({
           price: product.price,
           image: product.image,
           price_tag: product.price_tag,
+          stock: product.stock,
           quantity: 1,
         };
       }

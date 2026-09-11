@@ -1,11 +1,11 @@
 import { Divider } from '@/components/ui/divider';
-import { Product } from '@/types/product';
+import { Product, ProductCardItem } from '@/types/product';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { ProductListItem } from '@/components/features/catalog/product-list-item';
 
 export interface ProductListProps {
-  products: Product[];
+  products: ProductCardItem[];
   onProductPress?: (slug: string) => void;
   ListHeaderComponent?: React.ReactElement;
   ListEmptyComponent?: React.ReactElement;
@@ -22,7 +22,7 @@ export function ProductList({
   ListEmptyComponent,
 }: ProductListProps) {
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Product>) => (
+    ({ item }: ListRenderItemInfo<ProductCardItem>) => (
       <ProductListItem
         product={item}
         onPress={onProductPress ? () => onProductPress(item.slug) : undefined}
@@ -31,7 +31,7 @@ export function ProductList({
     [onProductPress]
   );
 
-  const keyExtractor = useCallback((item: Product) => item.slug, []);
+  const keyExtractor = useCallback((item: ProductCardItem) => item.slug, []);
 
   const renderSeparator = useCallback(() => <Divider marginVertical={SEPARATOR_MARGIN} />, []);
 

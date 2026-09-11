@@ -6,5 +6,6 @@ export interface CartItem {
   price: number;
   image: string | number | ImageSource;
   price_tag: string;
+  stock: number;
   quantity: number;
 }
