@@ -22,15 +22,22 @@ const authPersistConfig = {
   // blacklist: ['isLoading', 'error'],
 };
 
+const cartPersistConfig = {
+  key: 'cart',
+  storage: AsyncStorage,
+  whitelist: ['items'],
+  // blacklist: ['isLoading', 'error'],
+};
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['cart'],
+  whitelist: [],
 };
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  cart: cartReducer,
+  cart: persistReducer(cartPersistConfig, cartReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
