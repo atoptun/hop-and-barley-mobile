@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ProductList } from '@/components/features/catalog/product-list';
 import { useProducts } from '@/hooks/use-products';
 import { Spacing } from '@/constants/theme';
-import { ErrorLoad } from '@/components/common/error-load';
+import { EmptyState } from '@/components/common/empty-state';
 
 export interface StoreViewProps {
   onProductPress: (productId: string) => void;
@@ -27,6 +27,11 @@ export function StoreView({ onProductPress, onFilterPress }: StoreViewProps) {
 
   const handleReload = () => {
     //refetch
+    console.info('Reload store');
+  };
+
+  const handleClearFilters = () => {
+    console.info('Clear filters');
   };
 
   return (
@@ -44,10 +49,26 @@ export function StoreView({ onProductPress, onFilterPress }: StoreViewProps) {
         </View>
       ) : error && products.length === 0 ? (
         <View style={styles.center}>
-          <ErrorLoad error={error} onReloadPress={handleReload} />
+          <EmptyState
+            iconName="alert-octagon-outline"
+            text={error}
+            actionTitle="Reload"
+            onAction={handleReload}
+          />
         </View>
       ) : (
-        <ProductList products={products} onProductPress={onProductPress} />
+        <ProductList
+          products={products}
+          onProductPress={onProductPress}
+          ListEmptyComponent={
+            <EmptyState
+              iconName="magnify"
+              text="No products found matching your criteria."
+              actionTitle="Clear filters"
+              onAction={handleClearFilters}
+            />
+          }
+        />
       )}
     </View>
   );

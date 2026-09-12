@@ -1,4 +1,4 @@
-import { ErrorLoad } from '@/components/common/error-load';
+import { EmptyState } from '@/components/common/empty-state';
 import { ThemedCounter } from '@/components/common/themed-counter';
 import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
 import { IconButton } from '@/components/ui/icon-button';
@@ -71,7 +71,12 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
         </View>
       ) : error ? (
         <View style={styles.centered}>
-          <ErrorLoad error={error} onReloadPress={handleReload} />
+          <EmptyState
+            iconName="alert-octagon-outline"
+            text={error}
+            actionTitle="Reload"
+            onAction={handleReload}
+          />
         </View>
       ) : product ? (
         <>

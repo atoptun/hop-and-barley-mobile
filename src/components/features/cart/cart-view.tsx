@@ -6,9 +6,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ModalHeader } from '@/components/common/modal-header';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 import { selectCartItemsList, selectCartTotalPrice } from '@/store/cart/cart-selectors';
 import { ProductList } from '../catalog/product-list';
+import { EmptyState } from '@/components/common/empty-state';
 
 export interface CartViewProps {
   onCheckout?: VoidFunction;
@@ -20,7 +21,6 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
-  const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItemsList);
   const totalPrice = useAppSelector(selectCartTotalPrice);
 
@@ -29,7 +29,10 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
       <StatusBar style="auto" />
       <ModalHeader title="Cart" onClosePress={onClose} />
       <View style={styles.content}>
-        <ProductList products={cartItems} />
+        <ProductList
+          products={cartItems}
+          ListEmptyComponent={<EmptyState iconName="cart-outline" text="Your cart is empty" />}
+        />
       </View>
       <View style={styles.footer}>
         <View style={styles.total}>

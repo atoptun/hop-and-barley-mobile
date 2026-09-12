@@ -8,6 +8,8 @@ export function useProducts() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let ignore = false;
+
     const load = async () => {
       setIsLoading(true);
       setError(null);
@@ -15,15 +17,19 @@ export function useProducts() {
       try {
         const items = await fetchProducts();
         // throw new Error("test error");
-        setData(items);
+        if (!ignore) setData(items);
       } catch {
-        setError('Something went wrong.\nTry later...');
+        if (!ignore) setError('Something went wrong.\nTry later...');
       } finally {
-        setIsLoading(false);
+        if (!ignore) setIsLoading(false);
       }
     };
 
     void load();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   return {

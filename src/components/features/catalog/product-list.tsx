@@ -1,5 +1,5 @@
 import { Divider } from '@/components/ui/divider';
-import { Product, ProductCardItem } from '@/types/product';
+import { ProductCardItem } from '@/types/product';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { ProductListItem } from '@/components/features/catalog/product-list-item';

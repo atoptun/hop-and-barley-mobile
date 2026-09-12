@@ -6,7 +6,7 @@ import { Theme, useTheme } from '@/context/theme-context';
 import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { Product, ProductCardItem } from '@/types/product';
+import { ProductCardItem } from '@/types/product';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
@@ -43,7 +43,8 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
     }
   };
 
-  const formattedPrice = `$ ${product.price.toFixed(2)}`;
+  const price = Math.max(1, quantity) * product.price;
+  const formattedPrice = `$ ${price.toFixed(2)}`;
 
   return (
     <Pressable
