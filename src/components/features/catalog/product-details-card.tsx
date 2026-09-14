@@ -4,7 +4,7 @@ import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { Product } from '@/types/product';
 import { StyleSheet, View } from 'react-native';
-import { ProductsTechSpecs } from './products-tech-specs';
+import { ProductsTechSpecs } from '@/components/features/catalog/products-tech-specs';
 
 export interface ProductDetaulsCardProps {
   product: Product;

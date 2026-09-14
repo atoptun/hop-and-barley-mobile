@@ -1,14 +1,16 @@
+import { ThemedCounter } from '@/components/common/themed-counter';
 import { ThemedButton } from '@/components/ui/themed-button';
-import { ThemedCounter } from '@/components/ui/themed-counter';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { Product } from '@/types/product';
-import { useState } from 'react';
+import { selectItemQuantity } from '@/store/cart/cart-selectors';
+import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { ProductCardItem } from '@/types/product';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
-  product: Product;
+  product: ProductCardItem;
   onPress?: (slug: string) => void;
   style?: StyleProp<ViewStyle>;
 }
@@ -17,26 +19,32 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const [quantity, setQuantity] = useState(0);
+  const dispatch = useAppDispatch();
 
-  const handleAdd = (slug: string) => {
-    console.info('Add product to cart: ', slug);
-    setQuantity(1);
+  const quantity = useAppSelector(selectItemQuantity(product.slug));
+
+  const handleAdd = () => {
+    dispatch(addToCart(product));
   };
-  const handleIncrement = (slug: string) => {
-    console.info('Inc product in cart: ', slug);
-    if (quantity < product.stock) {
-      setQuantity(prev => prev + 1);
+
+  const handleIncrement = () => {
+    if (quantity >= product.stock) {
+      // show message
+      return;
     }
+    dispatch(incQuantity(product.slug));
   };
-  const handleDecrement = (slug: string) => {
-    console.info('Dec product in cart: ', slug);
+
+  const handleDecrement = () => {
     if (quantity > 0) {
-      setQuantity(prev => prev - 1);
+      dispatch(decQuantity(product.slug));
+    } else {
+      dispatch(removeFromCart(product.slug));
     }
   };
 
-  const formattedPrice = `$ ${product.price.toFixed(2)}`;
+  const price = Math.max(1, quantity) * product.price;
+  const formattedPrice = `$ ${price.toFixed(2)}`;
 
   return (
     <Pressable
@@ -63,7 +71,7 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
       <View style={styles.content}>
         {/* Header */}
         <View style={styles.header}>
-          <ThemedText variant="h5" color="textPrimary" numberOfLines={1}>
+          <ThemedText variant="h4" color="textPrimary" numberOfLines={1}>
             {product.name}
           </ThemedText>
           {Boolean(product.price_tag) && (
@@ -80,19 +88,20 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
             <ThemedButton
               title="Add"
               iconName="plus"
-              onPress={() => handleAdd(product.slug)}
+              onPress={handleAdd}
               style={styles.addButton}
             />
           ) : (
             <ThemedCounter
               quantity={quantity}
-              onIncrement={() => handleIncrement(product.slug)}
-              onDecrement={() => handleDecrement(product.slug)}
+              size="md"
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
             />
           )}
 
           {/* Price */}
-          <ThemedText variant="h4" color="textPrimary">
+          <ThemedText variant="h3" color="textPrimary">
             {formattedPrice}
           </ThemedText>
         </View>
@@ -124,20 +133,20 @@ const createStyles = (colors: Theme) =>
       height: 100,
       gap: 8,
       justifyContent: 'space-between',
-      paddingVertical: 12,
-      paddingHorizontal: 16,
+      paddingVertical: 4,
+      paddingLeft: 16,
     },
     header: {
       gap: 4,
     },
     footer: {
       flexDirection: 'row',
-      alignItems: 'flex-end',
+      alignItems: 'center',
       justifyContent: 'space-between',
     },
     addButton: {
       minHeight: 32,
       paddingVertical: 4,
-      paddingHorizontal: 12,
+      paddingHorizontal: 16,
     },
   });

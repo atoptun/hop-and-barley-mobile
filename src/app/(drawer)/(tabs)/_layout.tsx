@@ -7,9 +7,11 @@ export default function TabsLayout() {
 
   return (
     <Tabs
+      // tabBar={(props) => <CustomTabBar {...props} />}
       initialRouteName="store"
       screenOptions={{
         headerShown: false,
+        headerTransparent: true,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
@@ -29,6 +31,8 @@ export default function TabsLayout() {
         name="store"
         options={{
           title: 'Store',
+          headerTransparent: true,
+
           tabBarIcon: ({ color, focused }) => {
             return <ThemedIcon name={focused ? 'store' : 'store-outline'} customColor={color} />;
           },

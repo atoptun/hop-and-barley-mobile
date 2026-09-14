@@ -1,6 +1,6 @@
 import { Theme, useTheme } from '@/context/theme-context';
 import { StyleSheet, View } from 'react-native';
-import { ThemedImage } from '../ui/themed-image';
+import { ThemedImage } from '@/components/ui/themed-image';
 
 export function ImageExamples() {
   const { colors } = useTheme();

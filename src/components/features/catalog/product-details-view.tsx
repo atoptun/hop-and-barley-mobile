@@ -1,15 +1,17 @@
+import { EmptyState } from '@/components/common/empty-state';
+import { ThemedCounter } from '@/components/common/themed-counter';
+import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
 import { IconButton } from '@/components/ui/icon-button';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProductDetails } from '@/hooks/use-product-details';
+import { selectItemQuantity } from '@/store/cart/cart-selectors';
+import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProductDetailsCard } from '../catalog/product-details-card';
-import { useState } from 'react';
-import { ThemedCounter } from '@/components/ui/themed-counter';
-import { ErrorLoad } from '@/components/ui/error-load';
 
 export interface ProductDetailsViewProps {
   slug: string;
@@ -19,29 +21,34 @@ export interface ProductDetailsViewProps {
 export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-
-  const [quantity, setQuantity] = useState(0);
+  const dispatch = useAppDispatch();
 
   const { product, isLoading, error } = useProductDetails(slug);
 
+  const quantity = useAppSelector(selectItemQuantity(product?.slug));
+
   const styles = createStyles(colors, insets);
 
-  const handleAdd = (slug: string) => {
-    console.info('Add product to cart: ', slug);
-    if (product?.stock! > 0) {
-      setQuantity(1);
-    }
+  const handleAdd = () => {
+    if (!product || (product.stock ?? 0) <= 0) return;
+    dispatch(addToCart(product!));
   };
-  const handleIncrement = (slug: string) => {
-    console.info('Inc product in cart: ', slug);
-    if (quantity < product?.stock!) {
-      setQuantity(prev => prev + 1);
+
+  const handleIncrement = () => {
+    if (!product) return;
+    if (quantity >= (product.stock ?? 0)) {
+      //  show limit message
+      return;
     }
+    dispatch(incQuantity(product.slug));
   };
-  const handleDecrement = (slug: string) => {
-    console.info('Dec product in cart: ', slug);
-    if (quantity > 0) {
-      setQuantity(prev => prev - 1);
+
+  const handleDecrement = () => {
+    if (!product) return;
+    if (quantity > 1) {
+      dispatch(decQuantity(product.slug));
+    } else {
+      dispatch(removeFromCart(product.slug));
     }
   };
 
@@ -64,40 +71,44 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
         </View>
       ) : error ? (
         <View style={styles.centered}>
-          <ErrorLoad error={error} onReloadPress={handleReload} />
+          <EmptyState
+            iconName="alert-octagon-outline"
+            text={error}
+            actionTitle="Reload"
+            onAction={handleReload}
+          />
         </View>
-      ) : (
-        <ScrollView
-          style={styles.content}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <ProductDetailsCard product={product!} />
-        </ScrollView>
-      )}
-      {product && (
-        <View style={styles.actions}>
-          {quantity === 0 ? (
-            <ThemedButton
-              title="Add to cart"
-              variant="primary"
-              disabled={!product}
-              iconName={'plus'}
-              iconSize={22}
-              style={styles.button}
-              onPress={() => {
-                handleAdd(product?.slug!);
-              }}
-            />
-          ) : (
-            <ThemedCounter
-              quantity={quantity}
-              onIncrement={() => handleIncrement(product?.slug!)}
-              onDecrement={() => handleDecrement(product?.slug!)}
-            />
-          )}
-        </View>
-      )}
+      ) : product ? (
+        <>
+          <ScrollView
+            style={styles.content}
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            <ProductDetailsCard product={product!} />
+          </ScrollView>
+          <View style={styles.actions}>
+            {quantity === 0 ? (
+              <ThemedButton
+                title="Add to cart"
+                variant="primary"
+                disabled={(product.stock ?? 0) === 0}
+                iconName={'plus'}
+                iconSize={22}
+                style={styles.button}
+                onPress={handleAdd}
+              />
+            ) : (
+              <ThemedCounter
+                quantity={quantity}
+                size="lg"
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+              />
+            )}
+          </View>
+        </>
+      ) : null}
     </View>
   );
 }
@@ -143,11 +154,12 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
       paddingHorizontal: Spacing.six,
       paddingTop: Spacing.three,
       paddingBottom: Math.max(insets.bottom, insets.bottom + Spacing.four),
-      // gap: 48,
-      // borderTopWidth: 1,
-      // borderTopColor: colors.borderSecondary ?? '#E2E8F0',
+      gap: 48,
+      borderTopWidth: 1,
+      borderTopColor: colors.borderSecondary,
     },
     button: {
       flex: 1,
+      paddingVertical: 10,
     },
   });

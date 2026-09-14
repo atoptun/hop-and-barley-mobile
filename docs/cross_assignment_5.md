@@ -1,5 +1,20 @@
 # Cross Assignment 5
 
+## Prepare
+
+Copy `.env.template` file
+
+```bash
+cp .env.template .env.local
+
+```
+
+## Video
+
+[![Cross Assignment 5](https://img.youtube.com/vi/NWnaTCwRp8Q/0.jpg)](https://www.youtube.com/watch?v=NWnaTCwRp8Q)
+
+[Watch on YouTube](https://www.youtube.com/watch?v=NWnaTCwRp8Q)
+
 ## Fetch API data from the server (Axios) (sources)
 
 [Store Service](/src/api/store-service.ts) [useProducts](/src/hooks/use-products.ts)
