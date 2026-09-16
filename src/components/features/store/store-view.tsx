@@ -10,11 +10,10 @@ import { Spacing } from '@/constants/theme';
 import { EmptyState } from '@/components/common/empty-state';
 
 export interface StoreViewProps {
-  onProductPress: (productId: string) => void;
   onFilterPress: () => void;
 }
 
-export function StoreView({ onProductPress, onFilterPress }: StoreViewProps) {
+export function StoreView({ onFilterPress }: StoreViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
@@ -59,7 +58,6 @@ export function StoreView({ onProductPress, onFilterPress }: StoreViewProps) {
       ) : (
         <ProductList
           products={products}
-          onProductPress={onProductPress}
           ListEmptyComponent={
             <EmptyState
               iconName="magnify"

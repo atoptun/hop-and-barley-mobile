@@ -2,7 +2,8 @@ import { Divider } from '@/components/ui/divider';
 import { ProductCardItem } from '@/types/product';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { ProductListItem } from '@/components/features/catalog/product-list-item';
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
+import { ProductCard } from '@/components/features/catalog/product-card';
 
 export interface ProductListProps {
   products: ProductCardItem[];
@@ -23,10 +24,13 @@ export function ProductList({
 }: ProductListProps) {
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<ProductCardItem>) => (
-      <ProductListItem
-        product={item}
-        onPress={onProductPress ? () => onProductPress(item.slug) : undefined}
-      />
+      <Animated.View
+        entering={FadeIn.duration(300)}
+        exiting={FadeOut.duration(350)}
+        layout={LinearTransition.springify()}
+      >
+        <ProductCard product={item} onPress={onProductPress} />
+      </Animated.View>
     ),
     [onProductPress]
   );

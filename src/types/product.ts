@@ -15,10 +15,6 @@ export interface Product {
   description: string;
 }
 
-// export interface ProductCardItem extends Product {
-//   quantity: number;
-// }
-
 export interface ProductCardItem {
   slug: string;
   name: string;
@@ -26,5 +22,4 @@ export interface ProductCardItem {
   image: string | number | ImageSource;
   price_tag: string;
   stock: number;
-  // quantity: number;
 }

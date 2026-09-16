@@ -55,8 +55,8 @@ export default function RootLayout() {
               <Stack.Screen
                 name="(modals)/cart"
                 options={{
-                  presentation: 'modal',
-                  animation: 'slide_from_left',
+                  presentation: 'card',
+                  animation: 'slide_from_right',
                 }}
               />
               {/* Product details */}
@@ -73,7 +73,7 @@ export default function RootLayout() {
                 name="(modals)/filters"
                 options={{
                   presentation: 'modal',
-                  animation: 'slide_from_left',
+                  animation: 'slide_from_bottom',
                 }}
               />
 
