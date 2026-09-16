@@ -1,3 +1,4 @@
+import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { ThemedCounter } from '@/components/common/themed-counter';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedImage } from '@/components/ui/themed-image';
@@ -101,21 +102,14 @@ export const ProductCard = memo(function ProductCard({
         {/* Footer */}
         <View style={styles.footer}>
           {/*Actions */}
-          {quantity === 0 ? (
-            <ThemedButton
-              title="Add"
-              iconName="plus"
-              onPress={handleAdd}
-              style={styles.addButton}
-            />
-          ) : (
-            <ThemedCounter
-              quantity={quantity}
-              size="md"
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-            />
-          )}
+          <AddToCartCounter
+            quantity={quantity}
+            stock={product.stock}
+            size="sm"
+            onAdd={handleAdd}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+          />
 
           {/* Price */}
           <ThemedText variant="h3" color="textPrimary">

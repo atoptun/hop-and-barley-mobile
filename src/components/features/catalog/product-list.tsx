@@ -1,8 +1,8 @@
 import { Divider } from '@/components/ui/divider';
 import { ProductCardItem } from '@/types/product';
 import { useCallback } from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
+import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 import { ProductCard } from '@/components/features/catalog/product-card';
 
 export interface ProductListProps {
@@ -12,10 +12,6 @@ export interface ProductListProps {
   ListEmptyComponent?: React.ReactElement;
 }
 
-const ITEM_HEIGHT = 100;
-const SEPARATOR_MARGIN = 16;
-const TOTAL_ROW_HEIGHT = ITEM_HEIGHT + SEPARATOR_MARGIN * 2;
-
 export function ProductList({
   products,
   onProductPress,
@@ -23,38 +19,36 @@ export function ProductList({
   ListEmptyComponent,
 }: ProductListProps) {
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ProductCardItem>) => (
-      <Animated.View
-        entering={FadeIn.duration(300)}
-        exiting={FadeOut.duration(350)}
-        layout={LinearTransition.springify()}
-      >
-        <ProductCard product={item} onPress={onProductPress} />
-      </Animated.View>
-    ),
-    [onProductPress]
+    ({ item, index }: ListRenderItemInfo<ProductCardItem>) => {
+      const isLastItem = index === products.length - 1;
+
+      return (
+        <Animated.View
+          entering={FadeIn.duration(250)}
+          exiting={FadeOutLeft.duration(200)}
+          layout={LinearTransition.springify().damping(16).stiffness(120)}
+          style={styles.animatedRow}
+        >
+          <ProductCard product={item} onPress={onProductPress} />
+
+          {!isLastItem && (
+            <View style={styles.separatorWrapper}>
+              <Divider marginVertical={16} />
+            </View>
+          )}
+        </Animated.View>
+      );
+    },
+    [onProductPress, products.length]
   );
 
   const keyExtractor = useCallback((item: ProductCardItem) => item.slug, []);
-
-  const renderSeparator = useCallback(() => <Divider marginVertical={SEPARATOR_MARGIN} />, []);
-
-  const getItemLayout = useCallback(
-    (_: any, index: number) => ({
-      length: TOTAL_ROW_HEIGHT,
-      offset: TOTAL_ROW_HEIGHT * index,
-      index,
-    }),
-    []
-  );
 
   return (
     <FlatList
       data={products}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      ItemSeparatorComponent={renderSeparator}
-      getItemLayout={getItemLayout}
       contentContainerStyle={styles.listContent}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
@@ -71,5 +65,11 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 16,
     paddingVertical: 16,
+  },
+  animatedRow: {
+    overflow: 'hidden',
+  },
+  separatorWrapper: {
+    width: '100%',
   },
 });

@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "@welldone-software/why-did-you-render": "^10.0.1",
     "eslint": "^9",
     "eslint-config-expo": "~57.0.2",
     "eslint-config-prettier": "^10.1.8",
