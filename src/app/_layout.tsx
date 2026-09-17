@@ -1,18 +1,11 @@
 import { ThemeProvider } from '@/context/theme-context';
 import { persistor, store } from '@/store/store';
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  useFonts,
-} from '@expo-google-fonts/inter';
 import { SplashScreen, Stack } from 'expo-router';
 import { StrictMode, useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { useFonts } from 'expo-font';
 
 if (__DEV__) {
   import('@/config/reactotron');
@@ -22,11 +15,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
+    Inter_400Regular: require('@/assets/fonts/Inter-Regular.ttf'),
+    Inter_500Medium: require('@/assets/fonts/Inter-Medium.ttf'),
+    Inter_600SemiBold: require('@/assets/fonts/Inter-SemiBold.ttf'),
+    Inter_700Bold: require('@/assets/fonts/Inter-Bold.ttf'),
+    Inter_800ExtraBold: require('@/assets/fonts/Inter-ExtraBold.ttf'),
   });
 
   useEffect(() => {
