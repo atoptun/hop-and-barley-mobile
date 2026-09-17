@@ -1,6 +1,4 @@
 import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
-import { ThemedCounter } from '@/components/common/themed-counter';
-import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';

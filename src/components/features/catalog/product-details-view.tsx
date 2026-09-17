@@ -1,9 +1,7 @@
 import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { EmptyState } from '@/components/common/empty-state';
-import { ThemedCounter } from '@/components/common/themed-counter';
 import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
 import { IconButton } from '@/components/ui/icon-button';
-import { ThemedButton } from '@/components/ui/themed-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProductDetails } from '@/hooks/use-product-details';
