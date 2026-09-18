@@ -63,7 +63,7 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
       statusBarStyle="light"
       scrollContentStyles={styles.container}
     >
-      <ThemedImage source={require('@/assets/images/login.jpg')} style={styles.image} />
+      <ThemedImage source={require('@/assets/images/login.webp')} style={styles.image} />
 
       <View style={styles.content}>
         <ThemedText variant="h1">Welcome!</ThemedText>
