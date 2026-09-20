@@ -1,8 +1,7 @@
+import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { EmptyState } from '@/components/common/empty-state';
-import { ThemedCounter } from '@/components/common/themed-counter';
 import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
 import { IconButton } from '@/components/ui/icon-button';
-import { ThemedButton } from '@/components/ui/themed-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProductDetails } from '@/hooks/use-product-details';
@@ -88,24 +87,16 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
             <ProductDetailsCard product={product!} />
           </ScrollView>
           <View style={styles.actions}>
-            {quantity === 0 ? (
-              <ThemedButton
-                title="Add to cart"
-                variant="primary"
-                disabled={(product.stock ?? 0) === 0}
-                iconName={'plus'}
-                iconSize={22}
-                style={styles.button}
-                onPress={handleAdd}
-              />
-            ) : (
-              <ThemedCounter
-                quantity={quantity}
-                size="lg"
-                onIncrement={handleIncrement}
-                onDecrement={handleDecrement}
-              />
-            )}
+            <AddToCartCounter
+              quantity={quantity}
+              stock={product.stock}
+              size="lg"
+              fullWidth={true}
+              btnAddTitle="Add to cart"
+              onAdd={handleAdd}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+            />
           </View>
         </>
       ) : null}
@@ -123,8 +114,8 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
     },
     closeButton: {
       position: 'absolute',
-      left: Spacing.six,
-      top: insets.top,
+      left: Spacing.four,
+      top: insets.top + Spacing.four,
       backgroundColor: colors.backgroundSecondary,
       zIndex: 100,
     },
@@ -147,14 +138,10 @@ const createStyles = (colors: Theme, insets: EdgeInsets) =>
       gap: Spacing.four,
     },
     actions: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
       width: '100%',
       paddingHorizontal: Spacing.six,
       paddingTop: Spacing.three,
       paddingBottom: Math.max(insets.bottom, insets.bottom + Spacing.four),
-      gap: 48,
       borderTopWidth: 1,
       borderTopColor: colors.borderSecondary,
     },

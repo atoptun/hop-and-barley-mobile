@@ -1,7 +1,6 @@
-import { useTheme } from '@/context/theme-context';
-import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 import { ThemedInput, ThemedInputProps } from '@/components/ui/themed-input';
+import { ThemedIcon } from '@/components/ui/themed-icon';
 
 export type PasswordInputProps = Omit<
   ThemedInputProps,
@@ -13,7 +12,6 @@ export function PasswordInput({
   placeholder = 'Enter password',
   ...props
 }: PasswordInputProps) {
-  const { colors } = useTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -28,10 +26,10 @@ export function PasswordInput({
       autoCapitalize="none"
       autoCorrect={false}
       icon={
-        <Feather
-          name={isPasswordVisible ? 'eye' : 'eye-off'}
+        <ThemedIcon
+          name={isPasswordVisible ? 'eye-outline' : 'eye-off-outline'}
           size={20}
-          color={colors.borderSecondary}
+          color="borderSecondary"
         />
       }
       onIconPress={toggleVisibility}

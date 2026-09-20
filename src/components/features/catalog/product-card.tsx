@@ -1,5 +1,4 @@
-import { ThemedCounter } from '@/components/common/themed-counter';
-import { ThemedButton } from '@/components/ui/themed-button';
+import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
@@ -7,6 +6,8 @@ import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ProductCardItem } from '@/types/product';
+import { router } from 'expo-router';
+import { memo } from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
@@ -15,7 +16,11 @@ export interface ProductCardProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function ProductCard({ product, onPress, style }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({
+  product,
+  onPress,
+  style,
+}: ProductCardProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
@@ -43,18 +48,29 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
     }
   };
 
+  const handlePress = () => {
+    if (onPress) {
+      onPress(product.slug);
+    } else {
+      router.push({
+        pathname: '/product/[slug]',
+        params: { slug: product.slug },
+      });
+    }
+  };
+
   const price = Math.max(1, quantity) * product.price;
   const formattedPrice = `$ ${price.toFixed(2)}`;
 
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={() => (onPress ? onPress(product.slug) : undefined)}
-      disabled={!onPress}
+      onPress={handlePress}
+      // disabled={!onPress}
       style={({ pressed }) => [
         styles.card,
         {
-          opacity: pressed && onPress ? 0.92 : 1,
+          opacity: pressed ? 0.92 : 1,
         },
         style,
       ]}
@@ -84,21 +100,14 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
         {/* Footer */}
         <View style={styles.footer}>
           {/*Actions */}
-          {quantity === 0 ? (
-            <ThemedButton
-              title="Add"
-              iconName="plus"
-              onPress={handleAdd}
-              style={styles.addButton}
-            />
-          ) : (
-            <ThemedCounter
-              quantity={quantity}
-              size="md"
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-            />
-          )}
+          <AddToCartCounter
+            quantity={quantity}
+            stock={product.stock}
+            size="sm"
+            onAdd={handleAdd}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+          />
 
           {/* Price */}
           <ThemedText variant="h3" color="textPrimary">
@@ -108,7 +117,7 @@ export function ProductCard({ product, onPress, style }: ProductCardProps) {
       </View>
     </Pressable>
   );
-}
+});
 
 const createStyles = (colors: Theme) =>
   StyleSheet.create({

@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '@/context/theme-context';
+import { ThemedText } from '@/components/ui/themed-text';
 
 export default function OrdersScreen() {
   const { colors } = useTheme();
@@ -7,7 +8,7 @@ export default function OrdersScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>OrdersScreen</Text>
+      <ThemedText variant="h1">OrdersScreen</ThemedText>
     </View>
   );
 }
@@ -17,8 +18,5 @@ const createStyles = (colors: Theme) =>
     container: {
       flex: 1,
       backgroundColor: colors.background,
-    },
-    text: {
-      color: colors.textPrimary,
     },
   });

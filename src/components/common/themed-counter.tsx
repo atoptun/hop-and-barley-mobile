@@ -37,7 +37,7 @@ export function ThemedCounter({
         <ThemedIcon name="minus" size={iconSize} color="primary" />
       </Pressable>
 
-      <ThemedText variant={textSize} color="textPrimary" style={styles.counterValue}>
+      <ThemedText variant={textSize} color="textOnPrimary" style={styles.counterValue}>
         {quantity}
       </ThemedText>
 
@@ -63,7 +63,7 @@ const createStyles = (colors: Theme, buttonSize: number) =>
       width: buttonSize,
       height: buttonSize,
       borderRadius: buttonSize / 2,
-      backgroundColor: colors.backgroundSecondary,
+      backgroundColor: colors.primary,
       alignItems: 'center',
       justifyContent: 'center',
     },

@@ -8,7 +8,6 @@ export function PageDotsExamples() {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.text}>Pagination Dots Examples</Text> */}
       <PaginationDots total={5} activeIndex={0} />
       <PaginationDots total={5} activeIndex={1} />
       <PaginationDots total={5} activeIndex={2} />
