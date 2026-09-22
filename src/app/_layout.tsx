@@ -6,12 +6,67 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
+import Toast from 'react-native-toast-message';
+import { useToastConfig } from '@/config/toast';
 
 if (__DEV__) {
   import('@/config/reactotron');
 }
 
 SplashScreen.preventAutoHideAsync();
+
+function AppContent() {
+  const toastConfig = useToastConfig();
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(onboarding)" />
+        <Stack.Screen name="(auth)" />
+
+        <Stack.Screen name="(drawer)" />
+
+        {/* Cart */}
+        <Stack.Screen
+          name="(modals)/cart"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_right',
+          }}
+        />
+        {/* Product details */}
+        <Stack.Screen
+          name="(modals)/product/[slug]"
+          options={{
+            presentation: 'card',
+            animation: 'slide_from_right',
+          }}
+        />
+
+        {/* Filters */}
+        <Stack.Screen
+          name="(modals)/filters"
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+
+        {/* Checkout */}
+        <Stack.Screen
+          name="(modals)/checkout"
+          options={{
+            presentation: 'card',
+            animation: 'slide_from_right',
+          }}
+        />
+      </Stack>
+
+      <Toast config={toastConfig} />
+    </GestureHandlerRootView>
+  );
+}
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts({
@@ -37,50 +92,7 @@ export default function RootLayout() {
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
           <ThemeProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="index" />
-                <Stack.Screen name="(onboarding)" />
-                <Stack.Screen name="(auth)" />
-
-                <Stack.Screen name="(drawer)" />
-
-                {/* Cart */}
-                <Stack.Screen
-                  name="(modals)/cart"
-                  options={{
-                    presentation: 'modal',
-                    animation: 'slide_from_right',
-                  }}
-                />
-                {/* Product details */}
-                <Stack.Screen
-                  name="(modals)/product/[slug]"
-                  options={{
-                    presentation: 'card',
-                    animation: 'slide_from_right',
-                  }}
-                />
-
-                {/* Filters */}
-                <Stack.Screen
-                  name="(modals)/filters"
-                  options={{
-                    presentation: 'modal',
-                    animation: 'slide_from_bottom',
-                  }}
-                />
-
-                {/* Checkout */}
-                <Stack.Screen
-                  name="(modals)/checkout"
-                  options={{
-                    presentation: 'card',
-                    animation: 'slide_from_right',
-                  }}
-                />
-              </Stack>
-            </GestureHandlerRootView>
+            <AppContent />
           </ThemeProvider>
         </PersistGate>
       </Provider>

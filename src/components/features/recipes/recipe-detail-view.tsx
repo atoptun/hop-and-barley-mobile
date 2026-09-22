@@ -1,16 +1,17 @@
-import { View, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { Spacing } from '@/constants/theme';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { IconButton } from '@/components/ui/icon-button';
-import { useGetRecipeBySlugQuery } from '@/store/recipes/recipes-api';
 import { EmptyState } from '@/components/common/empty-state';
-import { getErrorText } from '@/utils/utils';
-import { RecipeDetailsCard } from './recipe-details-card';
+import { IconButton } from '@/components/ui/icon-button';
 import { ThemedButton } from '@/components/ui/themed-button';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 import { addListToCart } from '@/store/cart/cart-slice';
 import { useAppDispatch } from '@/store/hooks';
+import { useGetRecipeBySlugQuery } from '@/store/recipes/recipes-api';
+import { getErrorText } from '@/utils/utils';
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import { RecipeDetailsCard } from './recipe-details-card';
 
 export interface RecipeDetailViewProps {
   slug: string;
@@ -35,7 +36,10 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
   const handleAddToCart = () => {
     if (recipe?.ingredients && recipe.ingredients.length > 0) {
       dispatch(addListToCart(recipe.ingredients));
-      // TODO: add toast
+      Toast.show({
+        type: 'success',
+        text1: 'All ingredients have been added to the cart.',
+      });
     }
   };
 
