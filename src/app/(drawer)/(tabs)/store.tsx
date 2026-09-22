@@ -1,4 +1,4 @@
-import { StoreView } from '@/components/features/store/store-view';
+import { StoreView } from '@/components/features/catalog/store-view';
 import { router } from 'expo-router';
 
 export default function StoreScreen() {

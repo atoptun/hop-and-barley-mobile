@@ -15,21 +15,13 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ProductCardItem>) => {
-      const product = action.payload;
-      const existing = state.items[product.slug];
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        state.items[product.slug] = {
-          slug: product.slug,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          price_tag: product.price_tag,
-          stock: product.stock,
-          quantity: 1,
-        };
-      }
+      addProductToCart(state, action.payload);
+    },
+
+    addListToCart: (state, action: PayloadAction<ProductCardItem[]>) => {
+      action.payload.forEach(product => {
+        addProductToCart(state, product);
+      });
     },
 
     incQuantity: (state, action: PayloadAction<string>) => {
@@ -61,5 +53,24 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, incQuantity, decQuantity, removeFromCart, clearCart } = cartSlice.actions;
+const addProductToCart = (state: CartState, product: ProductCardItem) => {
+  const existing = state.items[product.slug];
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    state.items[product.slug] = {
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      price_tag: product.price_tag,
+      stock: product.stock,
+      quantity: 1,
+    };
+  }
+};
+
+export const { addToCart, addListToCart, incQuantity, decQuantity, removeFromCart, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

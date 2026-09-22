@@ -8,6 +8,9 @@ import { useGetRecipeBySlugQuery } from '@/store/recipes/recipes-api';
 import { EmptyState } from '@/components/common/empty-state';
 import { getErrorText } from '@/utils/utils';
 import { RecipeDetailsCard } from './recipe-details-card';
+import { ThemedButton } from '@/components/ui/themed-button';
+import { addListToCart } from '@/store/cart/cart-slice';
+import { useAppDispatch } from '@/store/hooks';
 
 export interface RecipeDetailViewProps {
   slug: string;
@@ -19,12 +22,21 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
+  const dispatch = useAppDispatch();
+
   const { data: recipe, isLoading, error } = useGetRecipeBySlugQuery(slug);
 
   const errorText = getErrorText(error);
 
   const handleReload = () => {
     console.info('Recipe reload');
+  };
+
+  const handleAddToCart = () => {
+    if (recipe?.ingredients && recipe.ingredients.length > 0) {
+      dispatch(addListToCart(recipe.ingredients));
+      // TODO: add toast
+    }
   };
 
   return (
@@ -58,7 +70,13 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
           >
             <RecipeDetailsCard recipe={recipe} />
           </ScrollView>
-          <View style={styles.actions}></View>
+          <View style={styles.actions}>
+            <ThemedButton
+              title="Add ingredients to cart"
+              iconName="plus"
+              onPress={handleAddToCart}
+            />
+          </View>
         </>
       ) : null}
     </View>
