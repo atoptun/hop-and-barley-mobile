@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { fetchProductBySlug } from '@/api/store-service';
 import { Product } from '@/types/product';
-import { useEffect, useState } from 'react';
 
 export function useProductDetails(slug: string) {
   const [data, setData] = useState<Product | null>(null);

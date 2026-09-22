@@ -1,15 +1,17 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { EmptyState } from '@/components/common/empty-state';
+import { ModalHeader } from '@/components/common/modal-header';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ModalHeader } from '@/components/common/modal-header';
-import { useAppSelector } from '@/store/hooks';
 import { selectCartItemsList, selectCartTotalPrice } from '@/store/cart/cart-selectors';
+import { useAppSelector } from '@/store/hooks';
+
 import { ProductList } from '../catalog/product-list';
-import { EmptyState } from '@/components/common/empty-state';
 
 export interface CartViewProps {
   onCheckout?: VoidFunction;

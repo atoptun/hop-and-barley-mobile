@@ -1,9 +1,10 @@
+import { router } from 'expo-router';
+
 import { LoginView } from '@/components/features/auth/login-view';
 import { loginThunk } from '@/store/auth/auth-thunks';
 import { useAppDispatch } from '@/store/hooks';
 import { LoginData } from '@/types/auth';
 import { hasErrorMessage } from '@/utils/utils';
-import { router } from 'expo-router';
 
 export default function AuthLoginScreen() {
   const dispatch = useAppDispatch();

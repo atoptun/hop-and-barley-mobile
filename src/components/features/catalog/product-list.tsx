@@ -1,9 +1,10 @@
-import { Divider } from '@/components/ui/divider';
-import { ProductCardItem } from '@/types/product';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
+
 import { ProductCard } from '@/components/features/catalog/product-card';
+import { Divider } from '@/components/ui/divider';
+import { ProductCardItem } from '@/types/product';
 
 export interface ProductListProps {
   products: ProductCardItem[];

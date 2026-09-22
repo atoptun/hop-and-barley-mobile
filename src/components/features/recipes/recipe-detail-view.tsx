@@ -1,3 +1,8 @@
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+
 import { EmptyState } from '@/components/common/empty-state';
 import { IconButton } from '@/components/ui/icon-button';
 import { ThemedButton } from '@/components/ui/themed-button';
@@ -7,10 +12,7 @@ import { addListToCart } from '@/store/cart/cart-slice';
 import { useAppDispatch } from '@/store/hooks';
 import { useGetRecipeBySlugQuery } from '@/store/recipes/recipes-api';
 import { getErrorText } from '@/utils/utils';
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message';
+
 import { RecipeDetailsCard } from './recipe-details-card';
 
 export interface RecipeDetailViewProps {

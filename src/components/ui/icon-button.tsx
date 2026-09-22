@@ -1,6 +1,7 @@
-import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+
+import { IconName, ThemedIcon } from '@/components/ui/themed-icon';
 import { ThemeColors } from '@/context/theme-context';
-import { ThemedIcon, IconName } from '@/components/ui/themed-icon';
 
 export interface IconButtonProps {
   iconName: IconName;

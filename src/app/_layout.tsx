@@ -1,13 +1,14 @@
-import { ThemeProvider } from '@/context/theme-context';
-import { persistor, store } from '@/store/store';
+import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { StrictMode, useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { useFonts } from 'expo-font';
-import Toast from 'react-native-toast-message';
+
 import { useToastConfig } from '@/config/toast';
+import { ThemeProvider } from '@/context/theme-context';
+import { persistor, store } from '@/store/store';
 
 if (__DEV__) {
   import('@/config/reactotron');

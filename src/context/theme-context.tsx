@@ -1,11 +1,12 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SystemUI from 'expo-system-ui';
-import { Colors, Theme, ThemeColors, ColorKey } from '@/constants/theme';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Platform, StatusBar } from 'react-native';
 
-export type { Theme, ThemeColors, ColorKey };
+import { ColorKey, Colors, Theme, ThemeColors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+
+export type { ColorKey, Theme, ThemeColors };
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 

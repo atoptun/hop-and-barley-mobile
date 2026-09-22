@@ -1,5 +1,7 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { StyleSheet, View } from 'react-native';
+
+import { Theme, useTheme } from '@/context/theme-context';
+
 import { ThemedText } from '../ui/themed-text';
 
 export interface RatingBadgeProps {

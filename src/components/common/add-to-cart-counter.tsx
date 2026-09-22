@@ -3,9 +3,9 @@ import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanim
 
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { ThemedText } from '@/components/ui/themed-text';
-import { useTheme, Theme } from '@/context/theme-context';
 import { Spacing } from '@/constants/theme';
 import { TypographyVariant } from '@/constants/typography';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export type CounterSize = 'sm' | 'md' | 'lg';
 

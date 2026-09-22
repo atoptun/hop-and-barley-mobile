@@ -1,6 +1,7 @@
 import { authApi, AuthResponse, User } from '@/api/auth-service';
 import { LoginData, RegisterData } from '@/types/auth';
 import { clearToken, getToken, saveToken } from '@/utils/secure-storage';
+
 import { createAppAsyncThunk } from '../typed-thunk';
 
 export const registerThunk = createAppAsyncThunk<Omit<AuthResponse, 'token'>, RegisterData>(

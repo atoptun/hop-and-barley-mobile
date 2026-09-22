@@ -1,10 +1,11 @@
+import { useNavigation } from 'expo-router';
+import { DrawerActions } from 'expo-router/build/react-navigation';
+import { StyleSheet, View } from 'react-native';
+
 import { SearchInput } from '@/components/common/search-input';
 import { IconButton } from '@/components/ui/icon-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { useNavigation } from 'expo-router';
-import { DrawerActions } from 'expo-router/build/react-navigation';
-import { StyleSheet, View } from 'react-native';
 
 export interface ListHeaderProps {
   searchQuery?: string;

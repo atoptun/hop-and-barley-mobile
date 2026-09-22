@@ -1,6 +1,7 @@
 import { useGetRecipesQuery } from '@/store/recipes/recipes-api';
-import { useRecipesFilters } from './use-recipes-filters';
 import { getErrorText } from '@/utils/utils';
+
+import { useRecipesFilters } from './use-recipes-filters';
 
 export const useRecipes = () => {
   const { filters } = useRecipesFilters();

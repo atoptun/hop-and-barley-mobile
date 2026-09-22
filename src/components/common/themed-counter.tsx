@@ -1,8 +1,9 @@
-import { Theme, useTheme } from '@/context/theme-context';
 import { Pressable, StyleSheet, View } from 'react-native';
+
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { ThemedText } from '@/components/ui/themed-text';
 import { TypographyVariant } from '@/constants/typography';
+import { Theme, useTheme } from '@/context/theme-context';
 
 type Size = 'sm' | 'md' | 'lg';
 

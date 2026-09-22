@@ -1,6 +1,3 @@
-import { IconName, ThemedIcon } from '@/components/ui/themed-icon';
-import { TypographyVariant } from '@/constants/typography';
-import { useTheme } from '@/context/theme-context';
 import {
   ActivityIndicator,
   Pressable,
@@ -10,7 +7,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+import { IconName, ThemedIcon } from '@/components/ui/themed-icon';
 import { ThemedText } from '@/components/ui/themed-text';
+import { TypographyVariant } from '@/constants/typography';
+import { useTheme } from '@/context/theme-context';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost';
 

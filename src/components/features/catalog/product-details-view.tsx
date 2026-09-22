@@ -1,3 +1,7 @@
+import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { EmptyState } from '@/components/common/empty-state';
 import { ProductDetailsCard } from '@/components/features/catalog/product-details-card';
@@ -8,9 +12,6 @@ import { useProductDetails } from '@/hooks/use-product-details';
 import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface ProductDetailsViewProps {
   slug: string;

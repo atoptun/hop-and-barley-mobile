@@ -1,3 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { z } from 'zod';
+
 import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ThemedButton } from '@/components/ui/themed-button';
@@ -9,10 +14,6 @@ import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { RegisterData } from '@/types/auth';
 import { hasErrorMessage } from '@/utils/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
-import { z } from 'zod';
 
 const registerSchema = z
   .object({

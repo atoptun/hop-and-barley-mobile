@@ -1,5 +1,3 @@
-import { Spacing } from '@/constants/theme';
-import { Theme, useTheme } from '@/context/theme-context';
 import { StatusBar, StatusBarStyle } from 'expo-status-bar';
 import { ReactNode } from 'react';
 import {
@@ -20,6 +18,9 @@ import {
   SafeAreaViewProps,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface SafeKeyboardViewProps {
   children: ReactNode;

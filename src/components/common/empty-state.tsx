@@ -1,8 +1,10 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
 import { IconName, ThemedIcon } from '@/components/ui/themed-icon';
-import { ThemedText } from '../ui/themed-text';
-import { ThemedButton } from '../ui/themed-button';
 import { Spacing } from '@/constants/theme';
+
+import { ThemedButton } from '../ui/themed-button';
+import { ThemedText } from '../ui/themed-text';
 
 export interface EmptyStateProps {
   iconName: IconName;

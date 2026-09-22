@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ThemedInput, ThemedInputProps } from '@/components/ui/themed-input';
+
 import { ThemedIcon } from '@/components/ui/themed-icon';
+import { ThemedInput, ThemedInputProps } from '@/components/ui/themed-input';
 
 export type PasswordInputProps = Omit<
   ThemedInputProps,

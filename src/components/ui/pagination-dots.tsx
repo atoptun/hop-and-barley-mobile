@@ -1,5 +1,6 @@
-import { useTheme } from '@/context/theme-context';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
+import { useTheme } from '@/context/theme-context';
 
 interface PaginationDotsProps {
   total: number;

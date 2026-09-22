@@ -1,5 +1,6 @@
-import { ThemedText } from '@/components/ui/themed-text';
 import { StyleProp, View, ViewStyle } from 'react-native';
+
+import { ThemedText } from '@/components/ui/themed-text';
 
 interface MetricBadgeProps {
   label: string;

@@ -1,9 +1,10 @@
-import React, { MouseEvent } from 'react';
-import { StyleSheet, TextStyle, Pressable, GestureResponderEvent, StyleProp } from 'react-native';
 import { Link, LinkProps } from 'expo-router';
-import { ThemeColors } from '@/context/theme-context';
-import { TypographyVariant } from '@/constants/typography';
+import React, { MouseEvent } from 'react';
+import { GestureResponderEvent, Pressable, StyleProp, StyleSheet, TextStyle } from 'react-native';
+
 import { ThemedText } from '@/components/ui/themed-text';
+import { TypographyVariant } from '@/constants/typography';
+import { ThemeColors } from '@/context/theme-context';
 
 export type ThemedLinkProps = {
   variant?: TypographyVariant;

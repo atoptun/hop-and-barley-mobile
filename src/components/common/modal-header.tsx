@@ -1,8 +1,9 @@
-import { View, StyleSheet, StyleProp, TextStyle, ViewProps } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { Spacing } from '@/constants/theme';
-import { ThemedText } from '@/components/ui/themed-text';
+import { StyleProp, StyleSheet, TextStyle, View, ViewProps } from 'react-native';
+
 import { IconButton } from '@/components/ui/icon-button';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface HeaderProps extends ViewProps {
   title: string;

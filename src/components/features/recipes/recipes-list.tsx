@@ -1,8 +1,9 @@
-import { StyleSheet, FlatList, ListRenderItemInfo, View } from 'react-native';
 import { useCallback } from 'react';
-import { BeerRecipe } from '@/types/recipe';
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
+
 import { RecipeCard } from '@/components/features/recipes/recipe-card';
 import { Divider } from '@/components/ui/divider';
+import { BeerRecipe } from '@/types/recipe';
 
 export interface RecipesListProps {
   recipes: BeerRecipe[];

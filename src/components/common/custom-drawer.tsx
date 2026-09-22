@@ -1,7 +1,3 @@
-import { ThemeSelector } from '@/components/common/theme-selector';
-import { ThemedText } from '@/components/ui/themed-text';
-import { Theme, useTheme } from '@/context/theme-context';
-import { selectUser } from '@/store/auth/auth-selectors';
 import { router } from 'expo-router';
 import {
   DrawerContentComponentProps,
@@ -11,6 +7,11 @@ import {
 } from 'expo-router/drawer';
 import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
+
+import { ThemeSelector } from '@/components/common/theme-selector';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Theme, useTheme } from '@/context/theme-context';
+import { selectUser } from '@/store/auth/auth-selectors';
 
 interface CustomDrawerContentProps extends DrawerContentComponentProps {
   onLoginPress?: VoidFunction;

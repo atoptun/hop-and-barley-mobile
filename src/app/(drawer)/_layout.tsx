@@ -1,11 +1,12 @@
+import { router } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
+import { Alert } from 'react-native';
+
 import { CustomDrawerContent } from '@/components/common/custom-drawer';
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { useTheme } from '@/context/theme-context';
 import { logoutThunk } from '@/store/auth/auth-thunks';
 import { useAppDispatch } from '@/store/hooks';
-import { router } from 'expo-router';
-import { Drawer } from 'expo-router/drawer';
-import { Alert } from 'react-native';
 
 export default function DrawerLayout() {
   const { colors } = useTheme();

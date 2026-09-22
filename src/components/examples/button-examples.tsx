@@ -1,6 +1,7 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { StyleSheet, View } from 'react-native';
+
 import { ThemedButton } from '@/components/ui/themed-button';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export function ButtonExamples() {
   const { colors } = useTheme();

@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
-import { useTheme, useThemeController, ThemeMode } from '@/context/theme-context';
-import { Theme } from '@/constants/theme';
+import { Pressable, StyleSheet, View } from 'react-native';
+
 import { ThemedText } from '@/components/ui/themed-text';
+import { Theme } from '@/constants/theme';
+import { ThemeMode, useTheme, useThemeController } from '@/context/theme-context';
 
 const MODES: { label: string; value: ThemeMode }[] = [
   { label: 'Light', value: 'light' },

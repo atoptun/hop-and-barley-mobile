@@ -1,6 +1,7 @@
+import { StyleSheet, View } from 'react-native';
+
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { StyleSheet, View } from 'react-native';
 
 export function TextExamples() {
   const { colors } = useTheme();

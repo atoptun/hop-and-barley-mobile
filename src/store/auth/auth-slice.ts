@@ -1,5 +1,7 @@
-import { User } from '@/api/auth-service';
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+
+import { User } from '@/api/auth-service';
+
 import { loginThunk, logoutThunk, registerThunk, restoreSessionThunk } from './auth-thunks';
 
 interface AuthState {

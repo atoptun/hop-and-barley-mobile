@@ -1,5 +1,6 @@
-import { OnboardingView } from '@/components/features/onboarding/onboarding-view';
 import { router } from 'expo-router';
+
+import { OnboardingView } from '@/components/features/onboarding/onboarding-view';
 
 export default function OnboardingScreen() {
   const handleOnFinish = (isSkip: boolean) => {

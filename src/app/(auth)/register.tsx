@@ -1,9 +1,10 @@
+import { router } from 'expo-router';
+
 import { RegisterView } from '@/components/features/auth/register-view';
 import { registerThunk } from '@/store/auth/auth-thunks';
 import { useAppDispatch } from '@/store/hooks';
 import { RegisterData } from '@/types/auth';
 import { hasErrorMessage } from '@/utils/utils';
-import { router } from 'expo-router';
 
 export default function AuthRegsterScreen() {
   const dispatch = useAppDispatch();

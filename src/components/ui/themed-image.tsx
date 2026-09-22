@@ -1,8 +1,9 @@
-import { ThemedIcon } from '@/components/ui/themed-icon';
-import { Theme, useTheme } from '@/context/theme-context';
 import { Image, ImageProps } from 'expo-image';
 import { useState } from 'react';
 import { ActivityIndicator, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
+import { ThemedIcon } from '@/components/ui/themed-icon';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface ThemedImageProps extends Omit<ImageProps, 'style'> {
   style?: StyleProp<ViewStyle>;

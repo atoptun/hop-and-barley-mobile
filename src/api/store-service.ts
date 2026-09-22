@@ -1,6 +1,7 @@
 import { Product } from '@/types/product';
-import { client } from './base-client';
 import { updateProduct } from '@/utils/product';
+
+import { client } from './base-client';
 
 export const fetchProducts = async (): Promise<Product[]> => {
   const { data } = await client.get('/products');

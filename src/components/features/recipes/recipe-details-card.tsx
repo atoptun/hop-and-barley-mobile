@@ -1,13 +1,15 @@
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { BeerRecipe, BeerRecipeIngredient } from '@/types/recipe';
-import { ThemedImage } from '@/components/ui/themed-image';
-import { Spacing } from '@/constants/theme';
-import { ThemedText } from '@/components/ui/themed-text';
-import { RatingBadge } from '@/components/common/rating-badge';
-import { MetricBadge } from './metric-badge';
 import { router } from 'expo-router';
+import { Pressable, StyleSheet, View } from 'react-native';
+
 import { ImageGallery } from '@/components/common/image-gallery';
+import { RatingBadge } from '@/components/common/rating-badge';
+import { ThemedImage } from '@/components/ui/themed-image';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
+import { BeerRecipe, BeerRecipeIngredient } from '@/types/recipe';
+
+import { MetricBadge } from './metric-badge';
 
 export interface RecipeDetailsCardProps {
   recipe: BeerRecipe;

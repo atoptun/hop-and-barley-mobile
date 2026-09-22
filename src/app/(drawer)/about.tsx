@@ -1,6 +1,7 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
+import { StyleSheet, View } from 'react-native';
+
 import { ThemedText } from '@/components/ui/themed-text';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export default function AboutScreen() {
   const { colors } = useTheme();

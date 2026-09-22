@@ -1,3 +1,7 @@
+import { router } from 'expo-router';
+import { memo } from 'react';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
 import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
@@ -6,9 +10,6 @@ import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ProductCardItem } from '@/types/product';
-import { router } from 'expo-router';
-import { memo } from 'react';
-import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 export interface ProductCardProps {
   product: ProductCardItem;

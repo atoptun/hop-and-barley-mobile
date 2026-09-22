@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { BaseToast, ErrorToast, ToastConfig } from 'react-native-toast-message';
+
 import { useTheme } from '@/context/theme-context';
 
 export function useToastConfig(): ToastConfig {

@@ -1,13 +1,14 @@
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { EmptyState } from '@/components/common/empty-state';
 import { ListHeader } from '@/components/common/list-header';
 import { ProductList } from '@/components/features/catalog/product-list';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProducts } from '@/hooks/use-products';
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface StoreViewProps {
   onFilterPress: () => void;

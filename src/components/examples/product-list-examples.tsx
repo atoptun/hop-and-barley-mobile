@@ -1,8 +1,9 @@
+import { useCallback, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { ProductList } from '@/components/features/catalog/product-list';
 import { Theme, useTheme } from '@/context/theme-context';
 import { Product } from '@/types/product';
-import { useCallback, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
 
 const BASE_PRODUCTS: Omit<Product, 'id'>[] = [
   {

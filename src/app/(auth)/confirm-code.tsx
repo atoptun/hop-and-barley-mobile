@@ -1,6 +1,7 @@
-import { ConfirmCodeView } from '@/components/features/auth/confirm-code-view';
-import { useLocalSearchParams, router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
+
+import { ConfirmCodeView } from '@/components/features/auth/confirm-code-view';
 
 type ConfirmRouteParams = {
   email?: string;

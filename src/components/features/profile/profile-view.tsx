@@ -1,10 +1,11 @@
-import { ThemedText } from '@/components/ui/themed-text';
-import { Spacing } from '@/constants/theme';
-import { Theme, useTheme } from '@/context/theme-context';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { ModalHeader } from '@/components/common/modal-header';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface ProfileViewProps {
   onClose?: VoidFunction;

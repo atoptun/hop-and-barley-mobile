@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
-import { View, TextInput, StyleSheet, Pressable, Platform } from 'react-native';
-import { useTheme } from '@/context/theme-context';
+import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+
 import { ThemedText } from '@/components/ui/themed-text';
+import { useTheme } from '@/context/theme-context';
 
 export interface OtpInputProps {
   length?: number;

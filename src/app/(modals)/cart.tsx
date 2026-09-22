@@ -1,5 +1,6 @@
-import { CartView } from '@/components/features/cart/cart-view';
 import { router } from 'expo-router';
+
+import { CartView } from '@/components/features/cart/cart-view';
 
 export default function CartScreen() {
   const handleCheckout = () => {

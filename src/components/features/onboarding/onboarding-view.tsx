@@ -1,15 +1,16 @@
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
 import { StatusBar } from 'expo-status-bar';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedButton } from '@/components/ui/themed-button';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Spacing } from '@/constants/theme';
-import { PaginationDots } from '@/components/ui/pagination-dots';
-import { ThemedImage } from '@/components/ui/themed-image';
-import { ONBOARDING_STEPS } from '@/data/onboarding-steps';
 import { useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { PaginationDots } from '@/components/ui/pagination-dots';
+import { ThemedButton } from '@/components/ui/themed-button';
+import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedLink } from '@/components/ui/themed-link';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
+import { ONBOARDING_STEPS } from '@/data/onboarding-steps';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const IMAGE_HEIGHT = Math.round(SCREEN_HEIGHT * 0.5);

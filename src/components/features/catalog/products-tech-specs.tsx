@@ -1,9 +1,5 @@
-import { StyleSheet, Pressable } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { ThemedText } from '@/components/ui/themed-text';
 import { useState } from 'react';
-import { Spacing } from '@/constants/theme';
-import { ThemedIcon } from '@/components/ui/themed-icon';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
   FadeIn,
   FadeOut,
@@ -12,6 +8,11 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import { ThemedIcon } from '@/components/ui/themed-icon';
+import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface ProductsTechSpecsProps {
   techSpecs: Record<string, string>;

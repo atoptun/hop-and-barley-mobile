@@ -1,11 +1,13 @@
-import { View, StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { BeerRecipeCardItem } from '@/types/recipe';
-import { memo } from 'react';
 import { router } from 'expo-router';
+import { memo } from 'react';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
+import { RatingBadge } from '@/components/common/rating-badge';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
-import { RatingBadge } from '@/components/common/rating-badge';
+import { Theme, useTheme } from '@/context/theme-context';
+import { BeerRecipeCardItem } from '@/types/recipe';
+
 import { MetricBadge } from './metric-badge';
 
 export interface RecipeCardProps {

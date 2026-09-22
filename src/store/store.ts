@@ -1,19 +1,20 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import reactotron from '@/config/reactotron';
 import authReducer from '@/store/auth/auth-slice';
 import cartReducer from '@/store/cart/cart-slice';
-import reactotron from '@/config/reactotron';
+
 import { recipesApi } from './recipes/recipes-api';
 
 const authPersistConfig = {

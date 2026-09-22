@@ -1,8 +1,9 @@
-import { ThemedInput } from '@/components/ui/themed-input';
-import { Theme, useTheme } from '@/context/theme-context';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+
 import { PasswordInput } from '@/components/ui/password-input';
+import { ThemedInput } from '@/components/ui/themed-input';
+import { Theme, useTheme } from '@/context/theme-context';
 
 export function InputExamples() {
   const { colors } = useTheme();

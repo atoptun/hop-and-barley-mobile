@@ -1,10 +1,12 @@
-import { View, StyleSheet } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
 import { ImageSource } from 'expo-image';
-import { ThemedImage } from '../ui/themed-image';
-import { Carousel, CarouselRef, Pagination } from 'react-native-reanimated-carousel';
 import { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+import { Carousel, CarouselRef, Pagination } from 'react-native-reanimated-carousel';
+
+import { Theme, useTheme } from '@/context/theme-context';
+
+import { ThemedImage } from '../ui/themed-image';
 
 export interface ImageGalleryProps {
   images: (string | number | ImageSource)[];

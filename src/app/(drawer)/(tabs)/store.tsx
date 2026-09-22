@@ -1,5 +1,6 @@
-import { StoreView } from '@/components/features/catalog/store-view';
 import { router } from 'expo-router';
+
+import { StoreView } from '@/components/features/catalog/store-view';
 
 export default function StoreScreen() {
   const handleFilterPress = () => {

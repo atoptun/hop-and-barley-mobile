@@ -1,6 +1,7 @@
-import { ThemeColors, useTheme } from '@/context/theme-context';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { ColorValue } from 'react-native';
+
+import { ThemeColors, useTheme } from '@/context/theme-context';
 
 type MaterialIconName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 

@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+
 import { RecoveryPasswordView } from '@/components/features/auth/recovery-password-view';
 
 export default function RecoveryPasswordScreen() {

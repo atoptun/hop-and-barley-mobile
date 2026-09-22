@@ -1,5 +1,6 @@
-import { Theme, useTheme } from '@/context/theme-context';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
+import { Theme, useTheme } from '@/context/theme-context';
 
 export interface DividerProps {
   marginVertical?: number;

@@ -1,14 +1,16 @@
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { useGetRecipesQuery } from '@/store/recipes/recipes-api';
-import { useRecipesFilters } from '@/hooks/use-recipes-filters';
-import { useRecipes } from '@/hooks/use-recipes';
-import { RecipesList } from './recipes-list';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { EmptyState } from '@/components/common/empty-state';
 import { ListHeader } from '@/components/common/list-header';
-import { useState } from 'react';
+import { Theme, useTheme } from '@/context/theme-context';
+import { useRecipes } from '@/hooks/use-recipes';
+import { useRecipesFilters } from '@/hooks/use-recipes-filters';
+import { useGetRecipesQuery } from '@/store/recipes/recipes-api';
+
+import { RecipesList } from './recipes-list';
 
 export interface RecipesViewProps {}
 

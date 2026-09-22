@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from '@/context/theme-context';
-import { ThemedText } from '@/components/ui/themed-text';
+import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+
 import { ThemedIcon } from '@/components/ui/themed-icon';
+import { ThemedText } from '@/components/ui/themed-text';
+import { useTheme } from '@/context/theme-context';
 
 export type CheckboxSize = 'sm' | 'md' | 'lg';
 

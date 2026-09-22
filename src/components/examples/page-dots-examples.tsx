@@ -1,6 +1,7 @@
+import { StyleSheet, View } from 'react-native';
+
 import { PaginationDots } from '@/components/ui/pagination-dots';
 import { Theme, useTheme } from '@/context/theme-context';
-import { StyleSheet, View } from 'react-native';
 
 export function PageDotsExamples() {
   const { colors } = useTheme();

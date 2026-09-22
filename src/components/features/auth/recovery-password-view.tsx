@@ -1,3 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { z } from 'zod';
+
 import { ModalHeader } from '@/components/common/modal-header';
 import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { ThemedButton } from '@/components/ui/themed-button';
@@ -5,10 +10,6 @@ import { ThemedInput } from '@/components/ui/themed-input';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
-import { z } from 'zod';
 
 const recoverySchema = z.object({
   email: z.email('Please enter a valid email address'),

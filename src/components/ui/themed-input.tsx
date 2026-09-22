@@ -1,6 +1,3 @@
-import { ThemedText } from '@/components/ui/themed-text';
-import { Typography } from '@/constants/typography';
-import { useTheme } from '@/context/theme-context';
 import { useState } from 'react';
 import {
   Pressable,
@@ -11,6 +8,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+import { ThemedText } from '@/components/ui/themed-text';
+import { Typography } from '@/constants/typography';
+import { useTheme } from '@/context/theme-context';
 
 export interface ThemedInputProps extends Omit<TextInputProps, 'style'> {
   title?: string;

@@ -1,5 +1,6 @@
-import { ProfileView } from '@/components/features/profile/profile-view';
 import { router } from 'expo-router';
+
+import { ProfileView } from '@/components/features/profile/profile-view';
 
 export default function ProfileScreen() {
   const handleClose = () => {
