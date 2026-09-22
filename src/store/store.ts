@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from '@/store/auth/auth-slice';
 import cartReducer from '@/store/cart/cart-slice';
 import reactotron from '@/config/reactotron';
+import { recipesApi } from './recipes/recipes-api';
 
 const authPersistConfig = {
   key: 'auth',
@@ -38,6 +39,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   cart: persistReducer(cartPersistConfig, cartReducer),
+  [recipesApi.reducerPath]: recipesApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -49,7 +51,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(recipesApi.middleware),
   enhancers: getDefaultEnhancers => {
     if (__DEV__ && reactotron.createEnhancer) {
       return getDefaultEnhancers().concat(reactotron.createEnhancer());

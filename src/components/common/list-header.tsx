@@ -6,19 +6,19 @@ import { useNavigation } from 'expo-router';
 import { DrawerActions } from 'expo-router/build/react-navigation';
 import { StyleSheet, View } from 'react-native';
 
-export interface StoreHeaderProps {
-  searchQuery: string;
-  onSearchChange: (text: string) => void;
-  onFilterPress: () => void;
-  onSortPress: () => void;
+export interface ListHeaderProps {
+  searchQuery?: string;
+  onSearchChange?: (text: string) => void;
+  onFilterPress?: () => void;
+  onSortPress?: () => void;
 }
 
-export function StoreHeader({
-  searchQuery,
+export function ListHeader({
+  searchQuery = '',
   onSearchChange,
   onFilterPress,
   onSortPress,
-}: StoreHeaderProps) {
+}: ListHeaderProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const navigation = useNavigation();
@@ -30,9 +30,11 @@ export function StoreHeader({
   return (
     <View style={styles.container}>
       <IconButton iconName="menu" iconSize={24} onPress={handleTogleDrawer} />
-      <SearchInput value={searchQuery} onChange={onSearchChange} />
-      <IconButton iconName="filter-variant" iconSize={24} onPress={onFilterPress} />
-      <IconButton iconName="swap-vertical" iconSize={24} onPress={onSortPress} />
+      {onSearchChange && <SearchInput value={searchQuery} onChange={onSearchChange} />}
+      {onFilterPress && (
+        <IconButton iconName="filter-variant" iconSize={24} onPress={onFilterPress} />
+      )}
+      {onSortPress && <IconButton iconName="swap-vertical" iconSize={24} onPress={onSortPress} />}
     </View>
   );
 }
@@ -43,6 +45,7 @@ const createStyles = (colors: Theme) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: Spacing.three,
-      padding: Spacing.four,
+      // padding: Spacing.four,
+      paddingBottom: Spacing.four,
     },
   });

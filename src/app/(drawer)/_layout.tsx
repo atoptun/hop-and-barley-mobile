@@ -55,6 +55,17 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
+        name="profile"
+        options={{
+          drawerLabel: 'Profile',
+          title: 'Orders',
+          drawerIcon: ({ color, size }) => (
+            <ThemedIcon name="account" size={size} customColor={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
         name="orders"
         options={{
           drawerLabel: 'My orders',

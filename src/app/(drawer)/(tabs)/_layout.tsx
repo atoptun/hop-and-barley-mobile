@@ -40,6 +40,22 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
+        name="recipes"
+        options={{
+          title: 'Recipes',
+          tabBarIcon: ({ color, focused, size }) => {
+            return (
+              <ThemedIcon
+                name={focused ? 'book-open-variant' : 'book-open-variant-outline'}
+                customColor={color}
+                size={size}
+              />
+            );
+          },
+        }}
+      />
+
+      <Tabs.Screen
         name="cart-tab"
         options={{
           title: 'Cart',
@@ -51,18 +67,6 @@ export default function TabsLayout() {
           tabPress: e => {
             e.preventDefault();
             router.push('/(modals)/cart');
-          },
-        }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, focused }) => {
-            return (
-              <ThemedIcon name={focused ? 'account' : 'account-outline'} customColor={color} />
-            );
           },
         }}
       />

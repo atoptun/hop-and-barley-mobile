@@ -1,13 +1,13 @@
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import { useTheme, Theme } from '@/context/theme-context';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StoreHeader } from '@/components/features/store/store-header';
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { ProductList } from '@/components/features/catalog/product-list';
-import { useProducts } from '@/hooks/use-products';
-import { Spacing } from '@/constants/theme';
 import { EmptyState } from '@/components/common/empty-state';
+import { ListHeader } from '@/components/common/list-header';
+import { ProductList } from '@/components/features/catalog/product-list';
+import { Spacing } from '@/constants/theme';
+import { Theme, useTheme } from '@/context/theme-context';
+import { useProducts } from '@/hooks/use-products';
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface StoreViewProps {
   onFilterPress: () => void;
@@ -36,12 +36,6 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <StoreHeader
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onFilterPress={onFilterPress}
-        onSortPress={handleSortPress}
-      />
       {isLoading && products.length === 0 ? (
         <View style={styles.center}>
           <ActivityIndicator size="large" color={colors.primary} />
@@ -58,6 +52,14 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
       ) : (
         <ProductList
           products={products}
+          ListHeaderComponent={
+            <ListHeader
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              onFilterPress={onFilterPress}
+              onSortPress={handleSortPress}
+            />
+          }
           ListEmptyComponent={
             <EmptyState
               iconName="magnify"
