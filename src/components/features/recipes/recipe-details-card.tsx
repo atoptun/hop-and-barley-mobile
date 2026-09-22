@@ -6,6 +6,8 @@ import { Spacing } from '@/constants/theme';
 import { ThemedText } from '@/components/ui/themed-text';
 import { RatingBadge } from '@/components/common/rating-badge';
 import { MetricBadge } from './metric-badge';
+import { router } from 'expo-router';
+import { ImageGallery } from '@/components/common/image-gallery';
 
 export interface RecipeDetailsCardProps {
   recipe: BeerRecipe;
@@ -17,19 +19,18 @@ export function RecipeDetailsCard({ recipe }: RecipeDetailsCardProps) {
 
   if (!recipe) return null;
 
-  // console.info('recipe', recipe);
-
-  const imagePath =
-    typeof recipe.gallery[0] === 'string' ? { uri: recipe.gallery[0] } : recipe.gallery[0];
-
   const handleIngredientPress = (slug: string) => {
-    console.info('Press ingredient', slug);
+    router.push({
+      pathname: '/product/[slug]',
+      params: { slug },
+    });
   };
 
   return (
     <View style={styles.container}>
-      {/* TODO: replace to gallery */}
-      <ThemedImage source={imagePath} style={styles.image} contentFit="cover" transition={200} />
+      <View style={styles.gallery}>
+        <ImageGallery images={recipe.gallery} />
+      </View>
 
       <View style={styles.content}>
         <View style={styles.header}>
@@ -140,10 +141,10 @@ const createStyles = (colors: Theme) =>
       flex: 1,
       backgroundColor: colors.background,
     },
-    image: {
+    gallery: {
       flex: 1,
       width: '100%',
-      height: 300,
+      height: 350,
     },
     content: {
       padding: Spacing.six,
