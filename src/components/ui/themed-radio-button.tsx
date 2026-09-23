@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { memo, useEffect, useRef } from 'react';
+import { Animated, Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
@@ -24,6 +24,17 @@ export const ThemedRadioButton = memo(function ThemedRadioButton({
 }: ThemedRadioButtonProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+
+  const animatedScale = useRef(new Animated.Value(selected ? 1 : 0)).current;
+
+  useEffect(() => {
+    Animated.spring(animatedScale, {
+      toValue: selected ? 1 : 0,
+      tension: 50,
+      friction: 8,
+      useNativeDriver: true,
+    }).start();
+  }, [selected, animatedScale]);
 
   return (
     <Pressable
@@ -57,7 +68,16 @@ export const ThemedRadioButton = memo(function ThemedRadioButton({
       <View
         style={[styles.outerCircle, { borderColor: selected ? colors.primary : colors.border }]}
       >
-        {selected && <View style={[styles.innerCircle, { backgroundColor: colors.primary }]} />}
+        <Animated.View
+          style={[
+            styles.innerCircle,
+            {
+              backgroundColor: colors.primary,
+              opacity: animatedScale,
+              transform: [{ scale: animatedScale }],
+            },
+          ]}
+        />
       </View>
     </Pressable>
   );

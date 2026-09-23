@@ -27,12 +27,12 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
 
   const dispatch = useAppDispatch();
 
-  const { data: recipe, isLoading, error } = useGetRecipeBySlugQuery(slug);
+  const { data: recipe, isLoading, isFetching, error, refetch } = useGetRecipeBySlugQuery(slug);
 
   const errorText = getErrorText(error);
 
   const handleReload = () => {
-    console.info('Recipe reload');
+    refetch();
   };
 
   const handleAddToCart = () => {
@@ -41,9 +41,12 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
       Toast.show({
         type: 'success',
         text1: 'All ingredients have been added to the cart.',
+        position: 'bottom',
       });
     }
   };
+
+  const showLoader = isLoading || (isFetching && !recipe);
 
   return (
     <View style={styles.container}>
@@ -54,7 +57,7 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
         onPress={onClose}
         style={styles.closeButton}
       />
-      {isLoading ? (
+      {showLoader ? (
         <View style={styles.centered}>
           <ActivityIndicator size={'large'} color={colors.primary} />
         </View>
