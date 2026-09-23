@@ -46,7 +46,7 @@ const createStyles = (colors: Theme) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: Spacing.three,
-      // padding: Spacing.four,
-      paddingBottom: Spacing.four,
+      paddingHorizontal: Spacing.four,
+      paddingVertical: Spacing.two,
     },
   });

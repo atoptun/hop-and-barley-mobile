@@ -35,7 +35,14 @@ export interface BeerRecipeCardItem {
   short_description: string;
 }
 
+export type RecipeSortBy = 'title' | 'average_rating';
+export type SortOrder = 'asc' | 'desc';
+
 export interface BeerRecipesFilters {
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
+  search?: string;
+  sortBy?: RecipeSortBy;
+  order?: SortOrder;
+  difficulty?: Difficulty;
 }

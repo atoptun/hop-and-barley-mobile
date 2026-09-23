@@ -45,12 +45,36 @@ function AppContent() {
           }}
         />
 
-        {/* Filters */}
+        {/* Store filters */}
         <Stack.Screen
-          name="(modals)/filters"
+          name="(modals)/store-filters"
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',
+          }}
+        />
+
+        {/* Recipes filters */}
+        <Stack.Screen
+          name="(modals)/recipes-filters"
+          options={{
+            presentation: 'formSheet',
+            headerShown: false,
+            sheetAllowedDetents: [0.4],
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 20,
+          }}
+        />
+
+        {/* Recipes filters */}
+        <Stack.Screen
+          name="(modals)/recipes-sort"
+          options={{
+            presentation: 'formSheet',
+            headerShown: false,
+            sheetAllowedDetents: [0.35],
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 20,
           }}
         />
 

@@ -61,7 +61,11 @@ export const recipesApi = createApi({
         return filters;
       },
       merge: (currentCache, newItems, { arg }) => {
-        if (arg.page === 1) return newItems;
+        if (arg.page === 1) {
+          currentCache.items = newItems.items;
+          currentCache.hasMore = newItems.hasMore;
+          return;
+        }
 
         const existingIds = new Set(currentCache.items.map(item => item.slug));
         const uniqueIncoming = newItems.items.filter(item => !existingIds.has(item.slug));

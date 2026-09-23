@@ -14,8 +14,8 @@ import {
 import reactotron from '@/config/reactotron';
 import authReducer from '@/store/auth/auth-slice';
 import cartReducer from '@/store/cart/cart-slice';
-
-import { recipesApi } from './recipes/recipes-api';
+import { recipesApi } from '@/store/recipes/recipes-api';
+import { recipesFilterReducer } from '@/store/recipes/recipes-filter-slice';
 
 const authPersistConfig = {
   key: 'auth',
@@ -41,6 +41,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   cart: persistReducer(cartPersistConfig, cartReducer),
   [recipesApi.reducerPath]: recipesApi.reducer,
+  recipesFilter: recipesFilterReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

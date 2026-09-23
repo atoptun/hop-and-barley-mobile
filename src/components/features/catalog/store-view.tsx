@@ -37,6 +37,12 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <ListHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onFilterPress={onFilterPress}
+        onSortPress={handleSortPress}
+      />
       {isLoading && products.length === 0 ? (
         <View style={styles.center}>
           <ActivityIndicator size="large" color={colors.primary} />
@@ -53,14 +59,6 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
       ) : (
         <ProductList
           products={products}
-          ListHeaderComponent={
-            <ListHeader
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onFilterPress={onFilterPress}
-              onSortPress={handleSortPress}
-            />
-          }
           ListEmptyComponent={
             <EmptyState
               iconName="magnify"

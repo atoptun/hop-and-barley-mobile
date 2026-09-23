@@ -1,5 +1,5 @@
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -8,51 +8,41 @@ import { ListHeader } from '@/components/common/list-header';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useRecipes } from '@/hooks/use-recipes';
 import { useRecipesFilters } from '@/hooks/use-recipes-filters';
-import { useGetRecipesQuery } from '@/store/recipes/recipes-api';
 
 import { RecipesList } from './recipes-list';
 
-export interface RecipesViewProps {}
-
-export function RecipesView({}: RecipesViewProps) {
+export function RecipesView() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const { search, setSearch, resetFilters } = useRecipesFilters();
 
-  const { filters } = useRecipesFilters();
-
-  const { recipes, isFetching, error } = useRecipes();
-
-  useGetRecipesQuery(filters);
-
-  const handleReload = () => {
-    console.info('Recipes list reload');
-  };
-
-  const handleClearFilters = () => {
-    console.info('Clear recipes filters');
-  };
+  const { recipes, error, isInitialLoading, isLoadingMore, isRefreshing, loadMore, refresh } =
+    useRecipes();
 
   const handleFilterPress = () => {
-    console.info('Recipes filter pressed');
+    router.push('/recipes-filters');
   };
 
   const handleSortPress = () => {
-    console.info('Recipes sort pressed');
+    router.push('/recipes-sort');
+  };
+
+  const handleClearFilters = () => {
+    resetFilters();
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {/* <ListHeader
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+      <ListHeader
+        searchQuery={search}
+        onSearchChange={setSearch}
         onFilterPress={handleFilterPress}
         onSortPress={handleSortPress}
-      /> */}
-      {isFetching && recipes.length === 0 ? (
+      />
+      {isInitialLoading ? (
         <View style={styles.centered}>
           <ActivityIndicator size={'large'} color={colors.primary} />
         </View>
@@ -62,20 +52,16 @@ export function RecipesView({}: RecipesViewProps) {
             iconName="alert-octagon-outline"
             text={error}
             actionTitle="Reload"
-            onAction={handleReload}
+            onAction={refresh}
           />
         </View>
       ) : (
         <RecipesList
           recipes={recipes}
-          ListHeaderComponent={
-            <ListHeader
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onFilterPress={handleFilterPress}
-              onSortPress={handleSortPress}
-            />
-          }
+          onLoadMore={loadMore}
+          onRefresh={refresh}
+          isRefreshing={isRefreshing}
+          isLoadingMore={isLoadingMore}
           ListEmptyComponent={
             <EmptyState
               iconName="magnify"
