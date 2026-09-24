@@ -12,6 +12,7 @@ export default function EntryScreen() {
     async function prepareApp() {
       try {
         const hasOnboarded = await appSettings.onboarding.get();
+        // const hasOnboarded = false;
 
         if (!hasOnboarded) {
           setTarget('/(onboarding)');
