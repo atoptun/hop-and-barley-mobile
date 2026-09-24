@@ -1,6 +1,8 @@
 import { Redirect, SplashScreen } from 'expo-router';
 import { useEffect, useState } from 'react';
 
+import { appSettings } from '@/services/storage/app-settings';
+
 type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/store';
 
 export default function EntryScreen() {
@@ -9,8 +11,7 @@ export default function EntryScreen() {
   useEffect(() => {
     async function prepareApp() {
       try {
-        // TODO: check onboarded settings
-        const hasOnboarded = true;
+        const hasOnboarded = await appSettings.onboarding.get();
 
         if (!hasOnboarded) {
           setTarget('/(onboarding)');

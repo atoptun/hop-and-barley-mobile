@@ -5,8 +5,6 @@ import { updateRecipe } from '@/utils/recipe';
 
 const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
 
-console.info(baseUrl);
-
 interface RecipesApiList {
   items: BeerRecipe[];
   hasMore: boolean;

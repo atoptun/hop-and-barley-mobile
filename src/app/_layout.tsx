@@ -113,14 +113,14 @@ export default function RootLayout() {
   }
 
   return (
-    <StrictMode>
-      <Provider store={store}>
-        <PersistGate persistor={persistor} loading={null}>
-          <ThemeProvider>
-            <AppContent />
-          </ThemeProvider>
-        </PersistGate>
-      </Provider>
-    </StrictMode>
+    // <StrictMode>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <ThemeProvider>
+          <AppContent />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
+    // </StrictMode>
   );
 }

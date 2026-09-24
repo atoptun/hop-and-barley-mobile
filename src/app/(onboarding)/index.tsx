@@ -1,12 +1,11 @@
 import { router } from 'expo-router';
 
 import { OnboardingView } from '@/components/features/onboarding/onboarding-view';
+import { appSettings } from '@/services/storage/app-settings';
 
 export default function OnboardingScreen() {
-  const handleOnFinish = (isSkip: boolean) => {
-    if (!isSkip) {
-      // TODO: save the flag in settings
-    }
+  const handleOnFinish = async () => {
+    await appSettings.onboarding.set(true);
     router.replace('/(auth)/login');
   };
 

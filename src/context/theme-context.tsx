@@ -1,10 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SystemUI from 'expo-system-ui';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Platform, StatusBar } from 'react-native';
 
 import { ColorKey, Colors, Theme, ThemeColors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { appSettings } from '@/services/storage/app-settings';
 
 export type { ColorKey, Theme, ThemeColors };
 
@@ -18,8 +18,6 @@ interface ThemeContextValue {
   setThemeMode: (mode: ThemeMode) => void;
 }
 
-const STORAGE_KEY = 'settings:theme_mode';
-
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -28,37 +26,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    let ignore = false;
-
     async function loadTheme() {
-      try {
-        const saved = await AsyncStorage.getItem(STORAGE_KEY);
-        if (!ignore && (saved === 'light' || saved === 'dark' || saved === 'system')) {
-          setModeState(saved);
-        }
-      } catch (error) {
-        console.warn('Failed to load theme from storage', error);
-      } finally {
-        if (!ignore) {
-          setIsReady(true);
-        }
-      }
+      const saved = await appSettings.themeMode.get();
+      setModeState(saved);
+      setIsReady(true);
     }
 
-    loadTheme();
-
-    return () => {
-      ignore = true;
-    };
+    void loadTheme();
   }, []);
 
   const setThemeMode = async (mode: ThemeMode) => {
     setModeState(mode);
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, mode);
-    } catch (error) {
-      console.warn('Failed to save theme to storage', error);
-    }
+    await appSettings.themeMode.set(mode);
   };
 
   const activeScheme = themeMode === 'system' ? deviceScheme : themeMode;
@@ -98,7 +77,7 @@ export function useTheme() {
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return { colors: context.colors };
+  return { colors: context.colors, isDart: context.isDark };
 }
 
 export function useThemeController() {
