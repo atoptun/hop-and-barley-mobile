@@ -1,12 +1,15 @@
-import { Redirect, SplashScreen } from 'expo-router';
+import { Href, Redirect, SplashScreen } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 import { appSettings } from '@/services/storage/app-settings';
-
-type TargetRoute = '/(onboarding)' | '/(auth)/login' | '/store';
+import { selectAuthUser } from '@/store/auth/auth-selectors';
+import { restoreSessionThunk } from '@/store/auth/auth-thunks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export default function EntryScreen() {
-  const [target, setTarget] = useState<TargetRoute | null>(null);
+  const dispatch = useAppDispatch();
+  const [target, setTarget] = useState<Href | null>(null);
+  const user = useAppSelector(selectAuthUser);
 
   useEffect(() => {
     async function prepareApp() {
@@ -19,10 +22,12 @@ export default function EntryScreen() {
           return;
         }
 
-        // TODO: check auth token
-        const hasAuthToken = true;
+        await dispatch(restoreSessionThunk()).unwrap();
 
-        if (!hasAuthToken) {
+        const needAuth = !user || !(await appSettings.guestMode.get());
+        // const needAuth = true;
+
+        if (needAuth) {
           setTarget('/(auth)/login');
         } else {
           setTarget('/store');
@@ -35,7 +40,7 @@ export default function EntryScreen() {
     }
 
     prepareApp();
-  }, []);
+  }, [dispatch, user]);
 
   if (!target) return null;
 

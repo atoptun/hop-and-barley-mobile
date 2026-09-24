@@ -2,7 +2,15 @@ import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolki
 
 import { User } from '@/api/auth-service';
 
-import { loginThunk, logoutThunk, registerThunk, restoreSessionThunk } from './auth-thunks';
+import {
+  loginThunk,
+  logoutThunk,
+  recoveryPasswordThunk,
+  registerThunk,
+  resendCodeThunk,
+  restoreSessionThunk,
+  verifyCodeThunk,
+} from './auth-thunks';
 
 interface AuthState {
   user: User | null;
@@ -45,6 +53,11 @@ export const authSlice = createSlice({
         state.error = null;
         state.isGuest = true;
       })
+
+      .addCase(recoveryPasswordThunk.fulfilled, state => {})
+
+      .addCase(verifyCodeThunk.fulfilled, state => {})
+      .addCase(resendCodeThunk.fulfilled, state => {})
 
       .addCase(restoreSessionThunk.pending, state => {
         state.isRestoringToken = true;

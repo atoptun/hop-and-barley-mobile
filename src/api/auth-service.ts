@@ -15,6 +15,10 @@ export interface LogoutResponse {
   result: boolean;
 }
 
+export interface RecoveryPasswordResponse {
+  result: boolean;
+}
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const authApi = {
@@ -72,5 +76,27 @@ export const authApi = {
     if (!token) throw new Error('Unauthorized');
 
     return { result: true };
+  },
+
+  recoveryPassword: async (email: string): Promise<RecoveryPasswordResponse> => {
+    await delay(500);
+
+    return { result: true };
+  },
+
+  verifyCode: async (code: string): Promise<void> => {
+    await delay(500);
+
+    if (code !== '0000') {
+      throw new Error('Wrong code');
+    }
+
+    return;
+  },
+
+  resendCode: async (): Promise<void> => {
+    await delay(500);
+
+    return;
   },
 };

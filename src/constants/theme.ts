@@ -41,6 +41,10 @@ export const Palette = {
   warningLight: '#FFF4E4',
   errorDark: '#ED3241',
   errorLight: '#FFE2E5',
+
+  // overlay
+  overlayDark: 'rgba(0, 0, 0, 0.6)',
+  overlayLight: 'rgba(255, 255, 255, 0.65)',
 } as const;
 
 export const Colors = {
@@ -76,6 +80,9 @@ export const Colors = {
     warningBg: Palette.warningLight,
     error: Palette.errorDark,
     errorBg: Palette.errorLight,
+
+    // overlay
+    overlay: Palette.overlayLight,
   },
   dark: {
     // Primary CTA & Highlights
@@ -109,6 +116,9 @@ export const Colors = {
     warningBg: Palette.neutralDark2,
     error: Palette.errorDark,
     errorBg: Palette.neutralDark2,
+
+    // overlay
+    overlay: Palette.overlayDark,
   },
 } as const;
 

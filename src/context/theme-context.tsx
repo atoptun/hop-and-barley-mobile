@@ -77,7 +77,7 @@ export function useTheme() {
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return { colors: context.colors, isDart: context.isDark };
+  return { colors: context.colors, isDark: context.isDark };
 }
 
 export function useThemeController() {

@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
+import { OverlayLoader } from '@/components/common/overlay-loader';
 import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ThemedButton } from '@/components/ui/themed-button';
@@ -12,8 +13,10 @@ import { ThemedLink } from '@/components/ui/themed-link';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
+import { selectAuthIsLoading } from '@/store/auth/auth-selectors';
+import { useAppSelector } from '@/store/hooks';
 import { LoginData } from '@/types/auth';
-import { hasErrorMessage } from '@/utils/utils';
+import { hasErrorMessage } from '@/utils/errors';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const IMAGE_HEIGHT = Math.round(SCREEN_HEIGHT * 0.28);
@@ -34,6 +37,8 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
+  const authIsLoading = useAppSelector(selectAuthIsLoading);
+
   const {
     control,
     handleSubmit,
@@ -45,6 +50,8 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
     defaultValues: { email: '', password: '' },
     mode: 'onBlur',
   });
+
+  const showLoader = authIsLoading || isSubmitting;
 
   const onSubmit = async ({ email, password }: LoginFormValues) => {
     clearErrors('root');
@@ -62,6 +69,7 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
     <SafeKeyboardView
       useSafeArea={false}
       statusBarStyle="light"
+      safeAreaProps={{ style: { position: 'relative' } }}
       scrollContentStyles={styles.container}
     >
       <ThemedImage source={require('@/assets/images/login.webp')} style={styles.image} />
@@ -120,6 +128,8 @@ export function LoginView({ onLogin, onGuest }: LoginViewProps) {
           </ThemedLink>
         </View>
       </View>
+
+      {showLoader && <OverlayLoader />}
     </SafeKeyboardView>
   );
 }

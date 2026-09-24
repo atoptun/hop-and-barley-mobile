@@ -1,10 +1,12 @@
 import { router } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 import { RegisterView } from '@/components/features/auth/register-view';
+import { appSettings } from '@/services/storage/app-settings';
 import { registerThunk } from '@/store/auth/auth-thunks';
 import { useAppDispatch } from '@/store/hooks';
 import { RegisterData } from '@/types/auth';
-import { hasErrorMessage } from '@/utils/utils';
+import { getErrorText } from '@/utils/errors';
 
 export default function AuthRegsterScreen() {
   const dispatch = useAppDispatch();
@@ -13,20 +15,19 @@ export default function AuthRegsterScreen() {
     console.info(`Refister: data ${JSON.stringify(data)}`);
     try {
       await dispatch(registerThunk(data)).unwrap();
-      // toast.success('Nice to see you');
-      router.replace('/store');
-
-      // TODO: after implementation confirmation
-      // router.push({ pathname: '/(auth)/confirm-code', params: { email: data.email } });
+      router.push({ pathname: '/(auth)/confirm-code', params: { email: data.email } });
     } catch (error) {
-      if (hasErrorMessage(error)) {
-        // toast.error('Something went wrong...');
-      }
+      Toast.show({
+        type: 'error',
+        text1: getErrorText(error) || 'Something went wrong. Try later...',
+      });
+
       throw error;
     }
   };
 
-  const handleGuest = () => {
+  const handleGuest = async () => {
+    await appSettings.guestMode.set(true);
     router.replace('/store');
   };
 

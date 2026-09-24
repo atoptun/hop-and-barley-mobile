@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
+import { OverlayLoader } from '@/components/common/overlay-loader';
 import { SafeKeyboardView } from '@/components/common/safe-keyboard-view';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ThemedButton } from '@/components/ui/themed-button';
@@ -12,8 +13,10 @@ import { ThemedLink } from '@/components/ui/themed-link';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
+import { selectAuthIsLoading } from '@/store/auth/auth-selectors';
+import { useAppSelector } from '@/store/hooks';
 import { RegisterData } from '@/types/auth';
-import { hasErrorMessage } from '@/utils/utils';
+import { hasErrorMessage } from '@/utils/errors';
 
 const registerSchema = z
   .object({
@@ -47,6 +50,8 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
+  const authIsLoading = useAppSelector(selectAuthIsLoading);
+
   const {
     control,
     handleSubmit,
@@ -64,6 +69,8 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
     },
     mode: 'onBlur',
   });
+
+  const showLoader = authIsLoading || isSubmitting;
 
   const submit = async ({ name, email, password, confirmPassword }: RegisterFormValues) => {
     clearErrors();
@@ -83,7 +90,10 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
   };
 
   return (
-    <SafeKeyboardView scrollContentStyles={styles.content}>
+    <SafeKeyboardView
+      safeAreaProps={{ style: { position: 'relative' } }}
+      scrollContentStyles={styles.content}
+    >
       <View style={styles.header}>
         <ThemedText variant="h3">Sign up</ThemedText>
         <ThemedText variant="bodyS" color="textSecondary">
@@ -192,6 +202,8 @@ export function RegisterView({ onRegister, onGuest }: RegisterViewProps) {
           Continue as Guest
         </ThemedLink>
       </View>
+
+      {showLoader && <OverlayLoader />}
     </SafeKeyboardView>
   );
 }

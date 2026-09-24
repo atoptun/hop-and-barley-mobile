@@ -5,7 +5,7 @@ import { useGetRecipesQuery } from '@/store/recipes/recipes-api';
 import { nextPage, resetPage, setIsRefreshing } from '@/store/recipes/recipes-filter-slice';
 import { RootState } from '@/store/store';
 import { BeerRecipesFilters } from '@/types/recipe';
-import { getErrorText } from '@/utils/utils';
+import { getErrorText } from '@/utils/errors';
 
 export const useRecipes = () => {
   const dispatch = useAppDispatch();

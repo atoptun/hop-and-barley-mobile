@@ -1,6 +1,6 @@
 import { authApi, AuthResponse, User } from '@/api/auth-service';
+import { clearToken, getToken, saveToken } from '@/services/storage/secure-storage';
 import { LoginData, RegisterData } from '@/types/auth';
-import { clearToken, getToken, saveToken } from '@/utils/secure-storage';
 
 import { createAppAsyncThunk } from '../typed-thunk';
 
@@ -44,5 +44,26 @@ export const logoutThunk = createAppAsyncThunk<void, void>('auth/logout', async 
 
   await authApi.logout(token);
   await clearToken();
+  return;
+});
+
+export const recoveryPasswordThunk = createAppAsyncThunk<void, string>(
+  'auth/recoveryPassword',
+  async (email: string) => {
+    await authApi.recoveryPassword(email);
+    return;
+  }
+);
+
+export const verifyCodeThunk = createAppAsyncThunk<void, string>(
+  'auth/verifyCode',
+  async (code: string) => {
+    await authApi.verifyCode(code);
+    return;
+  }
+);
+
+export const resendCodeThunk = createAppAsyncThunk<void, void>('auth/resendCode', async () => {
+  await authApi.resendCode();
   return;
 });

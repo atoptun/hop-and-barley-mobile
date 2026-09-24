@@ -11,7 +11,7 @@ import { Theme, useTheme } from '@/context/theme-context';
 import { addListToCart } from '@/store/cart/cart-slice';
 import { useAppDispatch } from '@/store/hooks';
 import { useGetRecipeBySlugQuery } from '@/store/recipes/recipes-api';
-import { getErrorText } from '@/utils/utils';
+import { getErrorText } from '@/utils/errors';
 
 import { RecipeDetailsCard } from './recipe-details-card';
 

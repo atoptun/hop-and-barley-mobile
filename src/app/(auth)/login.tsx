@@ -1,29 +1,35 @@
 import { router } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 import { LoginView } from '@/components/features/auth/login-view';
+import { appSettings } from '@/services/storage/app-settings';
 import { loginThunk } from '@/store/auth/auth-thunks';
 import { useAppDispatch } from '@/store/hooks';
 import { LoginData } from '@/types/auth';
-import { hasErrorMessage } from '@/utils/utils';
+import { getErrorText } from '@/utils/errors';
 
 export default function AuthLoginScreen() {
   const dispatch = useAppDispatch();
+
   const handleLogin = async (creds: LoginData) => {
-    // TODO: handle login
     try {
       await dispatch(loginThunk(creds)).unwrap();
-      // show success message
+      Toast.show({
+        type: 'success',
+        text1: 'Authorization saccessful',
+      });
       router.replace('/store');
     } catch (error) {
-      if (hasErrorMessage(error)) {
-        // show error message
-        // console.info('err', error);
-      }
+      Toast.show({
+        type: 'error',
+        text1: getErrorText(error) || 'Something went wrong. Try later...',
+      });
       throw error;
     }
   };
 
-  const handleGuest = () => {
+  const handleGuest = async () => {
+    await appSettings.guestMode.set(true);
     router.replace('/store');
   };
 

@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { ThemeSelector } from '@/components/common/theme-selector';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectUser } from '@/store/auth/auth-selectors';
+import { selectAuthUser } from '@/store/auth/auth-selectors';
 
 interface CustomDrawerContentProps extends DrawerContentComponentProps {
   onLoginPress?: VoidFunction;
@@ -26,7 +26,7 @@ export function CustomDrawerContent({
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const user = useSelector(selectUser);
+  const user = useSelector(selectAuthUser);
 
   return (
     <DrawerContentScrollView

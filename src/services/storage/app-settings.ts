@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const STORAGE_KEYS = {
   HAS_ONBOARDED: 'settings:has_onboarded',
   THEME_MODE: 'settings:theme_mode',
+  GUEST_MODE: 'settings:guest_mode',
 } as const;
 
 type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
@@ -10,6 +11,7 @@ type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
 export const appSettings = {
   onboarding: createSetting<boolean>(STORAGE_KEYS.HAS_ONBOARDED, false),
   themeMode: createSetting<'light' | 'dark' | 'system'>(STORAGE_KEYS.THEME_MODE, 'system'),
+  guestMode: createSetting<boolean>(STORAGE_KEYS.GUEST_MODE, false),
 };
 
 // private
