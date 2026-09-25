@@ -12,9 +12,10 @@ import {
 } from 'redux-persist';
 
 import reactotron from '@/config/reactotron';
+import { baseApi } from '@/store/api/base-api';
 import authReducer from '@/store/auth/auth-slice';
 import cartReducer from '@/store/cart/cart-slice';
-import { recipesApi } from '@/store/recipes/recipes-api';
+import { productsFilterReducer } from '@/store/products/products-filter-slice';
 import { recipesFilterReducer } from '@/store/recipes/recipes-filter-slice';
 
 const authPersistConfig = {
@@ -40,8 +41,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   cart: persistReducer(cartPersistConfig, cartReducer),
-  [recipesApi.reducerPath]: recipesApi.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
   recipesFilter: recipesFilterReducer,
+  productsFilter: productsFilterReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -53,7 +55,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(recipesApi.middleware),
+    }).concat(baseApi.middleware),
   enhancers: getDefaultEnhancers => {
     if (__DEV__ && reactotron.createEnhancer) {
       return getDefaultEnhancers().concat(reactotron.createEnhancer());

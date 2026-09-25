@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -9,6 +8,7 @@ import { ProductList } from '@/components/features/catalog/product-list';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { useProducts } from '@/hooks/use-products';
+import { useProductsFilters } from '@/hooks/use-products-filters';
 
 export interface StoreViewProps {
   onFilterPress: () => void;
@@ -19,31 +19,23 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
-  const { products, isLoading, error } = useProducts();
+  const { search, setSearch, resetFilters } = useProductsFilters();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const { products, isInitialLoading, isLoadingMore, isRefreshing, error, loadMore, refresh } =
+    useProducts();
 
   const handleSortPress = () => {};
-
-  const handleReload = () => {
-    //refetch
-    console.info('Reload store');
-  };
-
-  const handleClearFilters = () => {
-    console.info('Clear filters');
-  };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <ListHeader
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        searchQuery={search}
+        onSearchChange={setSearch}
         onFilterPress={onFilterPress}
         onSortPress={handleSortPress}
       />
-      {isLoading && products.length === 0 ? (
+      {isInitialLoading ? (
         <View style={styles.center}>
           <ActivityIndicator size="large" color={colors.primary} />
         </View>
@@ -53,18 +45,22 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
             iconName="alert-octagon-outline"
             text={error}
             actionTitle="Reload"
-            onAction={handleReload}
+            onAction={refresh}
           />
         </View>
       ) : (
         <ProductList
           products={products}
+          isLoadingMore={isLoadingMore}
+          isRefreshing={isRefreshing}
+          onLoadMore={loadMore}
+          onRefresh={refresh}
           ListEmptyComponent={
             <EmptyState
               iconName="magnify"
               text="No products found matching your criteria."
               actionTitle="Clear filters"
-              onAction={handleClearFilters}
+              onAction={resetFilters}
             />
           }
         />

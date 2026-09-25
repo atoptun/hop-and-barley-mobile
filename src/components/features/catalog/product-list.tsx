@@ -1,24 +1,36 @@
 import { useCallback } from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, RefreshControl, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 
+import { ListFooterLoader } from '@/components/common/list-footer-loader';
 import { ProductCard } from '@/components/features/catalog/product-card';
 import { Divider } from '@/components/ui/divider';
+import { useTheme } from '@/context/theme-context';
 import { ProductCardItem } from '@/types/product';
 
 export interface ProductListProps {
   products: ProductCardItem[];
-  onProductPress?: (slug: string) => void;
   ListHeaderComponent?: React.ReactElement;
   ListEmptyComponent?: React.ReactElement;
+  onProductPress?: (slug: string) => void;
+  onLoadMore?: VoidFunction;
+  onRefresh?: VoidFunction;
+  isRefreshing?: boolean;
+  isLoadingMore?: boolean;
 }
 
 export function ProductList({
   products,
-  onProductPress,
   ListHeaderComponent,
   ListEmptyComponent,
+  onProductPress,
+  onLoadMore,
+  onRefresh,
+  isRefreshing = false,
+  isLoadingMore = false,
 }: ProductListProps) {
+  const { colors } = useTheme();
+
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<ProductCardItem>) => {
       const isLastItem = index === products.length - 1;
@@ -45,6 +57,11 @@ export function ProductList({
 
   const keyExtractor = useCallback((item: ProductCardItem) => item.slug, []);
 
+  const renderFooter = useCallback(() => {
+    if (!isLoadingMore) return null;
+    return <ListFooterLoader />;
+  }, [isLoadingMore]);
+
   return (
     <FlatList
       data={products}
@@ -53,6 +70,19 @@ export function ProductList({
       contentContainerStyle={styles.listContent}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
+      ListFooterComponent={renderFooter}
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.5}
+      refreshControl={
+        onRefresh && (
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
+          />
+        )
+      }
       initialNumToRender={8}
       maxToRenderPerBatch={10}
       windowSize={7}

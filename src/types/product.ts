@@ -23,3 +23,14 @@ export interface ProductCardItem {
   price_tag: string;
   stock: number;
 }
+
+export type ProductsSortBy = 'title' | 'average_rating';
+export type SortOrder = 'asc' | 'desc';
+
+export interface ProductsFilters {
+  page: number;
+  limit: number;
+  search?: string;
+  sortBy?: ProductsSortBy;
+  order?: SortOrder;
+}

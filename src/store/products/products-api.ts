@@ -1,17 +1,17 @@
 import { baseApi } from '@/store/api/base-api';
-import { BeerRecipe, BeerRecipesFilters } from '@/types/recipe';
-import { updateRecipe } from '@/utils/recipe';
+import { Product, ProductsFilters } from '@/types/product';
+import { updateProduct } from '@/utils/product';
 
-interface RecipesApiList {
-  items: BeerRecipe[];
+interface ProductsApiList {
+  items: Product[];
   hasMore: boolean;
 }
 
-export const recipesApi = baseApi.injectEndpoints({
+export const productsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getRecipes: builder.query<RecipesApiList, BeerRecipesFilters>({
+    getProducts: builder.query<ProductsApiList, ProductsFilters>({
       queryFn: async (arg, api, extraOptions, baseQuery) => {
-        const result = await baseQuery({ url: '/recipes', params: arg });
+        const result = await baseQuery({ url: '/products', params: arg });
 
         // console.info('queryFn', result);
 
@@ -26,11 +26,11 @@ export const recipesApi = baseApi.injectEndpoints({
           return result;
         }
 
-        const recipes = result.data as BeerRecipe[];
-        const isValidData = recipes && Array.isArray(recipes);
+        const products = result.data as Product[];
+        const isValidData = products && Array.isArray(products);
 
         if (!isValidData) {
-          console.error('Recipes API returned wrong data', result.data);
+          console.error('Products API returned wrong data', result.data);
           return {
             error: {
               status: 'CUSTOM_ERROR',
@@ -42,8 +42,8 @@ export const recipesApi = baseApi.injectEndpoints({
 
         return {
           data: {
-            items: recipes.map(p => updateRecipe(p)),
-            hasMore: recipes.length === arg.limit,
+            items: products.map(p => updateProduct(p)),
+            hasMore: products.length === arg.limit,
           },
         };
       },
@@ -68,11 +68,11 @@ export const recipesApi = baseApi.injectEndpoints({
         return currentArg?.page !== previousArg?.page;
       },
     }),
-    getRecipeBySlug: builder.query<BeerRecipe, string>({
-      query: slug => `/recipes/${slug}`,
-      transformResponse: (response: BeerRecipe) => updateRecipe(response),
+    getProductBySlug: builder.query<Product, string>({
+      query: slug => `/products/${slug}`,
+      transformResponse: (response: Product) => updateProduct(response),
     }),
   }),
 });
 
-export const { useGetRecipesQuery, useGetRecipeBySlugQuery } = recipesApi;
+export const { useGetProductsQuery, useGetProductBySlugQuery } = productsApi;

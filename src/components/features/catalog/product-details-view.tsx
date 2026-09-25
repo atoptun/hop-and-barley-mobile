@@ -8,10 +8,11 @@ import { ProductDetailsCard } from '@/components/features/catalog/product-detail
 import { IconButton } from '@/components/ui/icon-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { useProductDetails } from '@/hooks/use-product-details';
 import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useGetProductBySlugQuery } from '@/store/products/products-api';
+import { getErrorText } from '@/utils/errors';
 
 export interface ProductDetailsViewProps {
   slug: string;
@@ -23,7 +24,9 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 
-  const { product, isLoading, error } = useProductDetails(slug);
+  const { data: product, isLoading, isFetching, error, refetch } = useGetProductBySlugQuery(slug);
+
+  const errorText = getErrorText(error);
 
   const quantity = useAppSelector(selectItemQuantity(product?.slug));
 
@@ -54,8 +57,10 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
 
   const handleReload = () => {
     console.info('Reload product');
+    refetch();
   };
 
+  const showLoader = isLoading || (isFetching && !product);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -65,15 +70,15 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
         onPress={onClose}
         style={styles.closeButton}
       />
-      {isLoading ? (
+      {showLoader ? (
         <View style={styles.centered}>
           <ActivityIndicator size={'large'} color={colors.primary} />
         </View>
-      ) : error ? (
+      ) : errorText ? (
         <View style={styles.centered}>
           <EmptyState
             iconName="alert-octagon-outline"
-            text={error}
+            text={errorText}
             actionTitle="Reload"
             onAction={handleReload}
           />

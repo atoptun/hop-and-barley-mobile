@@ -1,41 +1,66 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { fetchProducts } from '@/api/store-service';
-import { Product } from '@/types/product';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useGetProductsQuery } from '@/store/products/products-api';
+import { nextPage, resetPage, setRefreshing } from '@/store/products/products-filter-slice';
+import { ProductsFilters } from '@/types/product';
+import { getErrorText } from '@/utils/errors';
 
 export function useProducts() {
-  const [data, setData] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    let ignore = false;
+  const { page, limit, applyedSearch, sortBy, order, isRefreshing } = useAppSelector(
+    state => state.productsFilter
+  );
 
-    const load = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const items = await fetchProducts();
-        // throw new Error("test error");
-        if (!ignore) setData(items);
-      } catch {
-        if (!ignore) setError('Something went wrong.\nTry later...');
-      } finally {
-        if (!ignore) setIsLoading(false);
-      }
+  const queryParams: ProductsFilters = useMemo(() => {
+    const params: ProductsFilters = {
+      page,
+      limit,
     };
+    if (applyedSearch) params.search = applyedSearch;
+    if (sortBy) {
+      params.sortBy = sortBy;
+      params.order = order ?? 'asc';
+    }
 
-    void load();
+    return params;
+  }, [page, limit, applyedSearch, sortBy, order]);
 
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  const { data, isLoading, isFetching, isError, error, refetch } = useGetProductsQuery(queryParams);
+
+  const products = data?.items ?? [];
+  const hasMore = data?.hasMore ?? false;
+  const errorText = isError ? getErrorText(error) : undefined;
+
+  const isInitialLoading = isLoading || (isFetching && products.length === 0 && !isRefreshing);
+  const isLoadingMore = isFetching && products.length > 0 && page > 1;
+
+  const loadMore = useCallback(() => {
+    if (!isFetching && hasMore) dispatch(nextPage());
+  }, [isFetching, hasMore, dispatch]);
+
+  const refresh = useCallback(async () => {
+    setRefreshing(true);
+    dispatch(resetPage());
+    try {
+      await refetch();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refetch, dispatch]);
 
   return {
-    products: data,
-    isLoading,
-    error,
+    // data
+    products,
+    hasMore,
+    error: errorText,
+    // state
+    isInitialLoading,
+    isLoadingMore,
+    isRefreshing,
+    // actions
+    loadMore,
+    refresh,
   };
 }
