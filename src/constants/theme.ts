@@ -68,6 +68,7 @@ export const Colors = {
     textSecondary: Palette.neutralDark3,
     textOnPrimary: Palette.white,
     textDisabled: Palette.neutralDark5,
+    textBlack: Palette.neutralDark1,
 
     // Stars
     starActive: Palette.gold,
@@ -104,6 +105,7 @@ export const Colors = {
     textSecondary: Palette.neutralDark5,
     textOnPrimary: Palette.neutralDark1,
     textDisabled: Palette.neutralDark3,
+    textBlack: Palette.neutralDark1,
 
     // Stars
     starActive: Palette.gold,

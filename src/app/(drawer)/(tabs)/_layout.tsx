@@ -1,5 +1,6 @@
 import { router, Tabs } from 'expo-router';
 
+import { CartTabBarIcon } from '@/components/features/cart/cart-tabbar-icon';
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { useTheme } from '@/context/theme-context';
 
@@ -61,7 +62,7 @@ export default function TabsLayout() {
         options={{
           title: 'Cart',
           tabBarIcon: ({ color, focused }) => {
-            return <ThemedIcon name={focused ? 'cart' : 'cart-outline'} customColor={color} />;
+            return <CartTabBarIcon focused={focused} color={color} />;
           },
         }}
         listeners={{
