@@ -21,7 +21,7 @@ export function CheckoutView() {
   };
 
   return (
-    <ModalSafeView title="Checkout">
+    <ModalSafeView title="Checkout" contentStyle={styles.content}>
       <View style={styles.content}>
         <ThemedText variant="bodyM">All product will be removed from cart</ThemedText>
       </View>
@@ -53,7 +53,7 @@ const createStyles = (colors: Theme) =>
     footer: {
       gap: Spacing.four,
       paddingTop: Spacing.three,
-      paddingHorizontal: Spacing.six,
+      // paddingHorizontal: Spacing.six,
       paddingBottom: Spacing.four,
     },
   });
