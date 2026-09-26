@@ -24,7 +24,7 @@ export interface ProductCardItem {
   stock: number;
 }
 
-export type ProductsSortBy = 'title' | 'average_rating';
+export type ProductsSortBy = 'name' | 'price' | 'average_rating';
 export type SortOrder = 'asc' | 'desc';
 
 export interface ProductsFilters {
@@ -33,4 +33,9 @@ export interface ProductsFilters {
   search?: string;
   sortBy?: ProductsSortBy;
   order?: SortOrder;
+  category_slug?: string;
+}
+
+export interface ProductsFieldsConditions {
+  category_slug?: string;
 }

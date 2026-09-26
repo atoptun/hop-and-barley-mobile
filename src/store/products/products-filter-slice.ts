@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ProductsSortBy, SortOrder } from '@/types/product';
+import { ProductsFieldsConditions, ProductsSortBy, SortOrder } from '@/types/product';
 
 export interface ProductsFilterState {
   page: number;
@@ -9,7 +9,7 @@ export interface ProductsFilterState {
   applyedSearch: string;
   sortBy?: ProductsSortBy;
   order?: SortOrder;
-  // difficulty?: Difficulty;
+  fieldsConditions: ProductsFieldsConditions;
   isRefreshing: boolean;
 }
 
@@ -22,6 +22,7 @@ const initialState: ProductsFilterState = {
   applyedSearch: '',
   sortBy: undefined,
   order: undefined,
+  fieldsConditions: {},
   isRefreshing: false,
 };
 
@@ -47,6 +48,9 @@ export const productsFilterSlice = createSlice({
     resetPage: state => {
       state.page = 1;
     },
+    setFieldsConditions: (state, action: PayloadAction<ProductsFieldsConditions>) => {
+      state.fieldsConditions = action.payload;
+    },
     resetFilters: () => initialState,
     setRefreshing: (state, action: PayloadAction<boolean>) => {
       state.isRefreshing = action.payload;
@@ -60,6 +64,7 @@ export const {
   setSorting,
   nextPage,
   resetPage,
+  setFieldsConditions,
   resetFilters,
   setRefreshing,
 } = productsFilterSlice.actions;

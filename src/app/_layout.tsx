@@ -1,6 +1,6 @@
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { StrictMode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
@@ -49,8 +49,23 @@ function AppContent() {
         <Stack.Screen
           name="(modals)/store-filters"
           options={{
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
+            presentation: 'formSheet',
+            headerShown: false,
+            sheetAllowedDetents: 'fitToContents',
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 20,
+          }}
+        />
+
+        {/* Store sort */}
+        <Stack.Screen
+          name="(modals)/store-sort"
+          options={{
+            presentation: 'formSheet',
+            headerShown: false,
+            sheetAllowedDetents: 'fitToContents',
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 20,
           }}
         />
 
@@ -60,19 +75,19 @@ function AppContent() {
           options={{
             presentation: 'formSheet',
             headerShown: false,
-            sheetAllowedDetents: [0.4],
+            sheetAllowedDetents: 'fitToContents',
             sheetGrabberVisible: true,
             sheetCornerRadius: 20,
           }}
         />
 
-        {/* Recipes filters */}
+        {/* Recipes sort */}
         <Stack.Screen
           name="(modals)/recipes-sort"
           options={{
             presentation: 'formSheet',
             headerShown: false,
-            sheetAllowedDetents: [0.35],
+            sheetAllowedDetents: 'fitToContents',
             sheetGrabberVisible: true,
             sheetCornerRadius: 20,
           }}
@@ -113,7 +128,6 @@ export default function RootLayout() {
   }
 
   return (
-    // <StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <ThemeProvider>
@@ -121,6 +135,5 @@ export default function RootLayout() {
         </ThemeProvider>
       </PersistGate>
     </Provider>
-    // </StrictMode>
   );
 }

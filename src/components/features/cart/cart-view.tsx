@@ -33,6 +33,7 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
       <View style={styles.content}>
         <ProductList
           products={cartItems}
+          animatedCards
           ListEmptyComponent={<EmptyState iconName="cart-outline" text="Your cart is empty" />}
         />
       </View>

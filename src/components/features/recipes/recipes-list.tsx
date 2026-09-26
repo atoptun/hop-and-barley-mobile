@@ -1,5 +1,13 @@
 import { ReactElement, useCallback } from 'react';
-import { FlatList, ListRenderItemInfo, RefreshControl, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { ListFooterLoader } from '@/components/common/list-footer-loader';
 import { RecipeCard } from '@/components/features/recipes/recipe-card';
@@ -15,6 +23,7 @@ export interface RecipesListProps {
   onRefresh?: VoidFunction;
   isRefreshing?: boolean;
   isLoadingMore?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function RecipesList({
@@ -25,6 +34,7 @@ export function RecipesList({
   onRefresh,
   isRefreshing = false,
   isLoadingMore = false,
+  style,
 }: RecipesListProps) {
   const { colors } = useTheme();
 
@@ -58,6 +68,7 @@ export function RecipesList({
       data={recipes}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
+      style={[styles.list, style]}
       contentContainerStyle={styles.listContent}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
@@ -84,6 +95,7 @@ export function RecipesList({
 }
 
 const styles = StyleSheet.create({
+  list: {},
   listContent: {
     paddingHorizontal: 16,
     paddingVertical: 16,

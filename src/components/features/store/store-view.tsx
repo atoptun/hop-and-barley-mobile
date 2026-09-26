@@ -7,24 +7,34 @@ import { ListHeader } from '@/components/common/list-header';
 import { ProductList } from '@/components/features/catalog/product-list';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
+import { useDelayedFlag } from '@/hooks/use-delayed-flag';
 import { useProducts } from '@/hooks/use-products';
 import { useProductsFilters } from '@/hooks/use-products-filters';
 
 export interface StoreViewProps {
-  onFilterPress: () => void;
+  onFilterPress: VoidFunction;
+  onSortPress: VoidFunction;
 }
 
-export function StoreView({ onFilterPress }: StoreViewProps) {
+export function StoreView({ onFilterPress, onSortPress }: StoreViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(colors, insets);
 
   const { search, setSearch, resetFilters } = useProductsFilters();
 
-  const { products, isInitialLoading, isLoadingMore, isRefreshing, error, loadMore, refresh } =
-    useProducts();
+  const {
+    products,
+    isInitialLoading,
+    isLoadingMore,
+    isRefreshing,
+    isFilterFetching,
+    error,
+    loadMore,
+    refresh,
+  } = useProducts();
 
-  const handleSortPress = () => {};
+  const showDimming = useDelayedFlag(isFilterFetching, 1000);
 
   return (
     <View style={styles.container}>
@@ -33,7 +43,7 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
         searchQuery={search}
         onSearchChange={setSearch}
         onFilterPress={onFilterPress}
-        onSortPress={handleSortPress}
+        onSortPress={onSortPress}
       />
       {isInitialLoading ? (
         <View style={styles.center}>
@@ -51,6 +61,7 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
       ) : (
         <ProductList
           products={products}
+          style={{ opacity: showDimming ? 0.6 : 1 }}
           isLoadingMore={isLoadingMore}
           isRefreshing={isRefreshing}
           onLoadMore={loadMore}
@@ -72,6 +83,7 @@ export function StoreView({ onFilterPress }: StoreViewProps) {
 const createStyles = (colors: Theme, insets: EdgeInsets) =>
   StyleSheet.create({
     container: {
+      position: 'relative',
       flex: 1,
       paddingTop: insets.top,
       backgroundColor: colors.background,

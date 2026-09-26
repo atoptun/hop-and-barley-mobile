@@ -9,9 +9,8 @@ import { getErrorText } from '@/utils/errors';
 export function useProducts() {
   const dispatch = useAppDispatch();
 
-  const { page, limit, applyedSearch, sortBy, order, isRefreshing } = useAppSelector(
-    state => state.productsFilter
-  );
+  const { page, limit, applyedSearch, sortBy, order, isRefreshing, fieldsConditions } =
+    useAppSelector(state => state.productsFilter);
 
   const queryParams: ProductsFilters = useMemo(() => {
     const params: ProductsFilters = {
@@ -23,9 +22,10 @@ export function useProducts() {
       params.sortBy = sortBy;
       params.order = order ?? 'asc';
     }
+    if (fieldsConditions.category_slug) params.category_slug = fieldsConditions.category_slug;
 
     return params;
-  }, [page, limit, applyedSearch, sortBy, order]);
+  }, [page, limit, applyedSearch, sortBy, order, fieldsConditions]);
 
   const { data, isLoading, isFetching, isError, error, refetch } = useGetProductsQuery(queryParams);
 
@@ -35,6 +35,7 @@ export function useProducts() {
 
   const isInitialLoading = isLoading || (isFetching && products.length === 0 && !isRefreshing);
   const isLoadingMore = isFetching && products.length > 0 && page > 1;
+  const isFilterFetching = isFetching && !isLoadingMore && !isRefreshing;
 
   const loadMore = useCallback(() => {
     if (!isFetching && hasMore) dispatch(nextPage());
@@ -59,6 +60,7 @@ export function useProducts() {
     isInitialLoading,
     isLoadingMore,
     isRefreshing,
+    isFilterFetching,
     // actions
     loadMore,
     refresh,

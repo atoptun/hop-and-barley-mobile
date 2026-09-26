@@ -1,11 +1,15 @@
 import { router } from 'expo-router';
 
-import { StoreView } from '@/components/features/catalog/store-view';
+import { StoreView } from '@/components/features/store/store-view';
 
 export default function StoreScreen() {
   const handleFilterPress = () => {
-    router.push('/(modals)/filters');
+    router.push('/store-filters');
   };
 
-  return <StoreView onFilterPress={handleFilterPress} />;
+  const handleSortPress = () => {
+    router.push('/store-sort');
+  };
+
+  return <StoreView onFilterPress={handleFilterPress} onSortPress={handleSortPress} />;
 }

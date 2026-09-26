@@ -58,6 +58,7 @@ export const useRecipes = () => {
 
   const isInitialLoading = isLoading || (isFetching && recipes.length === 0 && !isRefreshing);
   const isLoadingMore = isFetching && recipes.length > 0 && page > 1;
+  const isFilterFetching = isFetching && !isLoadingMore && !isRefreshing;
 
   return {
     // data
@@ -67,7 +68,8 @@ export const useRecipes = () => {
     //states
     isInitialLoading,
     isLoadingMore,
-    isRefreshing: isRefreshing,
+    isRefreshing,
+    isFilterFetching,
     // actions
     loadMore,
     refresh,

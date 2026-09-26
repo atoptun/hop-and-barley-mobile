@@ -6,6 +6,7 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { EmptyState } from '@/components/common/empty-state';
 import { ListHeader } from '@/components/common/list-header';
 import { Theme, useTheme } from '@/context/theme-context';
+import { useDelayedFlag } from '@/hooks/use-delayed-flag';
 import { useRecipes } from '@/hooks/use-recipes';
 import { useRecipesFilters } from '@/hooks/use-recipes-filters';
 
@@ -18,8 +19,16 @@ export function RecipesView() {
 
   const { search, setSearch, resetFilters } = useRecipesFilters();
 
-  const { recipes, error, isInitialLoading, isLoadingMore, isRefreshing, loadMore, refresh } =
-    useRecipes();
+  const {
+    recipes,
+    error,
+    isInitialLoading,
+    isLoadingMore,
+    isRefreshing,
+    isFilterFetching,
+    loadMore,
+    refresh,
+  } = useRecipes();
 
   const handleFilterPress = () => {
     router.push('/recipes-filters');
@@ -32,6 +41,8 @@ export function RecipesView() {
   const handleClearFilters = () => {
     resetFilters();
   };
+
+  const showDimming = useDelayedFlag(isFilterFetching);
 
   return (
     <View style={styles.container}>
@@ -58,6 +69,7 @@ export function RecipesView() {
       ) : (
         <RecipesList
           recipes={recipes}
+          style={{ opacity: showDimming ? 0.6 : 1 }}
           onLoadMore={loadMore}
           onRefresh={refresh}
           isRefreshing={isRefreshing}

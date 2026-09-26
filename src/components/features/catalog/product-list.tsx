@@ -1,5 +1,13 @@
 import { useCallback } from 'react';
-import { FlatList, ListRenderItemInfo, RefreshControl, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Animated, { FadeIn, FadeOutLeft, LinearTransition } from 'react-native-reanimated';
 
 import { ListFooterLoader } from '@/components/common/list-footer-loader';
@@ -17,6 +25,8 @@ export interface ProductListProps {
   onRefresh?: VoidFunction;
   isRefreshing?: boolean;
   isLoadingMore?: boolean;
+  animatedCards?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function ProductList({
@@ -28,12 +38,27 @@ export function ProductList({
   onRefresh,
   isRefreshing = false,
   isLoadingMore = false,
+  animatedCards = false,
+  style,
 }: ProductListProps) {
   const { colors } = useTheme();
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<ProductCardItem>) => {
       const isLastItem = index === products.length - 1;
+
+      const card = (
+        <>
+          <ProductCard product={item} onPress={onProductPress} />
+          {!isLastItem && (
+            <View style={styles.separatorWrapper}>
+              <Divider marginVertical={16} />
+            </View>
+          )}
+        </>
+      );
+
+      if (!animatedCards) return <View>{card}</View>;
 
       return (
         <Animated.View
@@ -42,17 +67,11 @@ export function ProductList({
           layout={LinearTransition.springify().damping(16).stiffness(120)}
           style={styles.animatedRow}
         >
-          <ProductCard product={item} onPress={onProductPress} />
-
-          {!isLastItem && (
-            <View style={styles.separatorWrapper}>
-              <Divider marginVertical={16} />
-            </View>
-          )}
+          {card}
         </Animated.View>
       );
     },
-    [onProductPress, products.length]
+    [onProductPress, products.length, animatedCards]
   );
 
   const keyExtractor = useCallback((item: ProductCardItem) => item.slug, []);
@@ -67,6 +86,7 @@ export function ProductList({
       data={products}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      style={[styles.list, style]}
       contentContainerStyle={styles.listContent}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
@@ -93,6 +113,7 @@ export function ProductList({
 }
 
 const styles = StyleSheet.create({
+  list: {},
   listContent: {
     paddingHorizontal: 16,
     paddingVertical: 16,

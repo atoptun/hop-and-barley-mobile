@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
 
-import { FiltersView } from '@/components/features/modals/filters-view';
+import { StoreFiltersView } from '@/components/features/store/store-filters-view';
 
-export default function FiltersScreen() {
+export default function StoreFiltersModal() {
   const handleClose = () => {
     router.back();
   };
 
-  return <FiltersView onClose={handleClose} />;
+  return <StoreFiltersView onClose={handleClose} />;
 }
