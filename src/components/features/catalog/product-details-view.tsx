@@ -8,9 +8,7 @@ import { ProductDetailsCard } from '@/components/features/catalog/product-detail
 import { IconButton } from '@/components/ui/icon-button';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectItemQuantity } from '@/store/cart/cart-selectors';
-import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useCartProduct } from '@/hooks/use-cart-product';
 import { useGetProductBySlugQuery } from '@/store/products/products-api';
 import { getErrorText } from '@/utils/errors';
 
@@ -22,38 +20,13 @@ export interface ProductDetailsViewProps {
 export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const dispatch = useAppDispatch();
+  const styles = createStyles(colors, insets);
 
   const { data: product, isLoading, isFetching, error, refetch } = useGetProductBySlugQuery(slug);
 
   const errorText = getErrorText(error);
 
-  const quantity = useAppSelector(selectItemQuantity(product?.slug));
-
-  const styles = createStyles(colors, insets);
-
-  const handleAdd = () => {
-    if (!product || (product.stock ?? 0) <= 0) return;
-    dispatch(addToCart(product!));
-  };
-
-  const handleIncrement = () => {
-    if (!product) return;
-    if (quantity >= (product.stock ?? 0)) {
-      //  show limit message
-      return;
-    }
-    dispatch(incQuantity(product.slug));
-  };
-
-  const handleDecrement = () => {
-    if (!product) return;
-    if (quantity > 1) {
-      dispatch(decQuantity(product.slug));
-    } else {
-      dispatch(removeFromCart(product.slug));
-    }
-  };
+  const { itemQuantity, addToCart, incQuantity, decQuantity } = useCartProduct(product);
 
   const handleReload = () => {
     console.info('Reload product');
@@ -94,14 +67,14 @@ export function ProductDetailsView({ slug, onClose }: ProductDetailsViewProps) {
           </ScrollView>
           <View style={styles.actions}>
             <AddToCartCounter
-              quantity={quantity}
+              quantity={itemQuantity}
               stock={product.stock}
               size="lg"
               fullWidth={true}
               btnAddTitle="Add to cart"
-              onAdd={handleAdd}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
+              onAdd={addToCart}
+              onIncrement={incQuantity}
+              onDecrement={decQuantity}
             />
           </View>
         </>

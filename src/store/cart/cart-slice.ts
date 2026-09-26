@@ -80,6 +80,14 @@ export const cartSlice = createSlice({
         text1: `Cart has been cleared`,
       });
     },
+
+    checkout: state => {
+      state.items = {};
+      Toast.show({
+        type: 'success',
+        text1: `Checkout succesful`,
+      });
+    },
   },
 });
 
@@ -102,6 +110,13 @@ const addProductToCart = (state: CartState, product: ProductCardItem) => {
   }
 };
 
-export const { addToCart, addListToCart, incQuantity, decQuantity, removeFromCart, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  addListToCart,
+  incQuantity,
+  decQuantity,
+  removeFromCart,
+  clearCart,
+  checkout,
+} = cartSlice.actions;
 export default cartSlice.reducer;

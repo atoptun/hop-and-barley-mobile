@@ -1,42 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { EmptyState } from '@/components/common/empty-state';
-import { ModalHeader } from '@/components/common/modal-header';
+import { ModalSafeView } from '@/components/common/modal-safe-view';
+import { ProductList } from '@/components/features/catalog/product-list';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectCartItemsList, selectCartTotalPrice } from '@/store/cart/cart-selectors';
-import { useAppSelector } from '@/store/hooks';
+import { useCart } from '@/hooks/use-cart';
 
-import { ProductList } from '../catalog/product-list';
-
-export interface CartViewProps {
-  onCheckout?: VoidFunction;
-  onClose?: VoidFunction;
-}
-
-export function CartView({ onCheckout, onClose }: CartViewProps) {
+export function CartView() {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
-  const styles = createStyles(colors, insets);
+  const styles = createStyles(colors);
 
-  const cartItems = useAppSelector(selectCartItemsList);
-  const totalPrice = useAppSelector(selectCartTotalPrice);
+  const { cartItems, totalPrice, checkout } = useCart();
+
+  const handleCheckout = () => {
+    if (checkout()) {
+      router.push('/(modals)/checkout');
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ModalHeader title="Cart" onClosePress={onClose} />
-      <View style={styles.content}>
-        <ProductList
-          products={cartItems}
-          animatedCards
-          ListEmptyComponent={<EmptyState iconName="cart-outline" text="Your cart is empty" />}
-        />
-      </View>
+    <ModalSafeView title="Cart" contentStyle={styles.content}>
+      <ProductList
+        products={cartItems}
+        animatedCards
+        ListEmptyComponent={<EmptyState iconName="cart-outline" text="Your cart is empty" />}
+      />
       <View style={styles.footer}>
         <View style={styles.total}>
           <ThemedText variant="bodyM" color="textSecondary">
@@ -44,36 +36,28 @@ export function CartView({ onCheckout, onClose }: CartViewProps) {
           </ThemedText>
           <ThemedText variant="h3" color="textPrimary">{`$ ${totalPrice.toFixed(2)}`}</ThemedText>
         </View>
-        <ThemedButton title="Checkout" onPress={onCheckout} disabled={cartItems.length === 0} />
+        <ThemedButton title="Checkout" onPress={handleCheckout} disabled={cartItems.length === 0} />
       </View>
-    </View>
+    </ModalSafeView>
   );
 }
 
-const createStyles = (colors: Theme, insets: EdgeInsets) =>
+const createStyles = (colors: Theme) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: insets.top,
-      backgroundColor: colors.background,
-    },
     content: {
       flex: 1,
-      // padding: Spacing.six,
+      // paddingHorizontal: Spacing.six,
     },
     footer: {
       gap: Spacing.four,
       paddingTop: Spacing.three,
       paddingHorizontal: Spacing.six,
-      paddingBottom: Math.max(Spacing.six, insets.bottom + Spacing.four),
+      paddingBottom: Spacing.four,
     },
     total: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingHorizontal: Spacing.three,
       paddingVertical: Spacing.two,
-    },
-    text: {
-      color: colors.textPrimary,
     },
   });

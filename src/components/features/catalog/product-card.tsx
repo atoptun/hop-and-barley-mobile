@@ -8,9 +8,7 @@ import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectItemQuantity } from '@/store/cart/cart-selectors';
-import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useCartProduct } from '@/hooks/use-cart-product';
 import { ProductCardItem } from '@/types/product';
 
 export interface ProductCardProps {
@@ -27,29 +25,7 @@ export const ProductCard = memo(function ProductCard({
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const dispatch = useAppDispatch();
-
-  const quantity = useAppSelector(selectItemQuantity(product.slug));
-
-  const handleAdd = () => {
-    dispatch(addToCart(product));
-  };
-
-  const handleIncrement = () => {
-    if (quantity >= product.stock) {
-      // show message
-      return;
-    }
-    dispatch(incQuantity(product.slug));
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 0) {
-      dispatch(decQuantity(product.slug));
-    } else {
-      dispatch(removeFromCart(product.slug));
-    }
-  };
+  const { itemQuantity, addToCart, incQuantity, decQuantity } = useCartProduct(product);
 
   const handlePress = () => {
     if (onPress) {
@@ -62,7 +38,7 @@ export const ProductCard = memo(function ProductCard({
     }
   };
 
-  const price = Math.max(1, quantity) * product.price;
+  const price = Math.max(1, itemQuantity) * product.price;
   const formattedPrice = `$ ${price.toFixed(2)}`;
 
   return (
@@ -106,12 +82,12 @@ export const ProductCard = memo(function ProductCard({
         <View style={styles.footer}>
           {/*Actions */}
           <AddToCartCounter
-            quantity={quantity}
+            quantity={itemQuantity}
             stock={product.stock}
             size="sm"
-            onAdd={handleAdd}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
+            onAdd={addToCart}
+            onIncrement={incQuantity}
+            onDecrement={decQuantity}
           />
 
           {/* Price */}

@@ -3,8 +3,7 @@ import { ColorValue, StyleSheet, View } from 'react-native';
 import { ThemedIcon } from '@/components/ui/themed-icon';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Theme, useTheme } from '@/context/theme-context';
-import { selectCartItemsCount } from '@/store/cart/cart-selectors';
-import { useAppSelector } from '@/store/hooks';
+import { useCart } from '@/hooks/use-cart';
 
 export interface CartTabBarIconProps {
   color: ColorValue;
@@ -15,14 +14,14 @@ export function CartTabBarIcon({ color, focused }: CartTabBarIconProps) {
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const total = useAppSelector(selectCartItemsCount);
+  const { totalItemsCount } = useCart();
 
   return (
     <View style={styles.container}>
       <ThemedIcon name={focused ? 'cart' : 'cart-outline'} customColor={color} />
-      {total > 0 && (
+      {totalItemsCount > 0 && (
         <View style={styles.number}>
-          <ThemedText color="textBlack">{total}</ThemedText>
+          <ThemedText color="textBlack">{totalItemsCount}</ThemedText>
         </View>
       )}
     </View>

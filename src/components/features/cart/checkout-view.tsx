@@ -1,55 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ModalHeader } from '@/components/common/modal-header';
+import { ModalSafeView } from '@/components/common/modal-safe-view';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
+import { useCart } from '@/hooks/use-cart';
 
-export interface CheckoutViewProps {
-  onContinue?: VoidFunction;
-  onClose?: VoidFunction;
-}
-
-export function CheckoutView({ onClose, onContinue }: CheckoutViewProps) {
+export function CheckoutView() {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
-  const styles = createStyles(colors, insets);
+  const styles = createStyles(colors);
+
+  const { totalPrice, finishCheckout } = useCart();
+
+  const handleCheckout = () => {
+    if (finishCheckout()) {
+      router.replace('/(drawer)/(tabs)/store');
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ModalHeader title="Checkout" onClosePress={onClose} />
+    <ModalSafeView title="Checkout">
       <View style={styles.content}>
-        <ThemedText variant="h3">Checkout view</ThemedText>
+        <ThemedText variant="bodyM">All product will be removed from cart</ThemedText>
+      </View>
+      <View style={styles.total}>
+        <ThemedText variant="bodyM" color="textSecondary">
+          Total
+        </ThemedText>
+        <ThemedText variant="h3" color="textPrimary">{`$ ${totalPrice.toFixed(2)}`}</ThemedText>
       </View>
       <View style={styles.footer}>
-        <ThemedButton title="Continue" onPress={onContinue} />
+        <ThemedButton title="Continue" onPress={handleCheckout} />
       </View>
-    </View>
+    </ModalSafeView>
   );
 }
 
-const createStyles = (colors: Theme, insets: EdgeInsets) =>
+const createStyles = (colors: Theme) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: insets.top,
-      backgroundColor: colors.background,
-    },
     content: {
       flex: 1,
       padding: Spacing.six,
+    },
+    total: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: Spacing.three,
+      paddingVertical: Spacing.two,
     },
     footer: {
       gap: Spacing.four,
       paddingTop: Spacing.three,
       paddingHorizontal: Spacing.six,
-      paddingBottom: Math.min(Spacing.six, insets.bottom),
-    },
-    text: {
-      color: colors.textPrimary,
+      paddingBottom: Spacing.four,
     },
   });

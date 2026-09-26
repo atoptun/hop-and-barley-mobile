@@ -1,6 +1,8 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
+import { ModalSafeView } from '@/components/common/modal-safe-view';
 import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 
 export default function OrdersScreen() {
@@ -8,16 +10,15 @@ export default function OrdersScreen() {
   const styles = createStyles(colors);
 
   return (
-    <View style={styles.container}>
-      <ThemedText variant="h1">OrdersScreen</ThemedText>
-    </View>
+    <ModalSafeView title="Orders" contentStyle={styles.content}>
+      <ThemedText variant="h3">Orders screen</ThemedText>
+    </ModalSafeView>
   );
 }
 
 const createStyles = (colors: Theme) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
+    content: {
+      padding: Spacing.six,
     },
   });
