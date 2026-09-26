@@ -1,36 +1,38 @@
 import { StyleSheet, View } from 'react-native';
 
-import { Theme, useTheme } from '@/context/theme-context';
-
-import { ThemedText } from '../ui/themed-text';
+import { ThemedText } from '@/components/ui/themed-text';
+import { ThemeColors } from '@/constants/theme';
+import { TypographyVariant } from '@/constants/typography';
 
 export interface RatingBadgeProps {
   raiting: number;
+  variant?: TypographyVariant;
+  color?: ThemeColors;
 }
 
-export function RatingBadge({ raiting }: RatingBadgeProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+export function RatingBadge({
+  raiting,
+  variant = 'actionM',
+  color = 'textPrimary',
+}: RatingBadgeProps) {
+  if (!raiting) return null;
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.star}>★</ThemedText>
-      <ThemedText variant="actionM" color="textPrimary">
+      <ThemedText variant={variant} color="starActive">
+        ★
+      </ThemedText>
+      <ThemedText variant={variant} color={color}>
         {raiting.toFixed(1)}
       </ThemedText>
     </View>
   );
 }
 
-const createStyles = (colors: Theme) =>
-  StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    star: {
-      color: colors.starActive,
-      fontSize: 12,
-      marginRight: 2,
-    },
-  });
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+});

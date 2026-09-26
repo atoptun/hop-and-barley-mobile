@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
+import { RatingBadge } from '@/components/common/rating-badge';
 import { ProductsTechSpecs } from '@/components/features/catalog/products-tech-specs';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
@@ -29,9 +30,9 @@ export function ProductDetailsCard({ product }: ProductDetaulsCardProps) {
       />
       <View style={styles.content}>
         <View style={styles.header}>
-          <ThemedText variant="h2">{product.name}</ThemedText>
-          <View>
-            <ThemedText>Stars: {product.average_rating.toFixed(2)}</ThemedText>
+          <View style={styles.headerTop}>
+            <ThemedText variant="h2">{product.name}</ThemedText>
+            <RatingBadge raiting={product.average_rating} variant="h3" />
           </View>
           <View style={styles.priceBox}>
             <ThemedText variant="h3">{price}</ThemedText>
@@ -68,6 +69,11 @@ const createStyles = (colors: Theme) =>
       gap: Spacing.six,
     },
     header: {
+      gap: Spacing.two,
+    },
+    headerTop: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       gap: Spacing.two,
     },
     priceBox: {

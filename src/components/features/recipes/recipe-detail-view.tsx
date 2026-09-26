@@ -38,11 +38,6 @@ export function RecipeDetailView({ slug, onClose }: RecipeDetailViewProps) {
   const handleAddToCart = () => {
     if (recipe?.ingredients && recipe.ingredients.length > 0) {
       dispatch(addListToCart(recipe.ingredients));
-      Toast.show({
-        type: 'success',
-        text1: 'All ingredients have been added to the cart.',
-        position: 'bottom',
-      });
     }
   };
 

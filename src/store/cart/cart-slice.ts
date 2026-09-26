@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Toast from 'react-native-toast-message';
 
 import { CartItem } from '@/types/cart';
 import { ProductCardItem } from '@/types/product';
@@ -15,25 +16,38 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<ProductCardItem>) => {
-      addProductToCart(state, action.payload);
+    addToCart: (state, { payload }: PayloadAction<ProductCardItem>) => {
+      addProductToCart(state, payload);
+      Toast.show({
+        type: 'success',
+        text1: `'${payload.name}' has been added to cart`,
+      });
     },
 
     addListToCart: (state, action: PayloadAction<ProductCardItem[]>) => {
       action.payload.forEach(product => {
         addProductToCart(state, product);
       });
+      Toast.show({
+        type: 'success',
+        text1: 'All ingredients have been added to the cart.',
+        position: 'bottom',
+      });
     },
 
-    incQuantity: (state, action: PayloadAction<string>) => {
-      const slug = action.payload;
+    incQuantity: (state, { payload }: PayloadAction<string>) => {
+      const slug = payload;
       if (state.items[slug]) {
         state.items[slug].quantity += 1;
+        Toast.show({
+          type: 'success',
+          text1: `'${state.items[slug].name}' has been added to cart`,
+        });
       }
     },
 
-    decQuantity: (state, action: PayloadAction<string>) => {
-      const slug = action.payload;
+    decQuantity: (state, { payload }: PayloadAction<string>) => {
+      const slug = payload;
       const item = state.items[slug];
       if (!item) return;
 
@@ -42,14 +56,29 @@ export const cartSlice = createSlice({
       } else {
         delete state.items[slug];
       }
+      Toast.show({
+        type: 'success',
+        text1: `'${item.name}' has been removed from cart`,
+      });
     },
 
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      delete state.items[action.payload];
+    removeFromCart: (state, { payload }: PayloadAction<string>) => {
+      const name = state.items[payload]?.name;
+      delete state.items[payload];
+      if (name) {
+        Toast.show({
+          type: 'success',
+          text1: `'${state.items[payload].name}' has been removed from cart`,
+        });
+      }
     },
 
     clearCart: state => {
       state.items = {};
+      Toast.show({
+        type: 'success',
+        text1: `Cart has been cleared`,
+      });
     },
   },
 });
@@ -66,6 +95,7 @@ const addProductToCart = (state: CartState, product: ProductCardItem) => {
       price: product.price,
       image: product.image,
       price_tag: product.price_tag,
+      average_rating: product.average_rating,
       stock: product.stock,
       quantity: 1,
     };

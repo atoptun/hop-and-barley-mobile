@@ -3,8 +3,10 @@ import { memo } from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { AddToCartCounter } from '@/components/common/add-to-cart-counter';
+import { RatingBadge } from '@/components/common/rating-badge';
 import { ThemedImage } from '@/components/ui/themed-image';
 import { ThemedText } from '@/components/ui/themed-text';
+import { Spacing } from '@/constants/theme';
 import { Theme, useTheme } from '@/context/theme-context';
 import { selectItemQuantity } from '@/store/cart/cart-selectors';
 import { addToCart, decQuantity, incQuantity, removeFromCart } from '@/store/cart/cart-slice';
@@ -67,7 +69,6 @@ export const ProductCard = memo(function ProductCard({
     <Pressable
       accessibilityRole="button"
       onPress={handlePress}
-      // disabled={!onPress}
       style={({ pressed }) => [
         styles.card,
         {
@@ -88,9 +89,12 @@ export const ProductCard = memo(function ProductCard({
       <View style={styles.content}>
         {/* Header */}
         <View style={styles.header}>
-          <ThemedText variant="h4" color="textPrimary" numberOfLines={1}>
-            {product.name}
-          </ThemedText>
+          <View style={styles.headerTop}>
+            <ThemedText variant="h4" color="textPrimary" numberOfLines={1}>
+              {product.name}
+            </ThemedText>
+            <RatingBadge raiting={product.average_rating} variant="h4" />
+          </View>
           {Boolean(product.price_tag) && (
             <ThemedText variant="bodyS" color="textSecondary" numberOfLines={1}>
               {product.price_tag}
@@ -148,6 +152,11 @@ const createStyles = (colors: Theme) =>
     },
     header: {
       gap: 4,
+    },
+    headerTop: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: Spacing.two,
     },
     footer: {
       flexDirection: 'row',

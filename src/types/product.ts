@@ -21,6 +21,7 @@ export interface ProductCardItem {
   price: number;
   image: string | number | ImageSource;
   price_tag: string;
+  average_rating: number;
   stock: number;
 }
 
