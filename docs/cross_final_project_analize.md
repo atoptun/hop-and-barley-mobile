@@ -1,76 +1,77 @@
-# Final project analyze
+# Final project analysis
 
-## Analize
+## Analysis
 
-Застосунок Hop&Barley - це мобільний додаток для замовлення товарів для домашнього пивоваріння. В
-застосунку реалізовано наступний функціонал:
+The Hop&Barley app is a mobile application for ordering homebrewing supplies. The application
+implements the following functionality:
 
-- вітальні екрани
-- реєстрація та авторизація користувачів
-- перегляд каталогу товарів
-- додавання товарів до кошика
-- перегляд кошика
+- Welcome screens (onboarding)
+- User registration and authentication
+- Browsing the product catalog
+- Adding items to the cart
+- Viewing the cart
 
-Основна мета проекту - створити зручний та інтуїтивно зрозумілий інтерфейс для користувачів, що
-дозволяє швидко знаходити та замовляти необхідні товари.
+The primary goal of the project is to build an intuitive, user-friendly interface that allows users
+to quickly find and order the supplies they need.
 
-Основна навігація по застосунку (expo-router) реалізована за допомогою TabBar та Stack навігації.
-Користувач може легко переміщатися між різними екранами, такими як каталог товарів та кошик.
-Додаткова навігація реалізована за допомогою Drawer, що дозволяє користувачам швидко переходити до
-різних розділів застосунку, таких як список замовлень, профіль користувача та налаштування. Для
-більшості додаткових екранів реалізована навігація, але вони потребують реалізації функціоналу.
+Core app navigation (expo-router) is implemented via TabBar and Stack navigation. Users can
+seamlessly navigate between primary screens such as the product catalog and the cart. Auxiliary
+navigation is handled through a Drawer menu, providing quick access to sections such as order
+history, user profile, and settings. While routing is set up for most auxiliary screens, their core
+features still require implementation.
 
-Для керування станом використовується Context API (Theme) та Redux (Auth, Cart). Це дозволяє
-ефективно управляти станом додатку та забезпечує швидкий доступ до даних з будь-якого компонента.
+State management is handled via the Context API (Theme) and Redux (Auth, Cart). This approach
+ensures efficient global state control and provides components with quick access to shared data
+across the app.
 
-Доступ до зовнішніх ресурсів (Auth, Store) здійснюється за допомогою окремих сервісів, що дозволяє
-централізовано управляти запитами та обробкою даних.
+Communication with external backends (Auth, Store) is isolated within dedicated services, allowing
+for centralized request handling and data management.
 
-Додаток потребує розширення функціоналу для залучення користувачів та покращення взаємодії з ними.
-Для цього необхідно реалізувати наступні можливості:
+The app requires functional expansion to boost user engagement and streamline interactions. The
+following enhancements are slated for development:
 
-- каталог рецептів з можливісттю додавання інгредієнтів до кошика
-- гортання вітальних екранів свайпами
-- додати повідомлення (toast) про успішну авторизацію, реєстрацію, вихід, відновлення паролю та інші
-  дії користувача, в тому числі помилки
-- пошук і сортування в каталозі товарів
+- A recipe catalog with the ability to add required ingredients directly to the cart
+- Gesture-based swipe navigation across onboarding screens
+- Toast notifications for auth actions (login, registration, logout, password recovery) and error
+  handling
+- Advanced search and sorting within the product catalog
 
 ## Recipes
 
-1. ✅ Додати каталог рецептів з можливістю додавання інгредієнтів до кошика.
-2. ✅ Додати можливість сортування рецептів за рейтингом i назвою.
-3. ✅ Додати можливість фільтрації рецептів за складністю.
-4. ✅ Додати можливість пошуку рецептів за назвою.
+1. ✅ Add a recipe catalog with the ability to add ingredients directly to the shopping cart.
+2. ✅ Add recipe sorting by rating and name.
+3. ✅ Add recipe filtering by difficulty level.
+4. ✅ Add recipe search by title.
 
 ## Onboarding
 
-1. ✅ Зробити скрол жестами на екрані Onboarding, щоб користувач міг перегортати слайди свайпами
-   вліво та вправо.
-2. ✅ Зберігати в AsyncStorage інформацію про те, що користувач пройшов Onboarding, щоб при
-   наступному запуску додатку не показувати його знову.
-3. ✅ Протестувати на широких екранах, можливо додати адаптивність для landscape та планшетів.
+1. ✅ Implement swipe gestures on the Onboarding screen so users can navigate slides by swiping left
+   and right.
+2. ✅ Store onboarding completion status in AsyncStorage to prevent displaying it on subsequent app
+   launches.
+3. ✅ Test on wide screens and optimize responsiveness for landscape orientation and tablets.
 
 ## Authentication
 
-1. ✅ Додати повідомлення (toast) про успішну авторизацію, реєстрацію, вихід, відовлення паролю та
-   інші дії користувача, в тому числі помилки.
-2. ✅ Додати скрін після відновлення пароля про відправку листа на пошту користувача з інструкціями.
-3. ✅ Додати лоадери для всіх запитів на сервер, щоб користувач бачив, що відбувається обробка
-   запиту.
-4. ✅ Додати перевірку OTP коду при реєстрації щоб забезпечити безпеку користувача.
+1. ✅ Add toast notifications for successful login, registration, logout, password recovery, and
+   error feedback.
+2. ✅ Add a confirmation screen post-password reset notifying users that instructions were sent to
+   their email.
+3. ✅ Implement loading indicators across all server requests to keep users informed during data
+   fetching.
+4. ✅ Add OTP code verification during registration to enhance account security.
 
 ## Store
 
-1. ✅ Замінити керування станом на Redux Toolkit для більш ефективного управління станом додатку та
-   забезпечення швидкого доступу до даних з будь-якого компонента.
-2. ✅ Додати можливість оновлення даних про товари (pull-to-refresh) і дозагрузку при скролі
-   (infinite scroll).
-3. ✅ Додати можливість сортування товарів за ціною, рейтингом та іншими параметрами.
-4. ✅ Додати можливість фільтрації товарів за категоріями, ціною та іншими параметрами.
-5. ✅ Додати можливість пошуку товарів за назвою та описом.
+1. ✅ Migrate state management to Redux Toolkit to streamline global state handling and improve
+   component data access.
+2. ✅ Add pull-to-refresh data updates and infinite scrolling pagination.
+3. ✅ Implement product sorting by price, rating, and other key parameters.
+4. ✅ Add product filtering by categories, price range, and attributes.
+5. ✅ Add product search by title and description.
 
 ## Cart
 
-1. ✅ Додати toast повідомлення про успішне додавання і видалення товару до кошика.
-2. ✅ Додати на іконці в TabBar відображення загальної кількості товарів у кошику.
-3. ✅ Оптимізувати роботу кошика використовуючи хуки.
+1. ✅ Add toast notifications for successfully adding and removing items from the cart.
+2. ✅ Display a dynamic item count badge on the TabBar cart icon.
+3. ✅ Optimize cart performance and state manipulation using custom hooks.

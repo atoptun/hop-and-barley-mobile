@@ -11,3 +11,7 @@ This is a mobile application for the Hop & Barley brand.
 [Cross Assignment 6](./docs/cross_assignment_6.md)
 
 [Cross Assignment 7](./docs/cross_assignment_7.md)
+
+[Final Project Analysis](./docs/cross_final_project_analize.md)
+
+[Final Project Description](./docs/cross_final_project.md)

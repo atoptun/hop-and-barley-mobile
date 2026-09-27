@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { NativeModules, Platform } from 'react-native';
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
@@ -24,7 +25,7 @@ const reactotron = Reactotron.configure({
   port: 9090,
 })
   .setAsyncStorageHandler(AsyncStorage)
-  .useReactNative()
+  .useReactNative({ asyncStorage: true })
   .use(reactotronRedux())
   .connect();
 
@@ -66,6 +67,16 @@ reactotron.onCustomCommand({
   },
   title: 'Clear AsyncStorage',
   description: 'Wipes all data from AsyncStorage',
+});
+
+reactotron.onCustomCommand({
+  command: 'getAuthToken',
+  handler: async () => {
+    const token = await SecureStore.getItemAsync('user_auth_token');
+    console.tron.log('SecureStore token:', token);
+  },
+  title: 'Print SecureStore Token',
+  description: 'Reads auth_token from SecureStore',
 });
 
 if (__DEV__) {
